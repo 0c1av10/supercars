@@ -625,9 +625,11 @@ body::after {
 }
 .cta-band-car {
   position: absolute; right: -2%; top: 50%; transform: translateY(-50%);
-  width: 52%; opacity: .09; pointer-events: none;
-  filter: brightness(0) invert(1);
+  width: 52%; pointer-events: none;
   object-fit: contain;
+  filter: invert(1) grayscale(1);
+  opacity: .13;
+  mix-blend-mode: screen;
 }
 .cta-band .tag-line { color: rgba(255,255,255,.4); }
 .cta-band .tag-line::before { background: rgba(255,255,255,.4); }
