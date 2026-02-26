@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Cars International — Importación desde China</title>
+  <meta name="description" content="Importación y exportación de vehículos desde China hacia Venezuela y el mundo. 0KM · 90 días · Proceso transparente.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cur-dot" id="curDot"></div>
+  <div class="cur-ring" id="curRing"></div>
+
+  <!-- WHATSAPP FLOAT -->
+  <a class="wa-float" href="https://wa.me/58422024582" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html">
+      <img src="assets/logo.png" alt="Super Cars International">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" id="n-home">Inicio</a></li>
+      <li><a href="catalogo.html" id="n-catalogo">Catálogo</a></li>
+      <li><a href="servicios.html" id="n-servicios">Servicios</a></li>
+      <li><a href="proceso.html" id="n-proceso">Proceso</a></li>
+      <li><a href="contacto.html" id="n-contacto">Contacto</a></li>
+    </ul>
+    <a class="nav-cta" href="contacto.html">Cotizar →</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="nav-drawer" id="navDrawer">
+    <a href="index.html">Inicio</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="proceso.html">Proceso</a>
+    <a href="contacto.html">Contacto</a>
+  </div>
+
+  <!-- ══════════════════════════════
+       HERO
+  ══════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-bg" style="background-image:url('assets/vehicles/rav4-front-34.jpg')"></div>
+    <div class="hero-overlay"></div>
+
+    <!-- Decorative car SVG -->
+    <svg class="hero-car-svg" viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40 130 C55 130 75 124 105 110 L170 86 C200 78 230 72 265 72 L335 72 C370 72 400 78 430 92 L490 114 C516 122 540 130 560 130 L580 130" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M168 86 L200 56 C218 40 245 32 278 32 L322 32 C355 32 382 42 400 58 L438 88" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="162" cy="130" r="26" stroke="#111" stroke-width="3" fill="none"/>
+      <circle cx="162" cy="130" r="9"  stroke="#111" stroke-width="2" fill="none"/>
+      <circle cx="458" cy="130" r="26" stroke="#111" stroke-width="3" fill="none"/>
+      <circle cx="458" cy="130" r="9"  stroke="#111" stroke-width="2" fill="none"/>
+      <line x1="10"  y1="156" x2="128" y2="156" stroke="#111" stroke-width="1.5" opacity=".4"/>
+      <line x1="196" y1="156" x2="422" y2="156" stroke="#111" stroke-width="1.5" opacity=".4"/>
+      <line x1="490" y1="156" x2="590" y2="156" stroke="#111" stroke-width="1.5" opacity=".4"/>
+    </svg>
+
+    <div class="hero-top-bar">
+      <span class="hero-top-tag">Super Cars International — China → Venezuela</span>
+      <div class="hero-top-numbers">
+        <div class="hero-stat-sm"><strong>0KM</strong><span>Todos los autos</span></div>
+        <div class="hero-stat-sm"><strong>Usados</strong><span>Con la mas alta calidad e inspeccion</span></div>
+        <div class="hero-stat-sm"><strong>90</strong><span>Días promedio</span></div>
+        <div class="hero-stat-sm"><strong>200+</strong><span>Entregados</span></div>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-eyebrow">China → Venezuela · Importación mundial</div>
+        <h1 class="hero-h1">
+          Super<br>
+          <span class="thin">Cars</span>
+        </h1>
+        <p class="hero-sub">Exportacion directa de vehículos 0KM desde China hacia Venezuela y el mundo. Proceso transparente, 90 días, precio de origen.</p>
+        <div class="hero-btns">
+          <a class="btn-dark" href="catalogo.html">Ver Catálogo →</a>
+          <a class="btn-outline" href="contacto.html">Cotizar</a>
+        </div>
+      </div>
+      
+      <div class="hero-right">
+        <div class="hero-badge">
+          <strong>0 KM</strong>
+          <span>Todos los vehículos</span>
+        </div>
+        <div class="hero-badge">
+          <strong>Usados</strong>
+          <span>Con la mas alta calidad e inspeccion</span>
+        </div>
+                <div class="hero-badge">
+          <strong>100+</strong>
+          <span>Entregados</span>
+        </div>
+        <div class="hero-scroll">Scroll <span></span></div>
+      </div>
+        </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item"><span>Highlander 7 plazas</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Frontlander 2.0L</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Camry Sport</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Toyota</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Hyundai</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Corolla Cross</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Corolla Levin</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>RAV4 4x4</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>RAV4 Luxury</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Highlander Premium</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Frontlander Deluxe Plus</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Corolla Cross Elite</span><span class="dot"></span></div>
+      
+      <!-- duplicate -->
+       <div class="marquee-item"><span>Toyota</span><span class="dot"></span></div>
+       <div class="marquee-item"><span>Hyundai</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>RAV4 4x4</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Toyota</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Hyundai</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Highlander 7 plazas</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Frontlander 2.0L</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Camry Sport</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Corolla Cross</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Corolla Levin</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>RAV4 4x4</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>RAV4 Luxury</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Highlander Premium</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Frontlander Deluxe Plus</span><span class="dot"></span></div>
+      <div class="marquee-item"><span>Corolla Cross Elite</span><span class="dot"></span></div>
+      
+    </div>
+  </div>
+
+  <!-- STATS BAND -->
+  <section class="stats-band">
+    <div class="stat-block rev">
+      <span class="stat-num">19<sup>+</sup></span>
+      <span class="stat-label">Modelos Toyota</span>
+      <span class="stat-sub">RAV4, Highlander, Frontlander, Camry, Corolla Cross y Levin.</span>
+    </div>
+    <div class="stat-block rev" style="transition-delay:.04s">
+      <span class="stat-num">Usados</span>
+      <span class="stat-label">Con el mejor precio </span>
+      <span class="stat-sub">Kilometraje real y con las inspecciones con lujo de detalle.</span>
+    </div>
+    <div class="stat-block rev" style="transition-delay:.08s">
+      <span class="stat-num">0</span>
+      <span class="stat-label">KM — Todos nuevos</span>
+      <span class="stat-sub">Directo de los mejores Dealers en China. Sin intermediarios, sin rodaje.</span>
+    </div>
+    <div class="stat-block rev" style="transition-delay:.16s">
+      <span class="stat-num">90</span>
+      <span class="stat-label">Días promedio</span>
+      <span class="stat-sub">De origen en China a entrega legalizada en Venezuela.</span>
+    </div>
+ 
+  </section>
+
+  <!-- PILLARS -->
+  <section class="pillars-section">
+    <div class="section-eyebrow"><span>Super Cars International</span><div class="sep"></div><span>Nuestra propuesta de valor</span></div>
+    <div class="pillars-header">
+      <div class="rev">
+        <div class="tag-line">Por qué elegirnos</div>
+        <h2 class="display-l" style="margin-top:14px">Por qué<br><span style="font-weight:200;color:var(--mid)">elegirnos</span></h2>
+      </div>
+      <p class="body-text rev" style="max-width:300px;transition-delay:.15s">Especialistas en importación desde China hacia Venezuela. Transparencia total, proceso documentado.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar rev">
+        <div class="pillar-num">01</div>
+        <span class="pillar-icon">🏆</span>
+        <div class="pillar-title">Vehículos Premium</div>
+        <p class="pillar-desc">Acceso directo a fabricantes y exportadores certificados en China. Los mejores modelos, precios de origen, sin intermediarios innecesarios.</p>
+      </div>
+      <div class="pillar rev" style="transition-delay:.12s">
+        <div class="pillar-num">02</div>
+        <span class="pillar-icon">⚡</span>
+        <div class="pillar-title">Proceso Ágil</div>
+        <p class="pillar-desc">90 días de inicio a fin. Gestionamos embarque, tránsito marítimo, aduanas y nacionalización. Vos solo recibís el auto.</p>
+      </div>
+      <div class="pillar rev" style="transition-delay:.24s">
+        <div class="pillar-num">03</div>
+        <span class="pillar-icon">💎</span>
+        <div class="pillar-title">Excelencia Total</div>
+        <p class="pillar-desc">Comunicación constante, fotos y videos en tiempo real. Cada cliente recibe atención personalizada de principio a fin.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRAND STORY -->
+  <section class="brand-story">
+    <div class="brand-story-visual"></div>
+    <div class="brand-story-text rev">
+      <div class="tag-line">Nuestra historia</div>
+      <blockquote class="brand-story-quote">
+        "Creemos que todos merecen acceso a un vehículo de calidad, importado directamente desde origen, con transparencia total en cada paso."
+      </blockquote>
+      <p class="body-text" style="max-width:400px">Super Cars International nació para eliminar intermediarios y acercar los mejores vehículos del mundo — especialmente desde China a Venezuela y Latinoamérica.</p>
+      <div class="brand-story-cite" style="margin-top:28px">— Fundadores, Super Cars International</div>
+    </div>
+  </section>
+
+  <!-- DARK FEATURES BAND -->
+  <section class="features-band">
+    <div class="feat-band-item rev">
+      <span class="feat-band-icon">🔒</span>
+      <div class="feat-band-title">Seguridad total</div>
+      <p class="feat-band-desc">Contratos en regla, pagos estructurados por etapas y documentación completa. Tu inversión siempre protegida.</p>
+      <div class="feat-band-num">01</div>
+    </div>
+    <div class="feat-band-item rev" style="transition-delay:.1s">
+      <span class="feat-band-icon">📡</span>
+      <div class="feat-band-title">Comunicación en vivo</div>
+      <p class="feat-band-desc">Fotos y videos en tiempo real desde China. Seguimiento del barco. Nunca estás sin información de tu auto.</p>
+      <div class="feat-band-num">02</div>
+    </div>
+    <div class="feat-band-item rev" style="transition-delay:.2s">
+      <span class="feat-band-icon">🏅</span>
+      <div class="feat-band-title">Calidad certificada</div>
+      <p class="feat-band-desc">Todos los vehículos son 0KM, inspeccionados en origen con documentación oficial de fábrica.</p>
+      <div class="feat-band-num">03</div>
+    </div>
+  </section>
+
+  <!-- FEATURED CARS -->
+  <section class="featured-section">
+    <div class="featured-header rev">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between">
+        <div>
+          <div class="tag-line">Nuestro catálogo</div>
+          <h2 class="display-l" style="margin-top:14px">Vehículos<br><span style="font-weight:200;color:var(--mid)">destacados</span></h2>
+        </div>
+        <a href="catalogo.html" class="btn-outline" style="align-self:flex-end">Ver todo →</a>
+      </div>
+    </div>
+    <div class="featured-grid">
+      <div class="feat-card" onclick="window.location='detalle.html'">
+        <div class="feat-img" style="background-image:url('assets/vehicles/rav4-front-34.jpg')"></div>
+        <div class="feat-info">
+          <span class="feat-brand">Toyota · SUV · 2026 · China 🇨🇳</span>
+          <div class="feat-model">RAV4 2.0L<br>Adventure Plus</div>
+          <span class="feat-spec">CVT · 4x4 · Luxury Edition desde US$ 24.900</span>
+        </div>
+        <div class="feat-hover">Ver modelos RAV4 →</div>
+      </div>
+      <div class="feat-card" onclick="window.location='catalogo.html'">
+        <div class="feat-img" style="background-image:url('https://images.unsplash.com/photo-1565684783-4e17e4d6e5c7?w=600&q=80')"></div>
+        <div class="feat-info"><span class="feat-brand">Toyota · SUV 7P · 2026</span><div class="feat-model">Highlander 380T</div><span class="feat-spec">Luxury · Premium · desde US$ 36.834</span></div>
+        <div class="feat-hover">Ver Highlander →</div>
+      </div>
+      <div class="feat-card" onclick="window.location='catalogo.html'">
+        <div class="feat-img" style="background-image:url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80')"></div>
+        <div class="feat-info"><span class="feat-brand">Toyota · SUV · 2026</span><div class="feat-model">Frontlander 2.0L</div><span class="feat-spec">4 variantes · desde US$ 14.725</span></div>
+        <div class="feat-hover">Ver Frontlander →</div>
+      </div>
+      <div class="feat-card" onclick="window.location='catalogo.html'">
+        <div class="feat-img" style="background-image:url('https://images.unsplash.com/photo-1549317661-bd32c8ce0729?w=600&q=80')"></div>
+        <div class="feat-info"><span class="feat-brand">Toyota · Crossover · 2025/2026</span><div class="feat-model">Corolla Cross</div><span class="feat-spec">Pioneer · Elite · Luxury desde US$ 14.576</span></div>
+        <div class="feat-hover">Ver Corolla Cross →</div>
+      </div>
+      <div class="feat-card" onclick="window.location='catalogo.html'">
+        <div class="feat-img" style="background-image:url('https://images.unsplash.com/photo-1621993202328-a04c7fa0be08?w=600&q=80')"></div>
+        <div class="feat-info"><span class="feat-brand">Toyota · Sedán · 2026</span><div class="feat-model">Camry 2.0S Sport</div><span class="feat-spec">Sport Edition · US$ 25.000</span></div>
+        <div class="feat-hover">Cotizar Camry →</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLOBAL BAND -->
+  <section class="global-band rev">
+    <div class="global-band-bg"></div>
+    <div class="global-band-overlay"></div>
+    <div class="global-band-content">
+      <div>
+        <div class="tag-line" style="color:rgba(255,255,255,.4)">Cobertura mundial</div>
+        <div class="global-band-title" style="margin-top:14px">China<br><span class="thin">al mundo</span></div>
+      </div>
+      <div>
+        <div style="font-size:8px;font-weight:700;letter-spacing:.44em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:16px">Destinos principales</div>
+        <div class="global-destinations">
+          <span class="dest-tag">🇻🇪 Venezuela</span>
+          <span class="dest-tag">🇨🇴 Colombia</span>
+          <span class="dest-tag">🇵🇦 Panamá</span>
+          <span class="dest-tag">🇩🇴 Rep. Dominicana</span>
+          <span class="dest-tag">🇲🇽 México</span>
+          <span class="dest-tag">🇺🇸 USA</span>
+          <span class="dest-tag">🇧🇷 Brasil</span>
+          <span class="dest-tag">🌍 Y más</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band rev">
+    <svg class="cta-band-car" viewBox="0 0 400 120" fill="none">
+      <path d="M30 80 C40 80 50 76 70 68 L110 56 C130 52 150 48 170 48 L220 48 C240 48 258 52 272 60 L306 72 C320 76 334 80 346 80 L370 80" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M110 56 L130 40 C140 32 158 28 178 28 L222 28 C242 28 260 34 272 44 L298 60" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <circle cx="108" cy="80" r="16" stroke="white" stroke-width="2.5" fill="none"/>
+      <circle cx="302" cy="80" r="16" stroke="white" stroke-width="2.5" fill="none"/>
+    </svg>
+    <div style="position:relative;z-index:1">
+      <div class="tag-line">— ¿Listo para empezar?</div>
+      <h2 class="display-m" style="color:var(--paper);margin-top:12px">Tu próximo auto<br>viene de China.</h2>
+    </div>
+    <div class="cta-band-actions">
+      <a href="catalogo.html" class="btn-outline-white">Ver Catálogo</a>
+      <a href="contacto.html" class="btn-ghost-white">Contactar</a>
+    </div>
+  </div>
+
+  <!-- FOOTER STRIP -->
+  <div class="footer-strip">
+    <div class="footer-strip-left">SUPER CARS</div>
+    <div class="footer-strip-rule"></div>
+    <div class="footer-strip-right">INTERNATIONAL</div>
+  </div>
+
+  <!-- FOOTER -->
+    <footer>
+    <div class="footer-top-nav">
+      <div class="footer-logo"><img src="assets/logo.png" alt="Super Cars International"></div>
+      <nav class="footer-nav-links">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="proceso.html">Proceso de Compra</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+    <div class="footer-legal-row">
+      <div class="footer-legal-block">
+        <span class="footer-legal-main">© Super Cars International 2026 — Todos los derechos reservados.</span>
+        <span class="footer-legal-sub">Venezuela: Super Cars International C.A. RIF J-000000 &nbsp;&nbsp;—&nbsp;&nbsp; China: Super Cars International CO. LTD License #0000000</span>
+      </div>
+      <span class="footer-powered">Powered by <span>Octavio Caamaño Developer</span></span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toyota RAV4 — Super Cars International</title>
+  <meta name="description" content="Toyota RAV4 2.0L 4x4 0KM desde China. Importación hacia Venezuela.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="cur-dot" id="curDot"></div>
+  <div class="cur-ring" id="curRing"></div>
+  <a class="wa-float" href="https://wa.me/58422024582" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="Super Cars International"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="catalogo.html" class="active">Catálogo</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="proceso.html">Proceso</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+    <a class="nav-cta" href="contacto.html">Cotizar →</a>
+    <button class="nav-hamburger" id="navHamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-drawer" id="navDrawer">
+    <a href="index.html">Inicio</a><a href="catalogo.html">Catálogo</a>
+    <a href="servicios.html">Servicios</a><a href="proceso.html">Proceso</a><a href="contacto.html">Contacto</a>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div style="padding:14px 48px;border-bottom:1px solid var(--rule);background:var(--offwhite);margin-top:76px;font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--silver)">
+    <a href="index.html" style="color:inherit">Inicio</a><span style="margin:0 10px">›</span>
+    <a href="catalogo.html" style="color:inherit">Catálogo</a><span style="margin:0 10px">›</span>
+    <span style="color:var(--ink)" id="breadName">RAV4 Adventure Plus 2026</span>
+  </div>
+
+  <!-- VARIANT TABS -->
+  <div style="background:var(--warm);border-bottom:1px solid var(--rule);padding:0 48px;display:flex;align-items:center;gap:0;overflow-x:auto">
+    <span style="font-size:7.5px;font-weight:700;letter-spacing:.42em;text-transform:uppercase;color:var(--silver);padding:14px 20px 14px 0;border-right:1px solid var(--rule);margin-right:16px;flex-shrink:0">Variante:</span>
+    <button class="filter-btn active" onclick="loadVariant('adv26',this)">Adventure Plus 2026</button>
+    <button class="filter-btn" onclick="loadVariant('lux26',this)">Luxury 2026</button>
+    <button class="filter-btn" onclick="loadVariant('adv25',this)">Adventure Plus 2025</button>
+    <button class="filter-btn" onclick="loadVariant('lux25',this)">Luxury 2025</button>
+  </div>
+
+  <div class="vd-layout">
+    <!-- GALLERY -->
+    <div class="vd-gallery">
+      <div class="vd-main-img">
+        <div class="vd-main-img-bg" id="mainImg" style="background-image:url('assets/vehicles/rav4-front-34.jpg')"></div>
+        <div class="vd-avail">✓ Disponible para Venezuela</div>
+        <div class="vd-update">Actualización: Feb 2026</div>
+      </div>
+      <div class="vd-thumbs">
+        <div class="vd-thumb active" data-full="assets/vehicles/rav4-front-34.jpg" style="background-image:url('assets/vehicles/rav4-front-34.jpg')"></div>
+        <div class="vd-thumb" data-full="assets/vehicles/rav4-front.jpg" style="background-image:url('assets/vehicles/rav4-front.jpg')"></div>
+        <div class="vd-thumb" data-full="assets/vehicles/rav4-rear.jpg" style="background-image:url('assets/vehicles/rav4-rear.jpg')"></div>
+        <div class="vd-thumb" data-full="assets/vehicles/rav4-interior-dash.jpg" style="background-image:url('assets/vehicles/rav4-interior-dash.jpg')"></div>
+      </div>
+    </div>
+
+    <!-- INFO PANEL -->
+    <div class="vd-info-panel">
+      <div class="vd-info-header">
+        <span class="vd-eyebrow" id="vdEyebrow">Toyota · SUV 4x4 · 2026 · China 🇨🇳 → Venezuela</span>
+        <div class="vd-title" id="vdTitle">RAV4 2.0L CVT 4x4<br>Adventure Plus Edition</div>
+        <span class="vd-sub" id="vdSub">Año: 2026 · Origen: China 🇨🇳 · Ruta: China → Venezuela</span>
+        <p class="vd-tagline">¡Estás a un click de hacerlo tuyo!</p>
+      </div>
+
+      <div class="vd-section">
+        <div class="vd-sec-label">Especificaciones Técnicas</div>
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-icon">🎨</span><div><span class="spec-label">Colores disponibles</span><span class="spec-value">Consultar disponibilidad</span></div></div>
+          <div class="spec-item"><span class="spec-icon">📊</span><div><span class="spec-label">Kilometraje</span><span class="spec-value">0 KM</span></div></div>
+          <div class="spec-item"><span class="spec-icon">🔧</span><div><span class="spec-label">Motor</span><span class="spec-value">2.0L 4-cilindros DOHC</span></div></div>
+          <div class="spec-item"><span class="spec-icon">⚡</span><div><span class="spec-label">Horsepower</span><span class="spec-value" id="sHP">171 hp @ 6600 rpm</span></div></div>
+          <div class="spec-item"><span class="spec-icon">💪</span><div><span class="spec-label">Torque</span><span class="spec-value">207 Nm @ 4400 rpm</span></div></div>
+          <div class="spec-item"><span class="spec-icon">⛽</span><div><span class="spec-label">Combustible</span><span class="spec-value">Gasolina</span></div></div>
+          <div class="spec-item"><span class="spec-icon">🗺️</span><div><span class="spec-label">Autonomía</span><span class="spec-value">~13.5 km/L · ~742 km/tanque</span></div></div>
+          <div class="spec-item"><span class="spec-icon">🛢️</span><div><span class="spec-label">Capacidad tanque</span><span class="spec-value">55L</span></div></div>
+          <div class="spec-item"><span class="spec-icon">⚙️</span><div><span class="spec-label">Transmisión</span><span class="spec-value">CVT Automática · AWD 4x4</span></div></div>
+          <div class="spec-item"><span class="spec-icon">🛞</span><div><span class="spec-label">Rines</span><span class="spec-value" id="sRines">R19" Aleación Sport</span></div></div>
+          <div class="spec-item"><span class="spec-icon">🚪</span><div><span class="spec-label">Puertas</span><span class="spec-value">5 Puertas + Maletero eléctrico</span></div></div>
+          <div class="spec-item"><span class="spec-icon">💺</span><div><span class="spec-label">Asientos</span><span class="spec-value">5 Plazas</span></div></div>
+          <div class="spec-item"><span class="spec-icon">🛑</span><div><span class="spec-label">Frenos</span><span class="spec-value">ABS + EBD + Active Stability Control</span></div></div>
+          <div class="spec-item"><span class="spec-icon">🛡️</span><div><span class="spec-label">Seguridad</span><span class="spec-value" id="sAirbags">7 Airbags + Toyota Safety Sense</span></div></div>
+          <div class="spec-item"><span class="spec-icon">📱</span><div><span class="spec-label">Infotainment</span><span class="spec-value" id="sScreen">Pantalla táctil 10.1" + CarPlay</span></div></div>
+          <div class="spec-item"><span class="spec-icon">🅿️</span><div><span class="spec-label">Parking</span><span class="spec-value">Cámara 360° + Sensores delanteros/traseros</span></div></div>
+          <div class="spec-item"><span class="spec-icon">❄️</span><div><span class="spec-label">Clima</span><span class="spec-value">A/A Automático Dual Zone</span></div></div>
+          <div class="spec-item"><span class="spec-icon">✨</span><div><span class="spec-label">Incluye</span><span class="spec-value" id="sExtras">Techo panorámico, Keyless, Arranque botón, Retrovisores calefactados</span></div></div>
+        </div>
+      </div>
+
+      <div class="vd-section">
+        <div class="vd-sec-label">Extras Opcionales</div>
+        <button class="extras-btn" data-hover><span>➕ Tapicería en cuero premium</span><span class="extras-price">+ US$ 1.500</span></button>
+        <button class="extras-btn" style="margin-top:8px" data-hover><span>➕ Tintado de vidrios (UV)</span><span class="extras-price">+ US$ 350</span></button>
+      </div>
+
+      <div class="vd-section">
+        <div class="vd-sec-label">Desglose de Costos</div>
+        <div class="cost-box">
+          <div class="cost-row"><span class="cost-label">Paga para embarcar</span><span class="cost-value" id="cEmbarque">US$ 18.000,00</span></div>
+          <div class="cost-row"><span class="cost-label">Paga al llegar</span><span class="cost-value">US$ 4.000,00</span></div>
+          <div class="cost-row"><span class="cost-label">Impuestos (Tasa BCV)</span><span class="cost-value" id="cImpuesto">US$ 5.800,00</span></div>
+          <div class="cost-total-row">
+            <span class="cost-label">Precio Final Aprox.</span>
+            <span class="cost-value" id="cTotal">US$ 24.900,00</span>
+          </div>
+        </div>
+        <p class="cost-note">* Precio estimado según tasa BCV del día. Sujeto a actualización.</p>
+      </div>
+
+      <div class="vd-section">
+        <div class="fee-box">
+          <span class="fee-label">Tasa fija de servicio</span>
+          <span class="fee-value">US$ 1.500,00</span>
+        </div>
+      </div>
+
+      <div class="vd-section">
+        <div class="vd-sec-label">Tiempos de Entrega Estimados</div>
+        <div class="timeline-steps">
+          <div class="tl-step"><div class="tl-dot">1</div><div><div class="tl-days">15 Días</div><div class="tl-label">Preparación y salida del vehículo desde China</div></div></div>
+          <div class="tl-step"><div class="tl-dot">2</div><div><div class="tl-days">60 Días</div><div class="tl-label">Tránsito marítimo internacional hacia Venezuela</div></div></div>
+          <div class="tl-step"><div class="tl-dot">3</div><div><div class="tl-days">15 Días</div><div class="tl-label">Aduanas y nacionalización en Venezuela</div></div></div>
+          <div class="tl-step total"><div class="tl-dot">✓</div><div><div class="tl-days">~90 Días Total</div><div class="tl-label">Entrega final del vehículo legalizado</div></div></div>
+        </div>
+      </div>
+
+      <div class="vd-section">
+        <div class="disclaimer">
+          <p><strong>Información Importante:</strong> Los costos presentados son aproximados y pueden variar según: — Disponibilidad del vehículo — Costos logísticos al momento del embarque — Variación en tasas e impuestos vigentes.</p>
+        </div>
+      </div>
+
+      <div class="vd-cta-bar">
+        <a href="contacto.html" class="cta-buy">Comprar</a>
+        <a href="https://wa.me/58422024582" target="_blank" class="cta-want">Lo Quiero 💬</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.querySelectorAll('.vd-thumb').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.vd-thumb').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        document.getElementById('mainImg').style.backgroundImage = "url('" + t.dataset.full + "')";
+      });
+    });
+
+    const VARIANTS = {
+      adv26: { eyebrow:'Toyota · SUV 4x4 · 2026 · China 🇨🇳 → Venezuela', title:'RAV4 2.0L CVT 4x4<br>Adventure Plus Edition', sub:'Año: 2026 · Origen: China 🇨🇳', bread:'RAV4 Adventure Plus 2026', hp:'171 hp @ 6600 rpm', rines:'R19" Aleación Sport', airbags:'7 Airbags + Toyota Safety Sense', screen:'Pantalla táctil 10.1" + Apple CarPlay + Android Auto', extras:'Techo panorámico, Keyless, Arranque botón, Retrovisores calefactados', embarque:'US$ 18.000,00', impuesto:'US$ 5.800,00', total:'US$ 24.900,00' },
+      lux26:  { eyebrow:'Toyota · SUV 4x4 · 2026 · China 🇨🇳 → Venezuela', title:'RAV4 2.0L 4WD<br>Luxury Version', sub:'Año: 2026 · Origen: China 🇨🇳', bread:'RAV4 Luxury 2026', hp:'171 hp @ 6600 rpm', rines:'R19" Aleación Premium', airbags:'8 Airbags + Toyota Safety Sense 3.0', screen:'Pantalla táctil 12.3" + CarPlay + JBL Audio', extras:'Techo panorámico doble, Asientos cuero calefactados, Head-Up Display, Keyless Go', embarque:'US$ 18.500,00', impuesto:'US$ 5.900,00', total:'US$ 25.500,00' },
+      adv25:  { eyebrow:'Toyota · SUV 4x4 · 2025 · China 🇨🇳 → Venezuela', title:'RAV4 2.0L CVT 4x4<br>Adventure Plus Edition', sub:'Año: 2025 · Origen: China 🇨🇳', bread:'RAV4 Adventure Plus 2025', hp:'168 hp @ 6600 rpm', rines:'R18" Aleación', airbags:'7 Airbags + Toyota Safety Sense', screen:'Pantalla táctil 9" + Apple CarPlay', extras:'Techo corredizo, Keyless, Arranque botón, Retrovisores eléctricos', embarque:'US$ 18.000,00', impuesto:'US$ 5.800,00', total:'US$ 24.900,00' },
+      lux25:  { eyebrow:'Toyota · SUV 4x4 · 2025 · China 🇨🇳 → Venezuela', title:'RAV4 2.0L 4WD<br>Luxury Version', sub:'Año: 2025 · Origen: China 🇨🇳', bread:'RAV4 Luxury 2025', hp:'168 hp @ 6600 rpm', rines:'R18" Aleación Premium', airbags:'7 Airbags + Toyota Safety Sense 2.0', screen:'Pantalla táctil 10" + CarPlay + JBL Audio', extras:'Techo panorámico, Asientos cuero, Head-Up Display, Keyless Go', embarque:'US$ 18.500,00', impuesto:'US$ 5.900,00', total:'US$ 25.500,00' },
+    };
+
+    function loadVariant(key, btn) {
+      const v = VARIANTS[key];
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      document.getElementById('vdEyebrow').textContent = v.eyebrow;
+      document.getElementById('vdTitle').innerHTML = v.title;
+      document.getElementById('vdSub').textContent = v.sub;
+      document.getElementById('breadName').textContent = v.bread;
+      document.getElementById('sHP').textContent = v.hp;
+      document.getElementById('sRines').textContent = v.rines;
+      document.getElementById('sAirbags').textContent = v.airbags;
+      document.getElementById('sScreen').textContent = v.screen;
+      document.getElementById('sExtras').textContent = v.extras;
+      document.getElementById('cEmbarque').textContent = v.embarque;
+      document.getElementById('cImpuesto').textContent = v.impuesto;
+      document.getElementById('cTotal').textContent = v.total;
+    }
+  </script>
+  <footer>
+    <div class="footer-top-nav">
+      <div class="footer-logo"><img src="assets/logo.png" alt="Super Cars International"></div>
+      <nav class="footer-nav-links">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="proceso.html">Proceso de Compra</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+    <div class="footer-legal-row">
+      <div class="footer-legal-block">
+        <span class="footer-legal-main">© Super Cars International 2026 — Todos los derechos reservados.</span>
+        <span class="footer-legal-sub">Venezuela: Super Cars International C.A. RIF J-000000 &nbsp;&nbsp;—&nbsp;&nbsp; China: Super Cars International CO. LTD License #0000000</span>
+      </div>
+      <span class="footer-powered">Powered by <span>Octavio Caamaño Developer</span></span>
+    </div>
+  </footer>
+</body>
+</html>

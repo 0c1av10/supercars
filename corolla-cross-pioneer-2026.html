@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corolla Cross Pioneer Version 2026 — Super Cars International</title>
+  <link rel="stylesheet" href="css/style.css">
+  
+<style>
+/* ── VEHICLE DETAIL PAGE ── */
+body { cursor: none; }
+*, *::before, *::after { box-sizing: border-box; }
+
+.vd-page { padding-top: 76px; }
+
+/* ── BREADCRUMB ── */
+.vd-breadcrumb {
+  padding: 13px 48px; border-bottom: 1px solid var(--rule);
+  background: var(--offwhite);
+  font-size: 9px; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--silver);
+}
+.vd-breadcrumb a { color: inherit; transition: color .2s; }
+.vd-breadcrumb a:hover { color: var(--ink); }
+
+/* ── HERO HEADER ── */
+.vd-hero {
+  background: var(--ink); padding: 44px 48px 36px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.vd-hero-inner { max-width: 700px; }
+.vd-hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 7.5px; font-weight: 700; letter-spacing: .44em;
+  text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 10px;
+}
+.vd-hero-name {
+  font-size: clamp(32px, 5vw, 62px); font-weight: 900;
+  text-transform: uppercase; color: #fff;
+  letter-spacing: -.02em; line-height: .9; margin-bottom: 10px;
+}
+.vd-hero-sub {
+  font-size: 12px; font-weight: 300; color: rgba(255,255,255,.45);
+  letter-spacing: .06em;
+}
+.vd-hero-badges {
+  display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap;
+}
+.vd-badge {
+  font-size: 7.5px; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; padding: 5px 12px;
+  border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.55);
+}
+.vd-badge.gold { border-color: var(--gold); color: var(--gold); }
+
+/* ── MAIN BODY LAYOUT ── */
+.vd-body {
+  display: grid; grid-template-columns: 520px 1fr;
+  min-height: 70vh; border-top: 1px solid var(--rule);
+}
+@media (max-width: 1100px) { .vd-body { grid-template-columns: 1fr; } }
+
+/* ── GALLERY ── */
+.vd-gallery {
+  background: var(--warm); border-right: 1px solid var(--rule);
+  position: sticky; top: 76px; height: calc(100vh - 76px);
+  overflow: hidden; display: flex; flex-direction: column;
+}
+@media (max-width: 1100px) {
+  .vd-gallery { position: static; height: auto; }
+}
+.vd-main-img {
+  flex: 1; background: var(--rule2) center/cover no-repeat;
+  position: relative; min-height: 280px;
+}
+.vd-avail-badge {
+  position: absolute; top: 16px; left: 16px;
+  background: var(--ink); color: #fff;
+  font-size: 7.5px; font-weight: 700; letter-spacing: .28em;
+  text-transform: uppercase; padding: 6px 12px;
+}
+.vd-thumbs {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  border-top: 1px solid var(--rule); flex-shrink: 0;
+}
+.vd-thumb {
+  aspect-ratio: 1; background: var(--rule2) center/cover no-repeat;
+  cursor: pointer; border-right: 1px solid var(--rule);
+  transition: opacity .2s; opacity: .6; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.vd-thumb:last-child { border-right: none; }
+.vd-thumb.active, .vd-thumb:hover { opacity: 1; }
+.vd-thumb.active::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--ink);
+}
+.vd-thumb-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--rule2);
+}
+.vd-thumb-placeholder span {
+  font-size: 8px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--silver);
+}
+
+/* ── INFO PANEL ── */
+.vd-info { overflow-y: auto; }
+
+/* ── ACCORDION SECTION ── */
+.acc-section { border-bottom: 1px solid var(--rule); }
+.acc-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 32px; cursor: pointer;
+  background: var(--paper); transition: background .2s;
+  user-select: none;
+}
+.acc-header:hover { background: var(--warm); }
+.acc-title {
+  font-size: 13px; font-weight: 800; letter-spacing: -.01em; color: var(--ink);
+  display: flex; align-items: center; gap: 8px;
+}
+.acc-title svg { width: 18px; height: 18px; opacity: .4; }
+.acc-chevron {
+  width: 20px; height: 20px; transition: transform .3s ease;
+  color: var(--mid); flex-shrink: 0;
+}
+.acc-section.open .acc-chevron { transform: rotate(180deg); }
+.acc-body {
+  overflow: hidden;
+  max-height: 0; transition: max-height .4s cubic-bezier(.4,0,.2,1);
+}
+.acc-section.open .acc-body { max-height: 2000px; }
+.acc-inner { padding: 0 32px 24px; }
+
+/* ── SPEC GRID (2 cols, icon+label+value) ── */
+.spec-model-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 0 20px; border-bottom: 1px solid var(--rule2); margin-bottom: 16px;
+}
+.spec-model-header .toyota-icon {
+  width: 32px; height: 32px; opacity: .7;
+}
+.spec-model-title { font-size: 14px; font-weight: 800; color: var(--ink); }
+.spec-color-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-left: auto;
+}
+.spec-color-label { font-size: 9px; font-weight: 600; color: var(--mid); letter-spacing: .12em; text-transform: uppercase; }
+.color-dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid var(--rule); cursor: pointer;
+  transition: transform .2s;
+}
+.color-dot:hover { transform: scale(1.2); }
+
+.spec-grid-2col {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+}
+.spec-cell {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 8px; border-bottom: 1px solid var(--rule2);
+  transition: background .15s;
+}
+.spec-cell:hover { background: var(--warm); }
+.spec-cell-icon {
+  width: 22px; height: 22px; flex-shrink: 0;
+  opacity: .55; margin-top: 1px;
+}
+.spec-cell-content { flex: 1; min-width: 0; }
+.spec-cell-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--mid); display: block; margin-bottom: 2px;
+}
+.spec-cell-value {
+  font-size: 11.5px; font-weight: 600; color: var(--ink);
+  line-height: 1.3;
+}
+/* Full width spec cell */
+.spec-cell.full { grid-column: 1 / -1; }
+
+/* ── PURCHASE SECTION ── */
+.purchase-inner {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px;
+  padding-top: 8px;
+}
+@media (max-width: 680px) { .purchase-inner { grid-template-columns: 1fr; } }
+
+/* Cost breakdown */
+.cost-label-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 0; border-bottom: 1px solid var(--rule2);
+}
+.cost-label-row:last-of-type { border-bottom: none; }
+.cost-flag { font-size: 18px; flex-shrink: 0; }
+.cost-label-text { flex: 1; }
+.cost-label-name { font-size: 11px; font-weight: 500; color: var(--mid); }
+.cost-label-val { font-size: 13px; font-weight: 800; color: var(--ink); }
+
+.extras-toggle {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 0; cursor: pointer; user-select: none;
+  color: var(--gold); font-size: 11px; font-weight: 700;
+  letter-spacing: .04em; border-top: 1px solid var(--rule2); margin-top: 4px;
+}
+.extras-toggle svg { width: 16px; height: 16px; transition: transform .3s; }
+.extras-toggle.open svg { transform: rotate(180deg); }
+.extras-list {
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s ease;
+}
+.extras-list.open { max-height: 300px; }
+.extra-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 0; border-bottom: 1px solid var(--rule2);
+  font-size: 11px;
+}
+.extra-item span:first-child { color: var(--mid); }
+.extra-item span:last-child { font-weight: 700; color: var(--ink); }
+
+/* Final price box */
+.final-price-box {
+  background: var(--ink); padding: 20px 20px 16px; margin-top: 16px;
+  position: relative;
+}
+.final-price-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .32em;
+  text-transform: uppercase; color: rgba(255,255,255,.45); margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.final-price-label svg { width: 14px; height: 14px; opacity: .5; }
+.final-price-value {
+  font-size: clamp(26px, 4vw, 38px); font-weight: 900;
+  color: var(--gold); letter-spacing: -.02em; line-height: 1;
+}
+.final-price-note {
+  font-size: 8.5px; font-weight: 300; color: rgba(255,255,255,.3);
+  margin-top: 6px; line-height: 1.6;
+}
+.final-price-date {
+  position: absolute; bottom: 14px; right: 16px;
+  font-size: 8px; font-weight: 400; color: rgba(255,255,255,.25);
+  letter-spacing: .08em;
+}
+.bajo-pedido-badge {
+  position: absolute; top: 16px; right: 16px;
+  font-size: 7px; font-weight: 800; letter-spacing: .28em;
+  text-transform: uppercase; color: rgba(255,255,255,.35);
+  border: 1px solid rgba(255,255,255,.1); padding: 4px 8px;
+}
+
+/* Delivery timeline box */
+.delivery-box {
+  background: var(--warm); border: 1px solid var(--rule);
+  padding: 20px; align-self: start;
+}
+.delivery-title {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 16px;
+}
+.delivery-title svg { width: 22px; height: 22px; opacity: .6; }
+.delivery-row {
+  display: flex; gap: 10px; padding: 9px 0;
+  border-bottom: 1px solid var(--rule2);
+}
+.delivery-row:last-of-type { border-bottom: none; }
+.delivery-days { font-size: 13px; font-weight: 900; color: var(--ink); min-width: 54px; }
+.delivery-desc { font-size: 11px; font-weight: 300; color: var(--mid); }
+.delivery-total {
+  text-align: center; margin-top: 14px; padding-top: 14px;
+  border-top: 2px solid var(--ink);
+  font-size: 28px; font-weight: 900; color: var(--ink);
+}
+.delivery-total span { font-size: 12px; font-weight: 400; color: var(--mid); display: block; }
+
+/* ── SERVICE FEE ── */
+.service-fee-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 32px; background: var(--offwhite);
+  border-bottom: 1px solid var(--rule);
+}
+.sf-label { font-size: 9px; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; color: var(--mid); }
+.sf-value { font-size: 16px; font-weight: 900; color: var(--ink); }
+
+/* ── CTA BAR ── */
+.vd-cta-bar {
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: sticky; bottom: 0; z-index: 20;
+  border-top: 1px solid var(--rule);
+}
+.vd-btn-buy {
+  display: block; padding: 18px; text-align: center;
+  background: var(--ink); color: var(--paper);
+  font-size: 10px; font-weight: 900; letter-spacing: .3em; text-transform: uppercase;
+  transition: background .25s, color .25s;
+}
+.vd-btn-buy:hover { background: var(--gold); color: var(--ink); }
+.vd-btn-wa {
+  display: block; padding: 18px; text-align: center;
+  background: var(--paper); color: var(--ink);
+  font-size: 10px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase;
+  border-left: 1px solid var(--rule); transition: background .25s;
+}
+.vd-btn-wa:hover { background: var(--warm); }
+</style>
+</head>
+<body>
+  <div class="cur-dot" id="curDot"></div>
+  <div class="cur-ring" id="curRing"></div>
+    <a class="wa-float" href="https://wa.me/58422024582" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="Super Cars International"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="catalogo.html" class="active">Catálogo</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="proceso.html">Proceso</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+    <a class="nav-cta" href="contacto.html">Cotizar →</a>
+    <button class="nav-hamburger" id="navHamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-drawer" id="navDrawer">
+    <a href="index.html">Inicio</a><a href="catalogo.html">Catálogo</a>
+    <a href="servicios.html">Servicios</a><a href="proceso.html">Proceso</a><a href="contacto.html">Contacto</a>
+  </div>
+
+  <div class="vd-page">
+
+    <!-- BREADCRUMB -->
+    <div class="vd-breadcrumb">
+      <a href="index.html">Inicio</a> <span style="margin:0 8px">›</span>
+      <a href="catalogo.html">Catálogo</a> <span style="margin:0 8px">›</span>
+      <span style="color:var(--ink)">Corolla Cross Pioneer Version 2026</span>
+    </div>
+
+    <!-- HERO -->
+    <div class="vd-hero">
+      <div class="vd-hero-inner">
+        <div class="vd-hero-tag">
+          <div style="width:20px;height:20px;opacity:.5"><svg viewBox="0 0 100 40" fill="currentColor"><ellipse cx="50" cy="20" rx="24" ry="16" fill="none" stroke="currentColor" stroke-width="4"/><ellipse cx="50" cy="20" rx="10" ry="16" fill="none" stroke="currentColor" stroke-width="4"/><line x1="2" y1="20" x2="98" y2="20" stroke="currentColor" stroke-width="4"/></svg></div>
+          Toyota · SUV Crossover 2026 · China 🇨🇳 → Venezuela
+        </div>
+        <div class="vd-hero-name">Corolla Cross<br>Pioneer Version</div>
+        <div class="vd-hero-sub">Año: 2026 · SUV Crossover · Origen: China → Venezuela</div>
+        <div class="vd-hero-badges"><span class="vd-badge">0 KM</span><span class="vd-badge">Crossover</span><span class="vd-badge gold">2026</span></div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="vd-body">
+
+      <!-- GALLERY -->
+      <div class="vd-gallery">
+        <div class="vd-main-img" id="mainImg" >
+          <div class="vd-avail-badge">✓ Disponible · China → Venezuela</div>
+        </div>
+        <div class="vd-thumbs"><div class="vd-thumb"><div class="vd-thumb-placeholder"><span>+1</span></div></div><div class="vd-thumb"><div class="vd-thumb-placeholder"><span>+2</span></div></div><div class="vd-thumb"><div class="vd-thumb-placeholder"><span>+3</span></div></div><div class="vd-thumb"><div class="vd-thumb-placeholder"><span>+4</span></div></div></div>
+      </div>
+
+      <!-- INFO PANEL -->
+      <div class="vd-info">
+
+        <!-- ── CARACTERÍSTICAS (accordion, open by default) ── -->
+        <div class="acc-section open" id="accSpecs">
+          <div class="acc-header" onclick="toggleAcc('accSpecs')">
+            <span class="acc-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h5M8 16h3"/></svg>
+              Características
+            </span>
+            <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="acc-body">
+            <div class="acc-inner">
+              <!-- Model label + colors -->
+              <div class="spec-model-header">
+                <div class="toyota-icon"><svg viewBox="0 0 100 40" fill="currentColor"><ellipse cx="50" cy="20" rx="24" ry="16" fill="none" stroke="currentColor" stroke-width="4"/><ellipse cx="50" cy="20" rx="10" ry="16" fill="none" stroke="currentColor" stroke-width="4"/><line x1="2" y1="20" x2="98" y2="20" stroke="currentColor" stroke-width="4"/></svg></div>
+                <div class="spec-model-title">Corolla Cross Pioneer Version  2026</div>
+                <div class="spec-color-row">
+                  <span class="spec-color-label">Colores:</span>
+                  <div class="color-dot" style="background:#1a1a1a" title="#1a1a1a"></div><div class="color-dot" style="background:#c0c0c0" title="#c0c0c0"></div><div class="color-dot" style="background:#fff" title="#fff"></div><div class="color-dot" style="background:#8B0000" title="#8B0000"></div>
+                </div>
+              </div>
+              <!-- Specs 2-col grid -->
+              <div class="spec-grid-2col">
+                <div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Kilometraje</span>
+            <span class="spec-cell-value">0 KM — Nuevo de fábrica</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="4" height="10" rx="1"/><rect x="6" y="4" width="12" height="16" rx="1"/><rect x="18" y="7" width="4" height="10" rx="1"/><path d="M10 8v8m4-8v8"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Motor</span>
+            <span class="spec-cell-value">1.8L 4-cilindros</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Horsepower</span>
+            <span class="spec-cell-value">140 hp</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 22V6a2 2 0 012-2h8a2 2 0 012 2v10"/><path d="M15 9l2-2 2 2v7a2 2 0 01-2 2h-2M7 10h4"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Combustible</span>
+            <span class="spec-cell-value">Gasolina</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8M12 8v8M19 8v14"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Transmisión</span>
+            <span class="spec-cell-value">CVT Automática · FWD</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2v10a2 2 0 002 2h8a2 2 0 002-2V2M4 14h16M6 14v6M18 14v6"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Asientos</span>
+            <span class="spec-cell-value">5 Plazas</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L4 6v6c0 5.5 3.5 10 8 12 4.5-2 8-6.5 8-12V6L12 2z"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Seguridad</span>
+            <span class="spec-cell-value">6 Airbags</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Infotainment</span>
+            <span class="spec-cell-value">Pantalla 7"</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v5a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/><path d="M7 14H3M17 14h4M10 17h4"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Parking</span>
+            <span class="spec-cell-value">Cámara trasera + Sensores</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Clima</span>
+            <span class="spec-cell-value">A/A Automático</span>
+          </div>
+        </div><div class="spec-cell">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3m-3.2-6.8l-2.1 2.1M8.3 15.7l-2.1 2.1m0-11.3l2.1 2.1m7.4 7.4l2.1 2.1"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Rines</span>
+            <span class="spec-cell-value">R16"</span>
+          </div>
+        </div><div class="spec-cell full">
+          <div class="spec-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <div class="spec-cell-content">
+            <span class="spec-cell-label">Incluye</span>
+            <span class="spec-cell-value">Arranque botón, Control crucero</span>
+          </div>
+        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── COMPRA (accordion, open by default) ── -->
+        <div class="acc-section open" id="accPurchase">
+          <div class="acc-header" onclick="toggleAcc('accPurchase')">
+            <span class="acc-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9l2 9M9 22a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+              Compra
+            </span>
+            <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="acc-body">
+            <div class="acc-inner">
+              <div class="purchase-inner">
+                <!-- LEFT: costs -->
+                <div>
+                  <p style="font-size:9px;font-weight:700;letter-spacing:.36em;text-transform:uppercase;color:var(--silver);margin-bottom:12px">Detalles de Costos</p>
+
+                  <div class="cost-label-row">
+                    <span class="cost-flag">🇨🇳</span>
+                    <div class="cost-label-text">
+                      <div class="cost-label-name">Paga para embarcar</div>
+                      <div class="cost-label-val">US$ 10.200,00</div>
+                    </div>
+                  </div>
+                  <div class="cost-label-row">
+                    <span class="cost-flag">🇻🇪</span>
+                    <div class="cost-label-text">
+                      <div class="cost-label-name">Paga al llegar</div>
+                      <div class="cost-label-val">US$ 2.500,00</div>
+                    </div>
+                  </div>
+                  <div class="cost-label-row">
+                    <span class="cost-flag">🏦</span>
+                    <div class="cost-label-text">
+                      <div class="cost-label-name">Impuestos (Tasa BCV)</div>
+                      <div class="cost-label-val">US$ 2.700,00</div>
+                    </div>
+                  </div>
+
+                  <div class="extras-toggle" onclick="toggleExtras(this)" id="extrasToggle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              Extras disponibles
+            </div>
+            <div class="extras-list" id="extrasList"><div class="extra-item"><span>➕ Tapicería cuero</span><span>+ US$ 1.200</span></div></div>
+
+                  <div class="final-price-box">
+                    <div class="bajo-pedido-badge">Bajo Pedido</div>
+                    <div class="final-price-label">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v6m0 0L8 4m4 4l4-4M12 22v-6m0 0l-4 4m4-4l4 4M2 12h6m0 0L4 8m4 4l-4 4M22 12h-6m0 0l4-4m-4 4l4 4"/></svg>
+                      Precio Final Apróximado:
+                    </div>
+                    <div class="final-price-value">US$ 14.576,00</div>
+                    <div class="final-price-note">Precio estimado según tasa BCV del día. Sujeto a actualización.</div>
+                    <div class="final-price-date">Última actualización: Feb 2026</div>
+                  </div>
+                </div>
+
+                <!-- RIGHT: delivery -->
+                <div class="delivery-box">
+          <div class="delivery-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            Tiempos de Entrega
+          </div>
+          <div class="delivery-row"><span class="delivery-days">15 Días</span><span class="delivery-desc">Preparación y salida del vehículo desde China</span></div>
+          <div class="delivery-row"><span class="delivery-days">60 Días</span><span class="delivery-desc">Tránsito marítimo internacional</span></div>
+          <div class="delivery-row"><span class="delivery-days">15 Días</span><span class="delivery-desc">Aduanas y nacionalización en Venezuela</span></div>
+          <div class="delivery-total">90 Días<span>Total estimado de entrega</span></div>
+        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SERVICE FEE -->
+        <div class="service-fee-bar">
+          <span class="sf-label">Tasa fija de servicio</span>
+          <span class="sf-value">US$ 1.500,00</span>
+        </div>
+
+        <!-- CTA BAR -->
+        <div class="vd-cta-bar">
+          <a href="contacto.html" class="vd-btn-buy">Comprar</a>
+          <a href="https://wa.me/58422024582?text=Hola!%20Me%20interesa%20el%20Corolla%20Cross%20Pioneer%20Version%202026" target="_blank" class="vd-btn-wa">💬 Lo Quiero</a>
+        </div>
+
+      </div><!-- /vd-info -->
+    </div><!-- /vd-body -->
+  </div>
+
+      <footer>
+    <div class="footer-top-nav">
+      <div class="footer-logo"><img src="assets/logo.png" alt="Super Cars International"></div>
+      <nav class="footer-nav-links">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="proceso.html">Proceso de Compra</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+    <div class="footer-legal-row">
+      <div class="footer-legal-block">
+        <span class="footer-legal-main">© Super Cars International 2026 — Todos los derechos reservados.</span>
+        <span class="footer-legal-sub">Venezuela: Super Cars International C.A. RIF J-000000 &nbsp;&nbsp;—&nbsp;&nbsp; China: Super Cars International CO. LTD License #0000000</span>
+      </div>
+      <span class="footer-powered">Powered by <span>Octavio Caamaño Developer</span></span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    /* Accordion toggle */
+    function toggleAcc(id) {
+      const sec = document.getElementById(id);
+      sec.classList.toggle('open');
+    }
+
+    /* Thumbnail switcher */
+    document.querySelectorAll('.vd-thumb[data-full]').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.vd-thumb').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        document.getElementById('mainImg').style.backgroundImage = "url('" + t.dataset.full + "')";
+      });
+    });
+
+    /* Extras toggle */
+    function toggleExtras(btn) {
+      btn.classList.toggle('open');
+      const list = document.getElementById('extrasList');
+      list.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>

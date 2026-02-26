@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toyota Highlander 380T 4WD — Super Cars International</title>
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    /* Vehicle detail page extra styles */
+    .vd-page { padding-top: 76px; }
+    .model-hero {
+      background: var(--ink); padding: 52px 48px 40px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .model-hero-inner { max-width: 960px; }
+    .model-tag { font-size:7.5px;font-weight:700;letter-spacing:.48em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block;margin-bottom:10px; }
+    .model-name { font-size:clamp(36px,6vw,72px);font-weight:900;text-transform:uppercase;color:#fff;letter-spacing:-.02em;line-height:.92; }
+    .model-sub { font-size:12px;font-weight:300;color:rgba(255,255,255,.5);letter-spacing:.06em;margin-top:8px;display:block; }
+
+    .model-body { display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--rule); }
+    @media(max-width:900px){ .model-body { grid-template-columns:1fr; } }
+
+    /* IMAGE GALLERY SLOT */
+    .img-gallery { padding:32px; background:var(--warm); border-right:1px solid var(--rule); }
+    .img-gallery-title { font-size:7.5px;font-weight:700;letter-spacing:.44em;text-transform:uppercase;color:var(--silver);margin-bottom:16px;display:block; }
+    .img-main-slot {
+      width:100%; aspect-ratio:4/3;
+      background:var(--rule2);
+      border:2px dashed var(--rule);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:8px; position:relative; overflow:hidden; cursor:pointer;
+      transition: background .25s;
+    }
+    .img-main-slot img { width:100%;height:100%;object-fit:cover;display:block; }
+    .img-main-slot .img-placeholder {
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+    }
+    .img-main-slot .img-placeholder svg { opacity:.25;width:48px;height:48px; }
+    .img-main-slot .img-placeholder span { font-size:9px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--silver); }
+    .img-thumbs { display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px; }
+    .img-thumb-slot {
+      aspect-ratio:1; background:var(--rule2);
+      border:1.5px dashed var(--rule);
+      display:flex;align-items:center;justify-content:center;
+      font-size:8px;font-weight:700;color:var(--silver);letter-spacing:.12em;
+      cursor:pointer; transition:background .2s; overflow:hidden;
+    }
+    .img-thumb-slot img { width:100%;height:100%;object-fit:cover;display:block; }
+    .img-thumb-slot.active { border-color:var(--ink); }
+    .img-upload-note {
+      margin-top:12px;font-size:9px;font-weight:300;color:var(--mid);
+      letter-spacing:.04em;line-height:1.6;padding:10px 14px;
+      background:rgba(0,0,0,.03);border-left:2px solid var(--rule);
+    }
+
+    /* INFO PANEL */
+    .model-info { overflow-y:auto; }
+
+    /* VARIANT TABS */
+    .variant-tabs {
+      display:flex;gap:0;border-bottom:1px solid var(--rule);
+      overflow-x:auto; background:var(--offwhite);
+    }
+    .v-tab {
+      flex-shrink:0; padding:14px 20px;
+      font-size:8px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
+      color:var(--silver); background:transparent; border:none;
+      border-bottom:2px solid transparent; cursor:pointer;
+      transition:all .25s;
+    }
+    .v-tab:hover { color:var(--ink); }
+    .v-tab.active { color:var(--ink); border-bottom-color:var(--ink); background:var(--paper); }
+
+    /* SPEC TABLE */
+    .spec-section { padding:28px 32px; border-bottom:1px solid var(--rule); }
+    .spec-section-title {
+      font-size:7.5px;font-weight:800;letter-spacing:.44em;
+      text-transform:uppercase;color:var(--silver);margin-bottom:18px;display:block;
+    }
+    .spec-table { width:100%;border-collapse:collapse; }
+    .spec-table tr { border-bottom:1px solid var(--rule2); transition:background .15s; }
+    .spec-table tr:last-child { border-bottom:none; }
+    .spec-table tr:hover { background:var(--warm); }
+    .spec-table td { padding:10px 8px;font-size:11px;vertical-align:top; }
+    .spec-table td:first-child {
+      font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--silver);width:42%;padding-right:12px;
+    }
+    .spec-table td:last-child { font-weight:500;color:var(--ink); }
+    .spec-icon-cell { display:flex;align-items:flex-start;gap:8px; }
+    .spec-icon-cell .si { font-size:14px;flex-shrink:0;margin-top:1px; }
+
+    /* PRICE BOX */
+    .price-box { padding:28px 32px; border-bottom:1px solid var(--rule); }
+    .price-variants { display:grid;grid-template-columns:1fr;gap:8px; }
+    .price-row {
+      display:flex;justify-content:space-between;align-items:center;
+      padding:14px 16px;border:1.5px solid var(--rule);
+      transition:all .25s; cursor:pointer;
+    }
+    .price-row:hover { border-color:var(--ink); background:var(--warm); }
+    .price-row .pr-name { font-size:11px;font-weight:600;color:var(--ink);letter-spacing:.03em; }
+    .price-row .pr-year { font-size:8px;font-weight:400;color:var(--mid);display:block;margin-top:2px; }
+    .price-row .pr-price { font-size:15px;font-weight:900;color:var(--ink); }
+    .price-row .pr-price.consultar { font-size:11px;font-weight:600;color:var(--mid);font-style:italic; }
+
+    /* COST BREAKDOWN */
+    .cost-section { padding:24px 32px; background:var(--warm); border-bottom:1px solid var(--rule); }
+    .cost-inner { background:var(--paper);border:1px solid var(--rule);overflow:hidden; }
+    .cost-row-item { display:flex;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--rule2); }
+    .cost-row-item:last-child { border-bottom:none; }
+    .cost-row-item .cr-label { font-size:11px;font-weight:300;color:var(--mid); }
+    .cost-row-item .cr-value { font-size:12px;font-weight:700;color:var(--ink); }
+    .cost-total { background:var(--ink);display:flex;justify-content:space-between;padding:16px; }
+    .cost-total .cr-label { font-size:8px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55); }
+    .cost-total .cr-value { font-size:20px;font-weight:900;color:#fff; }
+    .cost-note { font-size:9px;font-weight:300;color:var(--mid);margin-top:10px;line-height:1.7; }
+    .fee-row { display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:14px 16px;border:1px solid var(--rule);background:var(--paper); }
+    .fee-row .fr-label { font-size:8px;font-weight:700;letter-spacing:.36em;text-transform:uppercase;color:var(--mid); }
+    .fee-row .fr-value { font-size:15px;font-weight:900;color:var(--ink); }
+
+    /* TIMELINE */
+    .tl-section { padding:24px 32px; border-bottom:1px solid var(--rule); }
+    .tl-steps { position:relative;padding-left:28px; }
+    .tl-steps::before { content:'';position:absolute;left:11px;top:8px;bottom:8px;width:1px;background:var(--rule); }
+    .tl-item { display:flex;gap:16px;align-items:flex-start;padding:9px 0; }
+    .tl-circle {
+      width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink);
+      background:var(--paper);display:flex;align-items:center;justify-content:center;
+      font-size:8px;font-weight:800;color:var(--ink);flex-shrink:0;z-index:1;
+      position:relative;transition:all .3s;
+    }
+    .tl-item:hover .tl-circle { background:var(--ink);color:var(--paper); }
+    .tl-item.total { border-top:1px solid var(--rule);margin-top:6px;padding-top:16px; }
+    .tl-item.total .tl-circle { background:var(--ink);color:#fff;font-size:10px; }
+    .tl-days { font-size:13px;font-weight:900;color:var(--ink); }
+    .tl-desc { font-size:10px;font-weight:300;color:var(--mid);margin-top:2px; }
+
+    /* DISCLAIMER */
+    .disclaimer-box { margin:20px 32px;padding:14px 18px;background:var(--warm);border-left:2px solid var(--gold); }
+    .disclaimer-box p { font-size:10px;font-weight:300;line-height:1.8;color:var(--mid); }
+    .disclaimer-box strong { font-weight:700;color:var(--ink); }
+
+    /* CTA BAR */
+    .model-cta-bar {
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;
+      padding:20px 32px; border-top:1px solid var(--rule);
+      position:sticky;bottom:0;background:var(--paper);z-index:10;
+    }
+    .btn-comprar {
+      font-size:11px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;
+      color:var(--paper);background:var(--ink);border:2px solid var(--ink);
+      padding:16px;text-align:center;display:block;transition:all .3s;
+    }
+    .btn-comprar:hover { background:transparent;color:var(--ink); }
+    .btn-quiero {
+      font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+      color:var(--ink);background:transparent;border:2px solid var(--ink);
+      padding:16px;text-align:center;display:block;transition:all .3s;
+    }
+    .btn-quiero:hover { background:var(--ink);color:var(--paper); }
+  </style>
+</head>
+<body>
+    <a class="wa-float" href="https://wa.me/58422024582" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+    <nav id="navbar">
+    <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="Super Cars International"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="catalogo.html" class="active">Catálogo</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="proceso.html">Proceso</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+    <a class="nav-cta" href="contacto.html">Cotizar →</a>
+    <button class="nav-hamburger" id="navHamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-drawer" id="navDrawer">
+    <a href="index.html">Inicio</a><a href="catalogo.html">Catálogo</a>
+    <a href="servicios.html">Servicios</a><a href="proceso.html">Proceso</a><a href="contacto.html">Contacto</a>
+  </div>
+
+  <div class="vd-page">
+    <!-- BREADCRUMB -->
+    <div style="padding:14px 48px;border-bottom:1px solid var(--rule);background:var(--offwhite);font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--silver)">
+      <a href="index.html" style="color:inherit">Inicio</a><span style="margin:0 10px">›</span>
+      <a href="catalogo.html" style="color:inherit">Catálogo</a><span style="margin:0 10px">›</span>
+      <span style="color:var(--ink)">Toyota Highlander</span>
+    </div>
+
+    <!-- MODEL HERO -->
+    <div class="model-hero">
+      <div class="model-hero-inner">
+        <span class="model-tag">Toyota · SUV 7 Plazas · 2026 · China 🇨🇳 → Venezuela</span>
+        <div class="model-name">Highlander 380T</div>
+        <span class="model-sub">Luxury & Premium · 7 asientos · AWD · Origen: China</span>
+      </div>
+    </div>
+
+    <!-- BODY GRID -->
+    <div class="model-body">
+
+      <!-- IMAGE GALLERY -->
+      <div class="img-gallery">
+        <span class="img-gallery-title">Galería de imágenes</span>
+        <div class="img-main-slot" id="mainImg">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9l4-4 4 4 4-5 4 5"/><circle cx="7.5" cy="6.5" r="1.5"/></svg><span>Foto principal</span></div>
+        </div>
+        <div class="img-thumbs">
+          <div class="img-thumb-slot">+1</div>
+<div class="img-thumb-slot">+2</div>
+<div class="img-thumb-slot">+3</div>
+<div class="img-thumb-slot">+4</div>
+
+        </div>
+        <div class="img-upload-note">
+          📁 Las imágenes adicionales se agregarán próximamente. Para más fotos contáctenos por WhatsApp.
+        </div>
+      </div>
+
+      <!-- INFO PANEL -->
+      <div class="model-info">
+
+        <!-- Tagline -->
+        <div style="padding:20px 32px 0;border-bottom:1px solid var(--rule2)">
+          <p style="font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.03em;padding-bottom:20px">¡Estás a un click de hacerlo tuyo!</p>
+        </div>
+
+        <!-- Variants -->
+        <div class="variant-tabs"><button class="v-tab active" onclick="selectVariant(0, this)">Luxury Edition 7 asientos</button>
+<button class="v-tab " onclick="selectVariant(1, this)">Premium Edition 7 asientos</button>
+</div>
+
+        <!-- Specs -->
+        <div class="spec-section">
+          <span class="spec-section-title">Especificaciones Técnicas</span>
+          <table class="spec-table">
+            <tr><td><div class="spec-icon-cell"><span class="si">📊</span><span>Kilometraje</span></div></td><td>0 KM — Nuevo de fábrica</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">🔧</span><span>Motor</span></div></td><td>2.4L Turbo 4-cilindros</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">⚡</span><span>Horsepower</span></div></td><td>265 hp @ 6000 rpm</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">💪</span><span>Torque</span></div></td><td>420 Nm @ 2000-3000 rpm</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">⛽</span><span>Combustible</span></div></td><td>Gasolina</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">⚙️</span><span>Transmisión</span></div></td><td>Automática 8 vel · AWD 4WD</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">💺</span><span>Asientos</span></div></td><td>7 Plazas — 3 filas</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">🛡️</span><span>Seguridad</span></div></td><td>8 Airbags + Toyota Safety Sense 3.0</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">📱</span><span>Infotainment</span></div></td><td>Pantalla táctil 12.3" + CarPlay + JBL Audio</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">🅿️</span><span>Parking</span></div></td><td>Cámara 360° + Parktronic</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">❄️</span><span>Clima</span></div></td><td>Tri-Zone A/A (3 zonas)</td></tr>
+<tr><td><div class="spec-icon-cell"><span class="si">✨</span><span>Incluye</span></div></td><td>Techo panorámico, Cuero calefactado, Head-Up Display, Keyless</td></tr>
+
+          </table>
+        </div>
+
+        <!-- Price variants -->
+        <div class="price-box">
+          <span class="spec-section-title">Variantes y Precios FOB</span>
+          <div class="price-variants">
+            <div class="price-row">
+          <div><span class="pr-name">Luxury Edition 7 asientos</span><span class="pr-year">Año: 2026</span></div>
+          <span class="pr-price">US$ 36,834.00</span>
+        </div>
+<div class="price-row">
+          <div><span class="pr-name">Premium Edition 7 asientos</span><span class="pr-year">Año: 2026</span></div>
+          <span class="pr-price">US$ 38,363.00</span>
+        </div>
+
+          </div>
+        </div>
+
+        <!-- Cost breakdown -->
+        <div class="cost-section">
+          <span class="spec-section-title" style="display:block;margin-bottom:14px">Desglose de Costos</span>
+          <div class="cost-inner">
+            <div class="cost-row-item"><span class="cr-label">Precio FOB (Origen China)</span><span class="cr-value">US$ 27.000,00</span></div>
+<div class="cost-row-item"><span class="cr-label">Flete marítimo</span><span class="cr-value">US$ 2.500,00</span></div>
+<div class="cost-row-item"><span class="cr-label">Paga al llegar</span><span class="cr-value">US$ 4.000,00</span></div>
+<div class="cost-row-item"><span class="cr-label">Impuestos (Tasa BCV)</span><span class="cr-value">US$ 6.500,00</span></div>
+
+            <div class="cost-total">
+              <span class="cr-label">Precio Final Aprox.</span>
+              <span class="cr-value" id="totalPrice">US$ 36.834,00</span>
+            </div>
+          </div>
+          <p class="cost-note">* Precio estimado según tasa BCV del día. Sujeto a actualización.</p>
+          <div class="fee-row"><span class="fr-label">Tasa fija de servicio</span><span class="fr-value">US$ 1.500,00</span></div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="tl-section">
+          <span class="spec-section-title">Tiempos de Entrega Estimados</span>
+          <div class="tl-steps">
+            <div class="tl-item"><div class="tl-circle">1</div><div><div class="tl-days">15 Días</div><div class="tl-desc">Preparación y salida del vehículo desde China</div></div></div>
+            <div class="tl-item"><div class="tl-circle">2</div><div><div class="tl-days">60 Días</div><div class="tl-desc">Tránsito marítimo internacional hacia Venezuela</div></div></div>
+            <div class="tl-item"><div class="tl-circle">3</div><div><div class="tl-days">15 Días</div><div class="tl-desc">Aduanas y nacionalización en Venezuela</div></div></div>
+            <div class="tl-item total"><div class="tl-circle">✓</div><div><div class="tl-days">~90 Días Total</div><div class="tl-desc">Entrega final del vehículo legalizado</div></div></div>
+          </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer-box">
+          <p><strong>Información Importante:</strong> Los costos son aproximados y pueden variar según: disponibilidad del vehículo, costos logísticos al momento del embarque y variación en tasas e impuestos vigentes.</p>
+        </div>
+
+        <!-- CTA -->
+        <div class="model-cta-bar">
+          <a href="contacto.html" class="btn-comprar">Comprar</a>
+          <a href="https://wa.me/58422024582" target="_blank" class="btn-quiero">Lo Quiero 💬</a>
+        </div>
+
+      </div><!-- /model-info -->
+    </div><!-- /model-body -->
+  </div>
+
+        <footer>
+    <div class="footer-top-nav">
+      <div class="footer-logo"><img src="assets/logo.png" alt="Super Cars International"></div>
+      <nav class="footer-nav-links">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="proceso.html">Proceso de Compra</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+    <div class="footer-legal-row">
+      <div class="footer-legal-block">
+        <span class="footer-legal-main">© Super Cars International 2026 — Todos los derechos reservados.</span>
+        <span class="footer-legal-sub">Venezuela: Super Cars International C.A. RIF J-000000 &nbsp;&nbsp;—&nbsp;&nbsp; China: Super Cars International CO. LTD License #0000000</span>
+      </div>
+      <span class="footer-powered">Powered by <span>Octavio Caamaño Developer</span></span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Thumbnail switcher
+    document.querySelectorAll('.img-thumb-slot[data-full]').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.img-thumb-slot').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        const main = document.getElementById('mainImg');
+        main.innerHTML = '<img src="' + t.dataset.full + '" alt="foto">';
+      });
+    });
+
+    // Variant tab switcher (updates cost total)
+    const prices = ["'36,834.00'", "'38,363.00'"];
+    function selectVariant(i, btn) {
+      document.querySelectorAll('.v-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const p = prices[i];
+      const el = document.getElementById('totalPrice');
+      if(el) el.textContent = (p === 'Consultar') ? 'Consultar' : 'US$ ' + p;
+    }
+    
+  </script>
+</body>
+</html>
