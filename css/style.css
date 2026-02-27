@@ -538,9 +538,104 @@ body::after {
 }
 
 /* ================================================================
-   HOME — FEATURED CARS
+   HOME — VEHÍCULO DEL MES
    ================================================================ */
-.featured-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+.vdm-section {
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.vdm-inner {
+  display: grid; grid-template-columns: 1fr 1fr; min-height: 560px;
+}
+.vdm-gallery {
+  position: relative; overflow: hidden; background: var(--ink);
+}
+.vdm-main-img {
+  position: absolute; inset: 0;
+  background: center/cover no-repeat;
+  filter: brightness(.85);
+  transition: transform 8s ease-out;
+}
+.vdm-section:hover .vdm-main-img { transform: scale(1.03); }
+.vdm-badge-month {
+  position: absolute; top: 28px; left: 28px; z-index: 2;
+  background: var(--gold); color: var(--ink);
+  font-size: 8px; font-weight: 900; letter-spacing: .44em;
+  text-transform: uppercase; padding: 7px 16px;
+}
+.vdm-thumbs-strip {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+.vdm-thumb {
+  aspect-ratio: 4/3; background: center/cover no-repeat;
+  cursor: pointer; border-right: 1px solid rgba(255,255,255,.1);
+  transition: opacity .25s; opacity: .55; position: relative;
+}
+.vdm-thumb:last-child { border-right: none; }
+.vdm-thumb:hover, .vdm-thumb.active { opacity: 1; }
+.vdm-thumb.active::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--gold);
+}
+
+.vdm-info {
+  padding: 56px 52px; display: flex; flex-direction: column;
+  justify-content: center; background: var(--paper);
+  border-left: 1px solid var(--rule);
+}
+.vdm-tag-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+}
+.vdm-tag {
+  font-size: 9px; font-weight: 700; letter-spacing: .36em;
+  text-transform: uppercase; color: var(--silver);
+  border: 1px solid var(--rule); padding: 4px 10px;
+}
+.vdm-tag.highlight { border-color: var(--gold); color: var(--gold); }
+.vdm-name {
+  font-size: clamp(32px, 4vw, 56px); font-weight: 900;
+  text-transform: uppercase; color: var(--ink);
+  letter-spacing: -.02em; line-height: .9; margin-bottom: 6px;
+}
+.vdm-sub {
+  font-size: 13px; font-weight: 400; color: var(--mid);
+  letter-spacing: .04em; margin-bottom: 32px;
+}
+.vdm-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 32px; }
+.vdm-spec-item {
+  padding: 13px 0; border-bottom: 1px solid var(--rule);
+}
+.vdm-spec-item:nth-child(odd) { border-right: 1px solid var(--rule); padding-right: 20px; }
+.vdm-spec-item:nth-child(even) { padding-left: 20px; }
+.vdm-spec-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--silver); display: block; margin-bottom: 2px;
+}
+.vdm-spec-value {
+  font-size: 13px; font-weight: 700; color: var(--ink);
+}
+.vdm-price-row {
+  display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px;
+}
+.vdm-price {
+  font-size: clamp(28px, 3.5vw, 44px); font-weight: 900;
+  color: var(--ink); letter-spacing: -.02em;
+}
+.vdm-price-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--silver);
+}
+.vdm-actions { display: flex; gap: 12px; }
+
+@media (max-width: 900px) {
+  .vdm-inner { grid-template-columns: 1fr; }
+  .vdm-gallery { min-height: 320px; }
+  .vdm-info { padding: 36px 24px; border-left: none; border-top: 1px solid var(--rule); }
+}
+
+/* Keep old featured styles (hidden, used elsewhere) */
+.featured-section { padding: 80px 0; border-top: 1px solid var(--rule); display: none; }
 .featured-header { padding: 0 48px 48px; }
 .featured-grid {
   display: grid;
@@ -580,6 +675,7 @@ body::after {
   opacity: 0; transition: all .4s var(--ease); white-space: nowrap;
 }
 .feat-card:hover .feat-hover { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
 
 /* ================================================================
    HOME — GLOBAL BAND
@@ -1111,6 +1207,11 @@ footer {
   .brand-story-visual { height: 280px; }
   .brand-story-visual::after { background: linear-gradient(to bottom, transparent 50%, rgba(255,255,255,1) 100%); }
   .features-band { grid-template-columns: 1fr; }
+  .feat-band-item { padding: 28px 24px; border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .feat-band-item:last-child { border-bottom: none; }
+  .feat-band-icon { font-size: 26px; margin-bottom: 10px; }
+  .feat-band-title { margin-bottom: 6px; }
+  .feat-band-num { font-size: 56px; bottom: 10px; right: 20px; }
   .global-band-content { flex-direction: column; padding: 32px 24px; gap: 24px; }
 }
 @media (max-width: 768px) {
