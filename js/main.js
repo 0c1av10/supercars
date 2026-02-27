@@ -122,7 +122,7 @@ const CARS = [
     tags: 'suv rav4', year: 2026,
     spec: 'SUV · 2.0L CVT · 4x4 · Adventure Plus Edition',
     price: 'US$ 24.900',
-    img: 'assets/vehicles/rav4-front-34.jpg',
+    img: 'assets/vehicles/rav4-adv2026-3.jpeg',
     url: 'rav4-adventure-plus-2026.html'
   },
   {
@@ -130,7 +130,7 @@ const CARS = [
     tags: 'suv rav4', year: 2026,
     spec: 'SUV · 2.0L · 4WD · Luxury Version',
     price: 'US$ 25.500',
-    img: 'assets/vehicles/rav4-front.jpg',
+    img: 'assets/vehicles/rav4-front-34.jpg',
     url: 'rav4-luxury-2026.html'
   },
   {
@@ -138,7 +138,7 @@ const CARS = [
     tags: 'suv rav4', year: 2025,
     spec: 'SUV · 2.0L CVT · 4x4 · Adventure Plus Edition',
     price: 'US$ 24.900',
-    img: 'assets/vehicles/rav4-rear.jpg',
+    img: 'assets/vehicles/rav4-adv2025-front.jpeg',
     url: 'rav4-adventure-plus-2025.html'
   },
   {
@@ -146,7 +146,7 @@ const CARS = [
     tags: 'suv rav4', year: 2025,
     spec: 'SUV · 2.0L · 4WD · Luxury Version',
     price: 'US$ 25.500',
-    img: 'assets/vehicles/rav4-interior-dash.jpg',
+    img: 'assets/vehicles/rav4-front.jpg',
     url: 'rav4-luxury-2025.html'
   },
 
@@ -156,7 +156,7 @@ const CARS = [
     tags: 'suv frontlander', year: 2026,
     spec: 'SUV · 2.0L · Comfort Edition',
     price: 'US$ 14.725',
-    img: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80',
+    img: 'assets/vehicles/frontlander-comfort-1.jpg',
     url: 'frontlander-comfort-2026.html'
   },
   {
@@ -164,7 +164,7 @@ const CARS = [
     tags: 'suv frontlander', year: 2026,
     spec: 'SUV · 2.0L · Comfort Plus Edition',
     price: 'US$ 15.413',
-    img: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80',
+    img: 'assets/vehicles/frontlander-comfort-plus-1.webp',
     url: 'frontlander-comfort-plus-2026.html'
   },
   {
@@ -172,7 +172,7 @@ const CARS = [
     tags: 'suv frontlander', year: 2026,
     spec: 'SUV · 2.0L · Deluxe Edition',
     price: 'US$ 17.063',
-    img: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80',
+    img: 'assets/vehicles/frontlander-deluxe-1.jpeg',
     url: 'frontlander-deluxe-2026.html'
   },
   {
@@ -180,7 +180,7 @@ const CARS = [
     tags: 'suv frontlander', year: 2026,
     spec: 'SUV · 2.0L · Deluxe Plus Edition',
     price: 'US$ 17.888',
-    img: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80',
+    img: 'assets/vehicles/frontlander-deluxe-plus-1.jpeg',
     url: 'frontlander-deluxe-plus-2026.html'
   },
 
@@ -190,7 +190,7 @@ const CARS = [
     tags: 'suv highlander', year: 2026,
     spec: 'SUV 7 plazas · 380T · 4WD · Luxury Edition',
     price: 'US$ 36.834',
-    img: 'https://images.unsplash.com/photo-1565684783-4e17e4d6e5c7?w=600&q=80',
+    img: 'assets/vehicles/highlander-luxury-1.jpeg',
     url: 'highlander-luxury-2026.html'
   },
   {
@@ -198,7 +198,7 @@ const CARS = [
     tags: 'suv highlander', year: 2026,
     spec: 'SUV 7 plazas · 380T · 4WD · Premium Edition',
     price: 'US$ 38.363',
-    img: 'https://images.unsplash.com/photo-1565684783-4e17e4d6e5c7?w=600&q=80',
+    img: 'assets/vehicles/highlander-premium-1.jpeg',
     url: 'highlander-premium-2026.html'
   },
 
@@ -208,7 +208,7 @@ const CARS = [
     tags: 'sedan camry', year: 2026,
     spec: 'Sedán · 2.0L · Sport Edition',
     price: 'US$ 25.000',
-    img: 'https://images.unsplash.com/photo-1621993202328-a04c7fa0be08?w=600&q=80',
+    img: 'assets/vehicles/camry-front2.jpg',
     url: 'camry-sport-2026.html'
   },
 
@@ -218,7 +218,7 @@ const CARS = [
     tags: 'suv crossover', year: 2026,
     spec: 'SUV Crossover · Pioneer Version',
     price: 'US$ 14.576',
-    img: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0729?w=600&q=80',
+    img: 'assets/vehicles/corolla-cross-elite-2026.jpg',
     url: 'corolla-cross-pioneer-2026.html'
   },
   {
@@ -226,7 +226,7 @@ const CARS = [
     tags: 'suv crossover', year: 2026,
     spec: 'SUV Crossover · Elite Version',
     price: 'US$ 15.950',
-    img: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0729?w=600&q=80',
+    img: 'assets/vehicles/corolla-cross-elite-2026.jpg',
     url: 'corolla-cross-elite-2026.html'
   },
   {
@@ -234,7 +234,7 @@ const CARS = [
     tags: 'suv crossover', year: 2026,
     spec: 'SUV Crossover · Luxury Version',
     price: 'Consultar',
-    img: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0729?w=600&q=80',
+    img: 'assets/vehicles/corolla-cross-elite-2026.jpg',
     url: 'corolla-cross-luxury-2026.html'
   },
   {
@@ -242,7 +242,7 @@ const CARS = [
     tags: 'suv crossover', year: 2025,
     spec: 'SUV Crossover · Pioneer Version',
     price: 'Consultar',
-    img: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0729?w=600&q=80',
+    img: 'assets/vehicles/corolla-cross-elite-2026.jpg',
     url: 'corolla-cross-pioneer-2025.html'
   },
   {
@@ -250,7 +250,7 @@ const CARS = [
     tags: 'suv crossover', year: 2025,
     spec: 'SUV Crossover · Elite Version',
     price: 'Consultar',
-    img: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0729?w=600&q=80',
+    img: 'assets/vehicles/corolla-cross-elite-2026.jpg',
     url: 'corolla-cross-elite-2025.html'
   },
   {
@@ -258,7 +258,7 @@ const CARS = [
     tags: 'suv crossover', year: 2025,
     spec: 'SUV Crossover · Luxury Version',
     price: 'Consultar',
-    img: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0729?w=600&q=80',
+    img: 'assets/vehicles/corolla-cross-elite-2026.jpg',
     url: 'corolla-cross-luxury-2025.html'
   },
 
@@ -268,7 +268,7 @@ const CARS = [
     tags: 'sedan usado levin', year: 2023,
     spec: 'Sedán · 1.5L · Usado · Excelente estado',
     price: 'US$ 7.900',
-    img: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&q=80',
+    img: 'assets/vehicles/levin-2023-frontal.jpeg',
     url: 'corolla-levin-2023.html'
   },
   {
@@ -276,7 +276,7 @@ const CARS = [
     tags: 'sedan usado levin', year: 2022,
     spec: 'Sedán · 1.5L · Usado · Excelente estado',
     price: 'US$ 7.900',
-    img: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&q=80',
+    img: 'assets/vehicles/levin-2022-frontal.jpeg',
     url: 'corolla-levin-2022.html'
   },
 ];
