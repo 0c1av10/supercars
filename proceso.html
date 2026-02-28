@@ -6,6 +6,145 @@
   <title>El Proceso — Super Cars International</title>
   <meta name="description" content="Proceso de importación de China a Venezuela en 90 días. Transparente, documentado, sin sorpresas.">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: #080808; }
+
+    /* ── HERO ── */
+    .proc-hero {
+      height: 50vh; min-height: 320px; position: relative;
+      overflow: hidden; display: flex; align-items: flex-end;
+      padding-bottom: 52px; margin-top: 76px;
+    }
+    .proc-hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=85') center 60%/cover;
+      filter: brightness(.22) saturate(.5);
+    }
+    .proc-hero-content { position: relative; z-index: 2; padding: 0 64px; }
+    .proc-hero-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: .44em; text-transform: uppercase; color: #C9A84C; margin-bottom: 14px; }
+    .proc-hero-title { font-size: clamp(56px, 9vw, 104px); font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: -.03em; line-height: .88; }
+    .proc-hero-title em { font-style: normal; font-weight: 200; color: rgba(255,255,255,.35); }
+
+    /* ── COUNTERS ── */
+    .proc-stats {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .ps-item {
+      padding: 36px 40px; border-right: 1px solid rgba(255,255,255,.05);
+      position: relative; overflow: hidden;
+    }
+    .ps-item:last-child { border-right: none; }
+    .ps-num { font-size: clamp(40px,5vw,64px); font-weight: 900; color: #C9A84C; letter-spacing: -.04em; line-height: 1; }
+    .ps-unit { font-size: .4em; vertical-align: super; font-weight: 700; margin-left: 2px; }
+    .ps-label { font-size: 9px; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-top: 6px; }
+
+    /* ── ROAD SECTION ── */
+    .road-outer {
+      background: #080808;
+      position: relative; padding: 60px 0 0;
+    }
+
+    .road-scene {
+      position: relative;
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 32px 40px;
+    }
+
+    /* The SVG canvas */
+    #roadSVG {
+      width: 100%; height: auto;
+      display: block;
+      filter: drop-shadow(0 0 40px rgba(0,0,0,.8));
+    }
+
+    /* Road styles */
+    .r-shadow    { fill:none; stroke:rgba(0,0,0,.6);            stroke-width:70; stroke-linecap:round; stroke-linejoin:round; }
+    .r-border    { fill:none; stroke:#1a1500;                   stroke-width:60; stroke-linecap:round; stroke-linejoin:round; }
+    .r-gold-edge { fill:none; stroke:#C9A84C;                   stroke-width:62; stroke-linecap:round; stroke-linejoin:round; }
+    .r-road      { fill:none; stroke:#141414;                   stroke-width:52; stroke-linecap:round; stroke-linejoin:round; }
+    .r-center    { fill:none; stroke:rgba(255,255,255,.05);     stroke-width:1.5; stroke-dasharray:16 12; stroke-linecap:round; stroke-linejoin:round; }
+    .r-progress  { fill:none; stroke:rgba(201,168,76,.18);      stroke-width:52; stroke-linecap:round; stroke-linejoin:round; }
+
+    /* ── NODE STYLES ── */
+    .sn-ring-outer { fill:none; stroke:rgba(201,168,76,.15); stroke-width:2; }
+    .sn-bg         { fill:#111; }
+    .sn-ring       { fill:none; stroke:rgba(255,255,255,.12); stroke-width:1.5; }
+    .sn-label      { fill:rgba(255,255,255,.35); font-family:'Montserrat',sans-serif; font-size:11px; font-weight:800; text-anchor:middle; dominant-baseline:central; }
+
+    .step-node-g.done   .sn-bg    { fill:rgba(201,168,76,.1); }
+    .step-node-g.done   .sn-ring  { stroke:#C9A84C; stroke-width:2; }
+    .step-node-g.done   .sn-label { fill:#C9A84C; }
+    .step-node-g.active .sn-bg    { fill:#C9A84C; }
+    .step-node-g.active .sn-ring  { stroke:#C9A84C; }
+    .step-node-g.active .sn-label { fill:#0a0a0a; }
+    .step-node-g.active .sn-ring-outer { stroke:rgba(201,168,76,.5); }
+
+    /* connector lines */
+    .sn-line { stroke:rgba(201,168,76,.2); stroke-width:1; stroke-dasharray:3 3; }
+    .sn-line.done { stroke:rgba(201,168,76,.45); stroke-dasharray:none; }
+
+    /* ── STEP CARDS GRID ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,.05);
+      margin-top: 1px;
+    }
+    .sg-card {
+      background: #0a0a0a;
+      padding: 36px 32px;
+      position: relative; overflow: hidden;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .sg-card.in { opacity: 1; transform: none; }
+    .sg-card::before {
+      content: ''; position: absolute; top:0; left:0; right:0; height:2px;
+      background: rgba(201,168,76,0); transition: background .4s;
+    }
+    .sg-card.in::before { background: rgba(201,168,76,.35); }
+    .sg-card:hover { background: rgba(201,168,76,.03); }
+    .sg-card:hover::before { background: #C9A84C; }
+
+    .sg-num { font-size: 9px; font-weight: 800; letter-spacing: .3em; color: rgba(255,255,255,.18); margin-bottom: 4px; }
+    .sg-phase { font-size: 9px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: #C9A84C; margin-bottom: 10px; }
+    .sg-title { font-size: 15px; font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: .04em; line-height: 1.2; margin-bottom: 10px; }
+    .sg-desc { font-size: 12px; font-weight: 400; color: rgba(255,255,255,.45); line-height: 1.75; }
+    .sg-badge { display:inline-block; margin-top:14px; font-size: 8px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:#C9A84C; border:1px solid rgba(201,168,76,.3); padding:4px 10px; }
+
+    /* Final card full-width */
+    .sg-card.full { grid-column: 1/-1; display:grid; grid-template-columns:1fr 300px; gap:48px; align-items:center; }
+    .sg-finale-num { font-size: 100px; font-weight:900; color:#C9A84C; letter-spacing:-.06em; line-height:1; }
+    .sg-finale-tag { font-size:9px; font-weight:700; letter-spacing:.32em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-top:6px; }
+
+    /* ── FINALE ── */
+    .proc-finale {
+      background: #050505;
+      border-top: 1px solid rgba(255,255,255,.06);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      padding: 100px 80px; align-items: center;
+    }
+    .finale-left-num { font-size: clamp(80px,12vw,140px); font-weight:900; color:#C9A84C; letter-spacing:-.06em; line-height:.85; }
+    .finale-left-sub { font-size:10px; font-weight:700; letter-spacing:.36em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-top:16px; }
+    .finale-right p { font-size:14px; font-weight:400; color:rgba(255,255,255,.5); line-height:1.9; margin-bottom:28px; }
+    .finale-checks { display:flex; flex-direction:column; gap:12px; margin-bottom:36px; }
+    .finale-check { display:flex; align-items:center; gap:14px; font-size:12px; font-weight:600; color:rgba(255,255,255,.65); letter-spacing:.04em; }
+    .fcheck-dot { width:5px; height:5px; background:#C9A84C; flex-shrink:0; }
+    .finale-btns { display:flex; gap:12px; flex-wrap:wrap; }
+
+    @media(max-width:900px){
+      .proc-stats { grid-template-columns: 1fr 1fr; }
+      .ps-item:nth-child(2) { border-right:none; }
+      .ps-item:nth-child(3),
+      .ps-item:nth-child(4) { border-top:1px solid rgba(255,255,255,.05); }
+      .steps-grid { grid-template-columns: 1fr; }
+      .sg-card.full { grid-template-columns:1fr; gap:24px; }
+      .proc-finale { grid-template-columns:1fr; padding:60px 24px; gap:40px; }
+      .proc-hero-content { padding:0 24px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -34,77 +173,342 @@
   </div>
 
   <!-- HERO -->
-  <div class="page-hero">
-    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=85')"></div>
-    <div class="page-hero-overlay"></div>
-    <div class="page-hero-content">
-      <div class="tag-line">Cómo funciona</div>
-      <div class="page-hero-title">El Proceso</div>
+  <div class="proc-hero">
+    <div class="proc-hero-bg"></div>
+    <div class="proc-hero-content">
+      <div class="proc-hero-eyebrow">— Super Cars International</div>
+      <div class="proc-hero-title">90 Días<br><em>de China</em><br><em>a tu puerta</em></div>
     </div>
   </div>
 
-  <!-- INTRO -->
-  <div class="section-eyebrow"><span>Super Cars International</span><div class="sep"></div><span>Proceso de importación</span></div>
-  <div class="process-intro rev">
+  <!-- STATS -->
+  <div class="proc-stats rev">
+    <div class="ps-item">
+      <div class="ps-num"><span id="cntDays">0</span></div>
+      <div class="ps-label">Días de inicio a entrega</div>
+    </div>
+    <div class="ps-item">
+      <div class="ps-num"><span id="cntSteps">0</span></div>
+      <div class="ps-label">Etapas del proceso</div>
+    </div>
+    <div class="ps-item">
+      <div class="ps-num"><span id="cntKm">0</span><span class="ps-unit">km</span></div>
+      <div class="ps-label">Distancia China → Venezuela</div>
+    </div>
+    <div class="ps-item">
+      <div class="ps-num">100<span class="ps-unit">%</span></div>
+      <div class="ps-label">Gestionado por nosotros</div>
+    </div>
+  </div>
+
+  <!-- ══ ROAD ANIMATION ══ -->
+  <div class="road-outer">
+    <div class="road-scene">
+
+      <svg id="roadSVG" viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="carGlow">
+            <feGaussianBlur stdDeviation="8" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="shadow">
+            <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,0,0,.7)"/>
+          </filter>
+        </defs>
+
+        <!-- ════ ROAD PATH (S-curve winding across canvas) ════ -->
+        <!--
+          Waypoints:
+          Start:  80, 120  (China label)
+          Curve1: top left to center
+          Curve2: down
+          Curve3: sweep right
+          Curve4: down-right
+          Curve5: sweep back left
+          End:    920, 480 (Venezuela label)
+        -->
+        <!-- Shadow layer -->
+        <path id="P" d="
+          M 80,130
+          C 80,130 180,80  320,100
+          C 430,116 480,180 440,240
+          C 400,300 260,320 230,380
+          C 200,445 260,510 370,520
+          C 480,530 560,490 620,445
+          C 700,390 750,320 830,300
+          C 890,286 940,320 940,380
+          C 940,445 890,510 800,530
+          C 720,548 640,530 590,520
+        " class="r-shadow"/>
+        <!-- Gold border (gives 3D road edge look) -->
+        <path d="
+          M 80,130
+          C 80,130 180,80  320,100
+          C 430,116 480,180 440,240
+          C 400,300 260,320 230,380
+          C 200,445 260,510 370,520
+          C 480,530 560,490 620,445
+          C 700,390 750,320 830,300
+          C 890,286 940,320 940,380
+          C 940,445 890,510 800,530
+          C 720,548 640,530 590,520
+        " class="r-gold-edge"/>
+        <!-- Road surface -->
+        <path d="
+          M 80,130
+          C 80,130 180,80  320,100
+          C 430,116 480,180 440,240
+          C 400,300 260,320 230,380
+          C 200,445 260,510 370,520
+          C 480,530 560,490 620,445
+          C 700,390 750,320 830,300
+          C 890,286 940,320 940,380
+          C 940,445 890,510 800,530
+          C 720,548 640,530 590,520
+        " class="r-road" id="roadSurface"/>
+        <!-- Center dashes -->
+        <path d="
+          M 80,130
+          C 80,130 180,80  320,100
+          C 430,116 480,180 440,240
+          C 400,300 260,320 230,380
+          C 200,445 260,510 370,520
+          C 480,530 560,490 620,445
+          C 700,390 750,320 830,300
+          C 890,286 940,320 940,380
+          C 940,445 890,510 800,530
+          C 720,548 640,530 590,520
+        " class="r-center"/>
+        <!-- Gold progress overlay -->
+        <path d="
+          M 80,130
+          C 80,130 180,80  320,100
+          C 430,116 480,180 440,240
+          C 400,300 260,320 230,380
+          C 200,445 260,510 370,520
+          C 480,530 560,490 620,445
+          C 700,390 750,320 830,300
+          C 890,286 940,320 940,380
+          C 940,445 890,510 800,530
+          C 720,548 640,530 590,520
+        " class="r-progress" id="progressOverlay"/>
+
+        <!-- ════ STEP NODES ════ -->
+
+        <!-- NODE 1 — Step 1: Selección, ~3% — pos: 80,130 -->
+        <g class="step-node-g" id="sn1">
+          <circle cx="80" cy="130" r="28" class="sn-ring-outer"/>
+          <circle cx="80" cy="130" r="22" class="sn-bg"/>
+          <circle cx="80" cy="130" r="22" class="sn-ring"/>
+          <text x="80" y="130" class="sn-label">01</text>
+          <!-- connector up -->
+          <line x1="80" y1="107" x2="80" y2="62" class="sn-line" id="snl1"/>
+          <rect x="5" y="40" width="150" height="26" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="80" y="56" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">SELECCIÓN · DÍA 1</text>
+        </g>
+
+        <!-- NODE 2 — Contrato, ~17% — pos approx 310,92 -->
+        <g class="step-node-g" id="sn2">
+          <circle cx="318" cy="90" r="28" class="sn-ring-outer"/>
+          <circle cx="318" cy="90" r="22" class="sn-bg"/>
+          <circle cx="318" cy="90" r="22" class="sn-ring"/>
+          <text x="318" y="90" class="sn-label">02</text>
+          <!-- connector up -->
+          <line x1="318" y1="67" x2="318" y2="28" class="sn-line" id="snl2"/>
+          <rect x="238" y="8" width="162" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="319" y="23" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">CONTRATO · DÍA 2–5</text>
+        </g>
+
+        <!-- NODE 3 — Compra China, ~30% — pos approx 450,208 -->
+        <g class="step-node-g" id="sn3">
+          <circle cx="455" cy="208" r="28" class="sn-ring-outer"/>
+          <circle cx="455" cy="208" r="22" class="sn-bg"/>
+          <circle cx="455" cy="208" r="22" class="sn-ring"/>
+          <text x="455" y="208" class="sn-label">03</text>
+          <!-- connector right -->
+          <line x1="478" y1="208" x2="536" y2="208" class="sn-line" id="snl3"/>
+          <rect x="538" y="196" width="184" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="630" y="211" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">COMPRA CHINA · DÍA 5–10</text>
+        </g>
+
+        <!-- NODE 4 — Embarque, ~43% — pos approx 234,377 -->
+        <g class="step-node-g" id="sn4">
+          <circle cx="234" cy="378" r="28" class="sn-ring-outer"/>
+          <circle cx="234" cy="378" r="22" class="sn-bg"/>
+          <circle cx="234" cy="378" r="22" class="sn-ring"/>
+          <text x="234" y="378" class="sn-label">04</text>
+          <!-- connector left -->
+          <line x1="211" y1="378" x2="148" y2="378" class="sn-line" id="snl4"/>
+          <rect x="0" y="366" width="150" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="75" y="381" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">EMBARQUE ~15D</text>
+        </g>
+
+        <!-- NODE 5 — Tránsito, ~57% — pos approx 540,483 -->
+        <g class="step-node-g" id="sn5">
+          <circle cx="545" cy="482" r="28" class="sn-ring-outer"/>
+          <circle cx="545" cy="482" r="22" class="sn-bg"/>
+          <circle cx="545" cy="482" r="22" class="sn-ring"/>
+          <text x="545" y="482" class="sn-label">05</text>
+          <!-- connector down -->
+          <line x1="545" y1="505" x2="545" y2="556" class="sn-line" id="snl5"/>
+          <rect x="460" y="558" width="172" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="546" y="572" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">TRÁNSITO ~60 DÍAS</text>
+        </g>
+
+        <!-- NODE 6 — Aduana, ~74% — pos approx 838,292 -->
+        <g class="step-node-g" id="sn6">
+          <circle cx="842" cy="292" r="28" class="sn-ring-outer"/>
+          <circle cx="842" cy="292" r="22" class="sn-bg"/>
+          <circle cx="842" cy="292" r="22" class="sn-ring"/>
+          <text x="842" y="292" class="sn-label">06</text>
+          <!-- connector up -->
+          <line x1="842" y1="269" x2="842" y2="228" class="sn-line" id="snl6"/>
+          <rect x="754" y="207" width="178" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="843" y="222" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">ADUANA ~10 DÍAS</text>
+        </g>
+
+        <!-- NODE 7 — ENTREGA FINAL, ~96% — pos approx 590,520 -->
+        <g class="step-node-g" id="sn7">
+          <!-- Big finish glow -->
+          <circle cx="590" cy="520" r="38" fill="rgba(201,168,76,.06)"/>
+          <circle cx="590" cy="520" r="30" fill="rgba(201,168,76,.12)" class="sn-ring-outer"/>
+          <circle cx="590" cy="520" r="24" class="sn-bg"/>
+          <circle cx="590" cy="520" r="24" class="sn-ring" style="stroke:#C9A84C;stroke-width:2"/>
+          <text x="590" y="520" class="sn-label" style="font-size:14px">✓</text>
+          <!-- connector down right -->
+          <line x1="614" y1="520" x2="680" y2="520" class="sn-line" id="snl7"/>
+          <rect x="682" y="508" width="200" height="26" rx="2" fill="rgba(201,168,76,.2)" stroke="rgba(201,168,76,.5)" stroke-width="1"/>
+          <text x="782" y="523" font-size="9" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">✓ ENTREGA FINAL</text>
+        </g>
+
+        <!-- CHINA / VENEZUELA labels -->
+        <text x="30" y="155" font-size="9" font-weight="800" fill="rgba(255,255,255,.18)" font-family="Montserrat,sans-serif" letter-spacing="3">CHINA</text>
+        <text x="540" y="610" font-size="9" font-weight="800" fill="rgba(201,168,76,.55)" font-family="Montserrat,sans-serif" letter-spacing="3">VENEZUELA</text>
+
+        <!-- ════ CAR GROUP ════ -->
+        <g id="carGroup">
+          <!-- headlight glow -->
+          <ellipse id="hlGlow" cx="0" cy="-24" rx="14" ry="8" fill="rgba(201,168,76,.3)" filter="url(#carGlow)"/>
+          <!-- car shadow -->
+          <ellipse cx="0" cy="8" rx="18" ry="7" fill="rgba(0,0,0,.5)"/>
+          <!-- body -->
+          <rect x="-13" y="-22" width="26" height="40" rx="7" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1.5"/>
+          <!-- roof -->
+          <rect x="-9" y="-17" width="18" height="26" rx="4" fill="#222"/>
+          <!-- windshield -->
+          <rect x="-7.5" y="-16" width="15" height="9" rx="2.5" fill="rgba(140,200,255,.12)" stroke="rgba(255,255,255,.06)" stroke-width=".5"/>
+          <!-- rear window -->
+          <rect x="-6" y="8" width="12" height="6" rx="2" fill="rgba(140,200,255,.08)"/>
+          <!-- headlights -->
+          <ellipse cx="-8" cy="-21" rx="4" ry="2.5" fill="#C9A84C"/>
+          <ellipse cx="8"  cy="-21" rx="4" ry="2.5" fill="#C9A84C"/>
+          <!-- brake lights -->
+          <ellipse cx="-8" cy="18" rx="3.5" ry="2" fill="#c0392b" opacity=".8"/>
+          <ellipse cx="8"  cy="18" rx="3.5" ry="2" fill="#c0392b" opacity=".8"/>
+          <!-- wheels -->
+          <rect x="-16" y="-17" width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+          <rect x="11"  y="-17" width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+          <rect x="-16" y="9"  width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+          <rect x="11"  y="9"  width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+        </g>
+
+      </svg>
+    </div>
+
+    <!-- ════ STEP CARDS ════ -->
+    <div class="steps-grid">
+
+      <div class="sg-card" data-delay="0">
+        <div class="sg-num">01</div>
+        <div class="sg-phase">Etapa 1 · Día 1</div>
+        <div class="sg-title">Selección del vehículo</div>
+        <div class="sg-desc">Explorás nuestro catálogo o nos indicás exactamente qué modelo querés. Nuestros asesores te ayudan a encontrar el auto perfecto según tu presupuesto.</div>
+        <span class="sg-badge">Inicio</span>
+      </div>
+
+      <div class="sg-card" data-delay="80">
+        <div class="sg-num">02</div>
+        <div class="sg-phase">Etapa 1 · Día 2–5</div>
+        <div class="sg-title">Pago para embarcar</div>
+        <div class="sg-desc">Firmamos el contrato con todos los términos claros. Realizás el primer pago para iniciar el proceso de embarque desde China.</div>
+        <span class="sg-badge">Días 2–5</span>
+      </div>
+
+      <div class="sg-card" data-delay="160">
+        <div class="sg-num">03</div>
+        <div class="sg-phase">Etapa 2 · Día 5–10</div>
+        <div class="sg-title">Compra en origen (China)</div>
+        <div class="sg-desc">Nuestro equipo en China adquiere el vehículo. Recibís fotos y videos durante todo el proceso de preparación y salida desde fábrica.</div>
+        <span class="sg-badge">Días 5–10</span>
+      </div>
+
+      <div class="sg-card" data-delay="240">
+        <div class="sg-num">04</div>
+        <div class="sg-phase">Etapa 2 · ~15 días</div>
+        <div class="sg-title">Preparación y embarque</div>
+        <div class="sg-desc">El vehículo es inspeccionado, preparado y enviado a la naviera desde puerto en China. Aproximadamente 15 días desde la confirmación.</div>
+        <span class="sg-badge">~15 días</span>
+      </div>
+
+      <div class="sg-card" data-delay="320">
+        <div class="sg-num">05</div>
+        <div class="sg-phase">Etapa 3 · ~60 días</div>
+        <div class="sg-title">Tránsito marítimo</div>
+        <div class="sg-desc">Tu vehículo navega desde China hacia Venezuela. Te mantenemos informado del estado del envío en todo momento. ~60 días de travesía.</div>
+        <span class="sg-badge">~60 días</span>
+      </div>
+
+      <div class="sg-card" data-delay="400">
+        <div class="sg-num">06</div>
+        <div class="sg-phase">Etapa 3 · ~10 días</div>
+        <div class="sg-title">Aduanas y nacionalización</div>
+        <div class="sg-desc">Gestionamos todos los trámites aduanales e impuestos en Venezuela. Asesoramiento completo en cada pago y requisito legal requerido.</div>
+        <span class="sg-badge">~10 días</span>
+      </div>
+
+      <div class="sg-card full" data-delay="480" style="border-top:1px solid rgba(201,168,76,.3)">
+        <div>
+          <div class="sg-num">07 — ETAPA FINAL</div>
+          <div class="sg-phase">~90 días totales</div>
+          <div class="sg-title" style="font-size:20px">Detailing y entrega</div>
+          <div class="sg-desc">Tu vehículo recibe detailing profesional y te lo entregamos listo para circular, con toda la documentación en regla, legalizado y a tu nombre.</div>
+          <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+            <span class="sg-badge">~90 días total</span>
+            <a href="contacto.html" class="btn-dark" style="background:#C9A84C;color:#000;font-size:8.5px;font-weight:800;padding:8px 20px;text-decoration:none;display:inline-flex;align-items:center">Empezar ahora →</a>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div class="sg-finale-num">90</div>
+          <div class="sg-finale-tag">Días · China → Venezuela</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FINALE -->
+  <div class="proc-finale rev">
     <div>
-      <div class="tag-line">Simple y transparente</div>
-      <h2 class="display-l" style="margin-top:14px">De China<br><span style="font-weight:200;color:var(--mid)">a tus manos<br>en 90 días</span></h2>
+      <div class="finale-left-num">90<br>Días</div>
+      <div class="finale-left-sub">De inicio a entrega garantizados</div>
     </div>
-    <p class="body-text" style="transition-delay:.15s">Cada paso está diseñado para darte máxima transparencia y tranquilidad. Te acompañamos desde la selección del vehículo hasta la entrega final, con comunicación constante durante todo el proceso.</p>
-  </div>
-
-  <!-- TIMELINE BAR -->
-  <div class="process-bar">
-    <div class="pb-node"><div class="pb-circle">1</div><div class="pb-label">Selección</div><span class="pb-day">Día 1</span></div>
-    <div class="pb-node"><div class="pb-circle">2</div><div class="pb-label">Contrato</div><span class="pb-day">Día 2–5</span></div>
-    <div class="pb-node"><div class="pb-circle">3</div><div class="pb-label">Compra</div><span class="pb-day">Día 5–10</span></div>
-    <div class="pb-node"><div class="pb-circle">4</div><div class="pb-label">Embarque</div><span class="pb-day">~15 días</span></div>
-    <div class="pb-node"><div class="pb-circle">5</div><div class="pb-label">Tránsito</div><span class="pb-day">~60 días</span></div>
-    <div class="pb-node"><div class="pb-circle">6</div><div class="pb-label">Aduana</div><span class="pb-day">~10 días</span></div>
-    <div class="pb-node final"><div class="pb-circle">✓</div><div class="pb-label">Entrega</div><span class="pb-day">~90 días</span></div>
-  </div>
-
-  <!-- STEPS GRID -->
-  <div class="process-steps-grid">
-    <div class="proc-step rev">
-      <div class="proc-num">01</div>
-      <div><span class="proc-phase">Etapa 1</span><div class="proc-title">Selección del vehículo</div>
-      <p class="proc-desc">Explorás nuestro catálogo o nos indicás exactamente qué modelo querés. Nuestros asesores te ayudan a encontrar el auto perfecto según tu presupuesto.</p></div>
-    </div>
-    <div class="proc-step rev" style="transition-delay:.1s">
-      <div class="proc-num">02</div>
-      <div><span class="proc-phase">Etapa 1</span><div class="proc-title">Pago para embarcar</div>
-      <p class="proc-desc">Firmamos el contrato con todos los términos claros. Realizás el primer pago para iniciar el proceso de embarque desde China.</p></div>
-    </div>
-    <div class="proc-step rev" style="transition-delay:.2s">
-      <div class="proc-num">03</div>
-      <div><span class="proc-phase">Etapa 2</span><div class="proc-title">Compra en origen (China)</div>
-      <p class="proc-desc">Nuestro equipo en China adquiere el vehículo. Recibís fotos y videos durante todo el proceso de preparación y salida desde fábrica.</p></div>
-    </div>
-    <div class="proc-step rev" style="transition-delay:.3s">
-      <div class="proc-num">04</div>
-      <div><span class="proc-phase">Etapa 2</span><div class="proc-title">Preparación y embarque</div>
-      <p class="proc-desc">El vehículo es inspeccionado, preparado y enviado a la naviera desde puerto en China. Aproximadamente 15 días desde la confirmación.</p></div>
-    </div>
-    <div class="proc-step rev" style="transition-delay:.4s">
-      <div class="proc-num">05</div>
-      <div><span class="proc-phase">Etapa 3</span><div class="proc-title">Tránsito marítimo</div>
-      <p class="proc-desc">Tu vehículo navega desde China hacia Venezuela. Te mantenemos informado del estado del envío en todo momento. ~60 días de travesía.</p></div>
-    </div>
-    <div class="proc-step rev" style="transition-delay:.5s">
-      <div class="proc-num">06</div>
-      <div><span class="proc-phase">Etapa 3</span><div class="proc-title">Aduanas y nacionalización</div>
-      <p class="proc-desc">Gestionamos todos los trámites aduanales e impuestos en Venezuela. Asesoramiento completo en cada pago y requisito legal requerido.</p></div>
-    </div>
-    <div class="proc-step rev" style="transition-delay:.6s">
-      <div class="proc-num">07</div>
-      <div><span class="proc-phase">Etapa 4</span><div class="proc-title">Detailing y entrega</div>
-      <p class="proc-desc">Tu vehículo recibe detailing profesional y te lo entregamos listo para circular, con toda la documentación en regla, legalizado y a tu nombre.</p></div>
-    </div>
-    <div class="proc-step highlight rev" style="transition-delay:.7s">
-      <div class="proc-num">✦</div>
-      <div><span class="proc-phase">Total estimado</span><div class="proc-title">~90 días de inicio a fin</div>
-      <p class="proc-desc">Todo el proceso gestionado por nosotros. Comunicación constante, transparencia total. Tu auto desde China, en 90 días.</p></div>
+    <div>
+      <p class="finale-right">Todo el proceso gestionado por nosotros. Comunicación constante, transparencia total. Tu auto desde China, en 90 días.</p>
+      <div class="finale-checks">
+        <div class="finale-check"><div class="fcheck-dot"></div>Contrato con todos los términos</div>
+        <div class="finale-check"><div class="fcheck-dot"></div>Fotos y videos durante el proceso</div>
+        <div class="finale-check"><div class="fcheck-dot"></div>Seguimiento del barco en tiempo real</div>
+        <div class="finale-check"><div class="fcheck-dot"></div>Gestión aduanal completa Venezuela</div>
+        <div class="finale-check"><div class="fcheck-dot"></div>Entrega legalizado y a tu nombre</div>
+      </div>
+      <div class="finale-btns">
+        <a href="contacto.html" class="btn-dark" style="background:#C9A84C;color:#000;font-weight:800">Empezar ahora →</a>
+        <a href="catalogo.html" class="btn-outline">Ver catálogo</a>
+      </div>
     </div>
   </div>
 
@@ -118,7 +522,7 @@
     <div class="cta-band-actions"><a href="contacto.html" class="btn-outline-white">Consultar Gratis →</a></div>
   </div>
 
-    <footer>
+  <footer>
     <div class="footer-top-nav">
       <div class="footer-logo"><img src="assets/logo.png" alt="Super Cars International"></div>
       <nav class="footer-nav-links">
@@ -138,5 +542,130 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+  (function() {
+
+    /* ── COUNTERS ── */
+    function animCount(el, target, dur) {
+      var start = performance.now();
+      (function frame(now) {
+        var t = Math.min((now - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(eased * target).toLocaleString();
+        if (t < 1) requestAnimationFrame(frame);
+      })(start);
+    }
+    var statsObs = new IntersectionObserver(function(entries) {
+      if (!entries[0].isIntersecting) return;
+      statsObs.disconnect();
+      animCount(document.getElementById('cntDays'),  90,   1400);
+      animCount(document.getElementById('cntSteps'), 7,    900);
+      animCount(document.getElementById('cntKm'),    18400, 2200);
+    }, { threshold: 0.4 });
+    statsObs.observe(document.querySelector('.proc-stats'));
+
+    /* ── ROAD ANIMATION ── */
+    var svg        = document.getElementById('roadSVG');
+    var surface    = document.getElementById('roadSurface');
+    var progress   = document.getElementById('progressOverlay');
+    var car        = document.getElementById('carGroup');
+
+    var totalLen   = surface.getTotalLength();
+    progress.style.strokeDasharray = '0 ' + totalLen;
+
+    // Node step positions (0–1 along path)
+    var stops = [0.03, 0.17, 0.31, 0.44, 0.58, 0.74, 0.96];
+    var nodeIds = ['sn1','sn2','sn3','sn4','sn5','sn6','sn7'];
+
+    var currentT = 0, targetT = 0, rafId;
+
+    function getAngle(len) {
+      var eps = 3;
+      var a = surface.getPointAtLength(Math.max(len - eps, 0));
+      var b = surface.getPointAtLength(Math.min(len + eps, totalLen));
+      return Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+    }
+
+    function drawAt(t) {
+      var len = totalLen * Math.max(0, Math.min(1, t));
+      var pt  = surface.getPointAtLength(len);
+      var ang = getAngle(len) - 90;
+      car.setAttribute('transform', 'translate(' + pt.x + ',' + pt.y + ') rotate(' + ang + ')');
+      progress.style.strokeDasharray = len + ' ' + totalLen;
+
+      // Update node states
+      for (var i = 0; i < stops.length; i++) {
+        var n = document.getElementById(nodeIds[i]);
+        var l = document.getElementById('snl' + (i+1));
+        n.classList.remove('active','done');
+        if (l) l.classList.remove('done');
+        if (t > stops[i] + 0.03) {
+          n.classList.add('done');
+          if (l) l.classList.add('done');
+        } else if (Math.abs(t - stops[i]) <= 0.03) {
+          n.classList.add('active');
+        }
+      }
+    }
+
+    function animate() {
+      var diff = targetT - currentT;
+      if (Math.abs(diff) > 0.0002) {
+        currentT += diff * 0.055;
+        drawAt(currentT);
+        rafId = requestAnimationFrame(animate);
+      } else {
+        currentT = targetT;
+        drawAt(currentT);
+      }
+    }
+
+    var roadOuter = document.querySelector('.road-outer');
+    function onScroll() {
+      var rect = roadOuter.getBoundingClientRect();
+      var wh   = window.innerHeight;
+      var rh   = roadOuter.offsetHeight;
+      var prog = Math.max(0, Math.min(1, -rect.top / (rh - wh * 0.5)));
+      targetT  = prog;
+      cancelAnimationFrame(rafId);
+      animate();
+    }
+
+    // Init car at start
+    drawAt(0);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // SVG entrance
+    svg.style.cssText += 'opacity:0;transform:translateY(24px);transition:opacity 1.2s ease,transform 1.2s ease;';
+    new IntersectionObserver(function(e) {
+      if (e[0].isIntersecting) { svg.style.opacity='1'; svg.style.transform='none'; }
+    }, { threshold: 0.1 }).observe(svg);
+
+    /* ── STEP CARDS ENTRANCE ── */
+    var cards = document.querySelectorAll('.sg-card');
+    var cardObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          var delay = parseInt(e.target.getAttribute('data-delay')) || 0;
+          setTimeout(function() { e.target.classList.add('in'); }, delay);
+          cardObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(function(c) { cardObs.observe(c); });
+
+    /* ── HEADLIGHT PULSE ── */
+    var glow = document.getElementById('hlGlow');
+    var pulse = true;
+    setInterval(function() {
+      if (!glow) return;
+      pulse = !pulse;
+      glow.style.opacity = pulse ? '1' : '0.4';
+      glow.style.transition = 'opacity 0.4s';
+    }, 800);
+
+  })();
+  </script>
 </body>
 </html>
