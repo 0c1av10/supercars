@@ -297,99 +297,350 @@
           C 720,548 640,530 590,520
         " class="r-progress" id="progressOverlay"/>
 
-        <!-- ════ STEP NODES ════ -->
+        <!-- ════ STEP NODES — ILLUSTRATED ICONS ════ -->
 
-        <!-- NODE 1 — Step 1: Selección, ~3% — pos: 80,130 -->
+        <!-- ─── ICON MACROS (reusable sub-paths) ─── -->
+        <defs>
+          <!-- Car top-down silhouette (centered 0,0 fits in ~20×28 box) -->
+          <g id="ico-car">
+            <ellipse cx="0" cy="5" rx="12" ry="5" fill="rgba(0,0,0,.4)"/>
+            <rect x="-9" y="-15" width="18" height="28" rx="5" fill="#ddd"/>
+            <rect x="-6.5" y="-11" width="13" height="17" rx="3" fill="#bbb"/>
+            <rect x="-6" y="-10" width="12" height="6" rx="2" fill="rgba(140,210,255,.55)"/>
+            <rect x="-5" y="5" width="10" height="5" rx="1.5" fill="rgba(140,210,255,.35)"/>
+            <ellipse cx="-7" cy="-14" rx="2.8" ry="1.6" fill="#ffd700"/>
+            <ellipse cx="7"  cy="-14" rx="2.8" ry="1.6" fill="#ffd700"/>
+            <ellipse cx="-7" cy="13" rx="2.2" ry="1.4" fill="#c0392b"/>
+            <ellipse cx="7"  cy="13" rx="2.2" ry="1.4" fill="#c0392b"/>
+            <rect x="-11" y="-11" width="3.5" height="7" rx="1.8" fill="#333"/>
+            <rect x="7.5"  y="-11" width="3.5" height="7" rx="1.8" fill="#333"/>
+            <rect x="-11" y="6"   width="3.5" height="7" rx="1.8" fill="#333"/>
+            <rect x="7.5"  y="6"   width="3.5" height="7" rx="1.8" fill="#333"/>
+          </g>
+          <!-- Document / Contract icon -->
+          <g id="ico-contract">
+            <rect x="-10" y="-13" width="20" height="26" rx="2" fill="#f0f0e8" stroke="#ccc" stroke-width=".5"/>
+            <rect x="-10" y="-13" width="20" height="8" rx="2" fill="#C9A84C"/>
+            <rect x="-10" y="-5" width="20" height="0" rx="0" fill="#C9A84C"/>
+            <line x1="-7" y1="-2" x2="7" y2="-2" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="-7" y1="2" x2="7" y2="2" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="-7" y1="6" x2="3" y2="6" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- pen -->
+            <rect x="3" y="4" width="2" height="8" rx="1" transform="rotate(-30 7 10)" fill="#2c3e50"/>
+            <polygon points="6,11 8,11 7,14" fill="#e67e22" transform="rotate(-30 7 12)"/>
+            <!-- stamp mark -->
+            <circle cx="5" cy="-7" r="4" fill="none" stroke="#C9A84C" stroke-width="1.2" stroke-dasharray="2 1.5"/>
+            <text x="5" y="-5" font-size="5" font-weight="900" fill="#C9A84C" text-anchor="middle">OK</text>
+          </g>
+          <!-- Container + mini car loading icon -->
+          <g id="ico-container">
+            <!-- Container body -->
+            <rect x="-14" y="-10" width="28" height="18" rx="2" fill="#c0392b"/>
+            <line x1="-7" y1="-10" x2="-7" y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
+            <line x1="0"  y1="-10" x2="0"  y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
+            <line x1="7"  y1="-10" x2="7"  y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
+            <!-- door open right -->
+            <rect x="9" y="-10" width="5" height="18" rx="1" fill="#a93226" transform="rotate(15 14 -1)"/>
+            <line x1="11" y1="-10" x2="11" y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1"/>
+            <!-- mini car entering -->
+            <rect x="-18" y="-5" width="10" height="7" rx="2" fill="#222"/>
+            <rect x="-16" y="-4" width="6" height="4" rx="1.5" fill="#333"/>
+            <rect x="-17" y="-4" width="4" height="3" rx="1" fill="rgba(140,210,255,.5)"/>
+            <circle cx="-15" cy="3" r="2" fill="#111" stroke="#555" stroke-width=".5"/>
+            <circle cx="-10" cy="3" r="2" fill="#111" stroke="#555" stroke-width=".5"/>
+            <!-- wheels of container -->
+            <circle cx="-10" cy="9" r="2.5" fill="#222" stroke="#555" stroke-width=".5"/>
+            <circle cx="10"  cy="9" r="2.5" fill="#222" stroke="#555" stroke-width=".5"/>
+          </g>
+          <!-- Ship icon -->
+          <g id="ico-ship">
+            <!-- hull -->
+            <path d="M -13,2 L -16,10 Q 0,14 16,10 L 13,2 Z" fill="#2980b9"/>
+            <path d="M -13,2 L 13,2 L 11,-8 L -11,-8 Z" fill="#ecf0f1" stroke="#bdc3c7" stroke-width=".5"/>
+            <!-- bridge -->
+            <rect x="-4" y="-15" width="8" height="8" rx="1" fill="#bdc3c7"/>
+            <rect x="-6" y="-8" width="12" height="3" rx="1" fill="#95a5a6"/>
+            <!-- chimney -->
+            <rect x="1" y="-18" width="4" height="6" rx="1" fill="#e74c3c"/>
+            <!-- windows -->
+            <rect x="-9" y="-5" width="3" height="3" rx=".5" fill="rgba(140,210,255,.7)"/>
+            <rect x="-4" y="-5" width="3" height="3" rx=".5" fill="rgba(140,210,255,.7)"/>
+            <rect x="1"  y="-5" width="3" height="3" rx=".5" fill="rgba(140,210,255,.7)"/>
+            <!-- wake waves -->
+            <path d="M -18,11 Q -14,9 -10,11 Q -6,13 -2,11" stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none"/>
+            <path d="M 2,11 Q 6,9 10,11 Q 14,13 18,11"  stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none"/>
+          </g>
+          <!-- Money / Payment icon -->
+          <g id="ico-money">
+            <rect x="-11" y="-8" width="22" height="16" rx="2" fill="#27ae60"/>
+            <circle cx="0" cy="0" r="5.5" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+            <text x="0" y="3" font-size="7" font-weight="900" fill="#fff" text-anchor="middle">$</text>
+            <!-- corner circles -->
+            <circle cx="-8" cy="-5" r="2" fill="rgba(255,255,255,.12)"/>
+            <circle cx="8"  cy="5"  r="2" fill="rgba(255,255,255,.12)"/>
+            <!-- shadow stacks -->
+            <rect x="-9" y="-10" width="22" height="16" rx="2" fill="#219a52" z="-1" transform="translate(-1,-2)"/>
+            <rect x="-10" y="-11" width="22" height="16" rx="2" fill="#1e8449" transform="translate(-2,-3)"/>
+          </g>
+          <!-- Customs stamp icon -->
+          <g id="ico-customs">
+            <!-- officer silhouette -->
+            <circle cx="0" cy="-10" r="5" fill="#ecf0f1"/>
+            <rect x="-6" y="-4" width="12" height="14" rx="3" fill="#2c3e50"/>
+            <!-- badge -->
+            <polygon points="0,-7 1,-5 3,-5 1.5,-4 2,-2 0,-3.5 -2,-2 -1.5,-4 -3,-5 -1,-5" fill="#C9A84C" transform="scale(0.7) translate(0,-2)"/>
+            <!-- hat -->
+            <rect x="-7" y="-16" width="14" height="3" rx="1.5" fill="#1a252f"/>
+            <rect x="-5" y="-19" width="10" height="4" rx="1" fill="#2c3e50"/>
+            <!-- clipboard -->
+            <rect x="4" y="-2" width="10" height="13" rx="1" fill="#f5f5f0" transform="rotate(15 9 5)"/>
+            <line x1="6" y1="1" x2="13" y2="-1" stroke="#aaa" stroke-width="1" stroke-linecap="round"/>
+            <line x1="6" y1="4" x2="13" y2="2"  stroke="#aaa" stroke-width="1" stroke-linecap="round"/>
+            <line x1="6" y1="7" x2="11" y2="5"  stroke="#aaa" stroke-width="1" stroke-linecap="round"/>
+          </g>
+          <!-- Keys icon for delivery -->
+          <g id="ico-keys">
+            <!-- key 1 -->
+            <circle cx="-5" cy="-8" r="6" fill="none" stroke="#C9A84C" stroke-width="2.5"/>
+            <circle cx="-5" cy="-8" r="2.5" fill="#C9A84C"/>
+            <rect x="-2" y="-9" width="14" height="3" rx="1.5" fill="#C9A84C"/>
+            <rect x="9"  y="-7" width="3" height="2.5" rx=".5" fill="#C9A84C"/>
+            <rect x="6"  y="-6" width="3" height="2.5" rx=".5" fill="#C9A84C"/>
+            <!-- key ring -->
+            <ellipse cx="0" cy="5" rx="6" ry="4" fill="none" stroke="#888" stroke-width="1.5"/>
+            <!-- key 2 smaller -->
+            <circle cx="7" cy="8" r="4" fill="none" stroke="#aaa" stroke-width="1.8"/>
+            <circle cx="7" cy="8" r="1.8" fill="#aaa"/>
+            <rect x="10" y="7" width="9" height="2.2" rx="1" fill="#aaa"/>
+            <rect x="17" y="8" width="2.2" height="1.8" rx=".4" fill="#aaa"/>
+            <rect x="14" y="8" width="2.2" height="1.8" rx=".4" fill="#aaa"/>
+          </g>
+        </defs>
+
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             NODE 1 — SELECCIÓN · Auto en carretera
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Mini car scene ON road near start -->
+        <g transform="translate(100,128) scale(0.85)">
+          <use href="#ico-car"/>
+        </g>
+
         <g class="step-node-g" id="sn1">
-          <circle cx="80" cy="130" r="28" class="sn-ring-outer"/>
-          <circle cx="80" cy="130" r="22" class="sn-bg"/>
-          <circle cx="80" cy="130" r="22" class="sn-ring"/>
-          <text x="80" y="130" class="sn-label">01</text>
-          <!-- connector up -->
-          <line x1="80" y1="107" x2="80" y2="62" class="sn-line" id="snl1"/>
-          <rect x="5" y="40" width="150" height="26" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="80" y="56" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">SELECCIÓN · DÍA 1</text>
+          <circle cx="80" cy="130" r="30" fill="rgba(201,168,76,.06)"/>
+          <circle cx="80" cy="130" r="23" class="sn-bg"/>
+          <circle cx="80" cy="130" r="23" class="sn-ring"/>
+          <!-- Car icon inside badge -->
+          <g transform="translate(80,130) scale(0.75)">
+            <rect x="-8" y="-10" width="16" height="22" rx="4" fill="#ccc"/>
+            <rect x="-6" y="-8" width="12" height="14" rx="2.5" fill="#bbb"/>
+            <rect x="-5.5" y="-7" width="11" height="5.5" rx="2" fill="rgba(140,210,255,.55)"/>
+            <ellipse cx="-5.5" cy="-9.5" rx="2" ry="1.2" fill="#ffd700"/>
+            <ellipse cx="5.5"  cy="-9.5" rx="2" ry="1.2" fill="#ffd700"/>
+            <ellipse cx="-5.5" cy="12" rx="1.8" ry="1" fill="#c0392b"/>
+            <ellipse cx="5.5"  cy="12" rx="1.8" ry="1" fill="#c0392b"/>
+            <rect x="-9.5" y="-7" width="2.5" height="5.5" rx="1.3" fill="#333"/>
+            <rect x="7"    y="-7" width="2.5" height="5.5" rx="1.3" fill="#333"/>
+            <rect x="-9.5" y="5"  width="2.5" height="5.5" rx="1.3" fill="#333"/>
+            <rect x="7"    y="5"  width="2.5" height="5.5" rx="1.3" fill="#333"/>
+          </g>
+          <line x1="80" y1="107" x2="80" y2="64" class="sn-line" id="snl1"/>
+          <rect x="5" y="40" width="150" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="80" y="52" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">SELECCIÓN</text>
+          <text x="80" y="62" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">Día 1</text>
         </g>
 
-        <!-- NODE 2 — Contrato, ~17% — pos approx 310,92 -->
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             NODE 2 — CONTRATO · Documento firmado
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Scene: document on road -->
+        <g transform="translate(300,95) scale(0.68)">
+          <use href="#ico-contract"/>
+        </g>
+
         <g class="step-node-g" id="sn2">
-          <circle cx="318" cy="90" r="28" class="sn-ring-outer"/>
-          <circle cx="318" cy="90" r="22" class="sn-bg"/>
-          <circle cx="318" cy="90" r="22" class="sn-ring"/>
-          <text x="318" y="90" class="sn-label">02</text>
-          <!-- connector up -->
-          <line x1="318" y1="67" x2="318" y2="28" class="sn-line" id="snl2"/>
-          <rect x="238" y="8" width="162" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="319" y="23" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">CONTRATO · DÍA 2–5</text>
+          <circle cx="318" cy="90" r="30" fill="rgba(201,168,76,.06)"/>
+          <circle cx="318" cy="90" r="23" class="sn-bg"/>
+          <circle cx="318" cy="90" r="23" class="sn-ring"/>
+          <!-- Contract mini icon -->
+          <g transform="translate(318,90) scale(0.72)">
+            <rect x="-9" y="-11" width="18" height="22" rx="2" fill="#f0f0e8"/>
+            <rect x="-9" y="-11" width="18" height="6" rx="1" fill="#C9A84C"/>
+            <line x1="-6" y1="-1" x2="6" y2="-1" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="-6" y1="3"  x2="6" y2="3"  stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="-6" y1="7"  x2="2" y2="7"  stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="4" cy="-6" r="3.5" fill="none" stroke="#C9A84C" stroke-width="1" stroke-dasharray="2 1.5"/>
+            <text x="4" y="-4" font-size="4" font-weight="900" fill="#C9A84C" text-anchor="middle">OK</text>
+          </g>
+          <line x1="318" y1="67" x2="318" y2="30" class="sn-line" id="snl2"/>
+          <rect x="236" y="8" width="164" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="318" y="20" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">CONTRATO</text>
+          <text x="318" y="30" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">Día 2–5</text>
         </g>
 
-        <!-- NODE 3 — Compra China, ~30% — pos approx 450,208 -->
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             NODE 3 — COMPRA · Dinero / pago
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Scene: money stack on road -->
+        <g transform="translate(435,214) scale(0.72)">
+          <use href="#ico-money"/>
+        </g>
+
         <g class="step-node-g" id="sn3">
-          <circle cx="455" cy="208" r="28" class="sn-ring-outer"/>
-          <circle cx="455" cy="208" r="22" class="sn-bg"/>
-          <circle cx="455" cy="208" r="22" class="sn-ring"/>
-          <text x="455" y="208" class="sn-label">03</text>
-          <!-- connector right -->
-          <line x1="478" y1="208" x2="536" y2="208" class="sn-line" id="snl3"/>
-          <rect x="538" y="196" width="184" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="630" y="211" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">COMPRA CHINA · DÍA 5–10</text>
+          <circle cx="455" cy="208" r="30" fill="rgba(201,168,76,.06)"/>
+          <circle cx="455" cy="208" r="23" class="sn-bg"/>
+          <circle cx="455" cy="208" r="23" class="sn-ring"/>
+          <!-- Money mini icon -->
+          <g transform="translate(455,208) scale(0.75)">
+            <rect x="-10" y="-7" width="20" height="14" rx="2" fill="#27ae60"/>
+            <circle cx="0" cy="0" r="4.5" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2"/>
+            <text x="0" y="3" font-size="6" font-weight="900" fill="#fff" text-anchor="middle">$</text>
+          </g>
+          <line x1="478" y1="208" x2="540" y2="208" class="sn-line" id="snl3"/>
+          <rect x="542" y="194" width="178" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="631" y="206" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">COMPRA EN CHINA</text>
+          <text x="631" y="216" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">Día 5–10</text>
         </g>
 
-        <!-- NODE 4 — Embarque, ~43% — pos approx 234,377 -->
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             NODE 4 — EMBARQUE · Contenedor con auto
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Scene: container loading on road -->
+        <g transform="translate(216,372) scale(0.82)">
+          <use href="#ico-container"/>
+        </g>
+
         <g class="step-node-g" id="sn4">
-          <circle cx="234" cy="378" r="28" class="sn-ring-outer"/>
-          <circle cx="234" cy="378" r="22" class="sn-bg"/>
-          <circle cx="234" cy="378" r="22" class="sn-ring"/>
-          <text x="234" y="378" class="sn-label">04</text>
-          <!-- connector left -->
-          <line x1="211" y1="378" x2="148" y2="378" class="sn-line" id="snl4"/>
-          <rect x="0" y="366" width="150" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="75" y="381" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">EMBARQUE ~15D</text>
+          <circle cx="234" cy="378" r="30" fill="rgba(201,168,76,.06)"/>
+          <circle cx="234" cy="378" r="23" class="sn-bg"/>
+          <circle cx="234" cy="378" r="23" class="sn-ring"/>
+          <!-- Container mini icon -->
+          <g transform="translate(234,378) scale(0.72)">
+            <rect x="-12" y="-8" width="24" height="16" rx="2" fill="#c0392b"/>
+            <line x1="-6" y1="-8" x2="-6" y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
+            <line x1="0"  y1="-8" x2="0"  y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
+            <line x1="6"  y1="-8" x2="6"  y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
+            <!-- mini car silhouette going in -->
+            <rect x="-18" y="-4" width="9" height="6" rx="1.5" fill="#1a1a2e"/>
+            <rect x="-16" y="-3.5" width="5" height="3" rx="1" fill="rgba(140,210,255,.45)"/>
+            <circle cx="-15" cy="3" r="2" fill="#333"/>
+            <circle cx="-11" cy="3" r="2" fill="#333"/>
+          </g>
+          <line x1="211" y1="378" x2="150" y2="378" class="sn-line" id="snl4"/>
+          <rect x="0" y="364" width="152" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="76" y="376" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">EMBARQUE</text>
+          <text x="76" y="386" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">~15 días</text>
         </g>
 
-        <!-- NODE 5 — Tránsito, ~57% — pos approx 540,483 -->
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             NODE 5 — TRÁNSITO · Barco en el mar
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Water strip suggesting ocean under/near node 5 -->
+        <rect x="430" y="490" width="230" height="22" rx="4" fill="rgba(41,128,185,.18)" stroke="rgba(41,128,185,.3)" stroke-width="1"/>
+        <path d="M430,500 Q 460,495 490,500 Q 520,505 550,500 Q 580,495 610,500 Q 640,505 660,500" stroke="rgba(255,255,255,.15)" stroke-width="1.2" fill="none"/>
+
+        <!-- Scene: ship on road / water -->
+        <g transform="translate(527,480) scale(0.85)">
+          <use href="#ico-ship"/>
+        </g>
+
         <g class="step-node-g" id="sn5">
-          <circle cx="545" cy="482" r="28" class="sn-ring-outer"/>
-          <circle cx="545" cy="482" r="22" class="sn-bg"/>
-          <circle cx="545" cy="482" r="22" class="sn-ring"/>
-          <text x="545" y="482" class="sn-label">05</text>
-          <!-- connector down -->
-          <line x1="545" y1="505" x2="545" y2="556" class="sn-line" id="snl5"/>
-          <rect x="460" y="558" width="172" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="546" y="572" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">TRÁNSITO ~60 DÍAS</text>
+          <circle cx="545" cy="482" r="30" fill="rgba(41,128,185,.1)"/>
+          <circle cx="545" cy="482" r="23" class="sn-bg"/>
+          <circle cx="545" cy="482" r="23" class="sn-ring"/>
+          <!-- Ship mini icon -->
+          <g transform="translate(545,482) scale(0.68)">
+            <path d="M-11,2 L-14,9 Q0,13 14,9 L11,2 Z" fill="#2980b9"/>
+            <path d="M-11,2 L11,2 L9,-7 L-9,-7 Z" fill="#ecf0f1"/>
+            <rect x="-3" y="-13" width="6" height="7" rx="1" fill="#bdc3c7"/>
+            <rect x="-5" y="-7" width="10" height="3" rx="1" fill="#95a5a6"/>
+            <rect x="1" y="-15" width="3" height="5" rx="1" fill="#e74c3c"/>
+            <rect x="-7" y="-4" width="2.5" height="2.5" rx=".4" fill="rgba(140,210,255,.8)"/>
+            <rect x="-3" y="-4" width="2.5" height="2.5" rx=".4" fill="rgba(140,210,255,.8)"/>
+            <rect x="1"  y="-4" width="2.5" height="2.5" rx=".4" fill="rgba(140,210,255,.8)"/>
+          </g>
+          <line x1="545" y1="505" x2="545" y2="558" class="sn-line" id="snl5"/>
+          <rect x="460" y="560" width="172" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="546" y="572" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">TRÁNSITO</text>
+          <text x="546" y="582" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">~60 días</text>
         </g>
 
-        <!-- NODE 6 — Aduana, ~74% — pos approx 838,292 -->
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             NODE 6 — ADUANA · Inspector oficial
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Scene: customs officer on road -->
+        <g transform="translate(824,296) scale(0.78)">
+          <use href="#ico-customs"/>
+        </g>
+
         <g class="step-node-g" id="sn6">
-          <circle cx="842" cy="292" r="28" class="sn-ring-outer"/>
-          <circle cx="842" cy="292" r="22" class="sn-bg"/>
-          <circle cx="842" cy="292" r="22" class="sn-ring"/>
-          <text x="842" y="292" class="sn-label">06</text>
-          <!-- connector up -->
-          <line x1="842" y1="269" x2="842" y2="228" class="sn-line" id="snl6"/>
-          <rect x="754" y="207" width="178" height="24" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="843" y="222" font-size="8" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">ADUANA ~10 DÍAS</text>
+          <circle cx="842" cy="292" r="30" fill="rgba(201,168,76,.06)"/>
+          <circle cx="842" cy="292" r="23" class="sn-bg"/>
+          <circle cx="842" cy="292" r="23" class="sn-ring"/>
+          <!-- Customs mini badge -->
+          <g transform="translate(842,292) scale(0.72)">
+            <circle cx="0" cy="-7" r="4.5" fill="#ecf0f1"/>
+            <rect x="-5" y="-2" width="10" height="12" rx="2.5" fill="#2c3e50"/>
+            <rect x="-6" y="-12" width="12" height="3" rx="1.5" fill="#1a252f"/>
+            <rect x="-4" y="-15" width="8" height="4" rx="1" fill="#2c3e50"/>
+            <polygon points="0,-8 1,-6 3,-6 1.5,-5 2,-3 0,-4.2 -2,-3 -1.5,-5 -3,-6 -1,-6" fill="#C9A84C" transform="scale(0.6)"/>
+          </g>
+          <line x1="842" y1="269" x2="842" y2="230" class="sn-line" id="snl6"/>
+          <rect x="755" y="208" width="174" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
+          <text x="842" y="220" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">ADUANA</text>
+          <text x="842" y="230" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">~10 días</text>
         </g>
 
-        <!-- NODE 7 — ENTREGA FINAL, ~96% — pos approx 590,520 -->
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             NODE 7 — ENTREGA · Auto + Llaves
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Scene: car + person + keys on road at end -->
+        <!-- person silhouette -->
+        <g transform="translate(620,515)">
+          <circle cx="0" cy="-18" r="5" fill="#C9A84C"/>
+          <rect x="-4" y="-12" width="8" height="14" rx="3" fill="#1a1a2e"/>
+          <line x1="-4" y1="-8" x2="-9" y2="0" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="4"  y1="-8" x2="9"  y2="-3" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- keys in hand -->
+          <g transform="translate(9,-3) scale(0.6)">
+            <circle cx="0" cy="-5" r="4" fill="none" stroke="#C9A84C" stroke-width="2"/>
+            <circle cx="0" cy="-5" r="1.5" fill="#C9A84C"/>
+            <rect x="1.5" y="-6" width="9" height="2.5" rx="1" fill="#C9A84C"/>
+            <rect x="8.5" y="-5" width="2.5" height="2" rx=".4" fill="#C9A84C"/>
+            <rect x="5.5" y="-4.5" width="2.5" height="2" rx=".4" fill="#C9A84C"/>
+          </g>
+          <rect x="-4" y="2" width="3" height="10" rx="1.5" fill="#1a1a2e"/>
+          <rect x="1"  y="2" width="3" height="10" rx="1.5" fill="#1a1a2e"/>
+        </g>
+        <!-- car parked at finish -->
+        <g transform="translate(652,520) scale(0.95)">
+          <use href="#ico-car"/>
+        </g>
+
+        <!-- Big finish glow ring -->
         <g class="step-node-g" id="sn7">
-          <!-- Big finish glow -->
-          <circle cx="590" cy="520" r="38" fill="rgba(201,168,76,.06)"/>
-          <circle cx="590" cy="520" r="30" fill="rgba(201,168,76,.12)" class="sn-ring-outer"/>
-          <circle cx="590" cy="520" r="24" class="sn-bg"/>
-          <circle cx="590" cy="520" r="24" class="sn-ring" style="stroke:#C9A84C;stroke-width:2"/>
-          <text x="590" y="520" class="sn-label" style="font-size:14px">✓</text>
-          <!-- connector down right -->
-          <line x1="614" y1="520" x2="680" y2="520" class="sn-line" id="snl7"/>
-          <rect x="682" y="508" width="200" height="26" rx="2" fill="rgba(201,168,76,.2)" stroke="rgba(201,168,76,.5)" stroke-width="1"/>
-          <text x="782" y="523" font-size="9" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="2">✓ ENTREGA FINAL</text>
+          <circle cx="590" cy="520" r="42" fill="rgba(201,168,76,.05)"/>
+          <circle cx="590" cy="520" r="32" fill="rgba(201,168,76,.1)"/>
+          <circle cx="590" cy="520" r="25" class="sn-bg"/>
+          <circle cx="590" cy="520" r="25" class="sn-ring" style="stroke:#C9A84C;stroke-width:2.5"/>
+          <!-- Keys icon inside final node -->
+          <g transform="translate(590,520) scale(0.7)">
+            <circle cx="-3" cy="-6" r="5.5" fill="none" stroke="#C9A84C" stroke-width="2.2"/>
+            <circle cx="-3" cy="-6" r="2" fill="#C9A84C"/>
+            <rect x="1.5" y="-7.5" width="13" height="3" rx="1.5" fill="#C9A84C"/>
+            <rect x="12"  y="-6"   width="3"  height="2.5" rx=".5" fill="#C9A84C"/>
+            <rect x="8.5" y="-5"   width="3"  height="2.5" rx=".5" fill="#C9A84C"/>
+          </g>
+          <line x1="565" y1="520" x2="500" y2="520" class="sn-line" id="snl7"/>
+          <rect x="296" y="508" width="206" height="28" rx="2" fill="rgba(201,168,76,.22)" stroke="rgba(201,168,76,.6)" stroke-width="1"/>
+          <text x="399" y="520" font-size="7.5" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">✓ ENTREGA FINAL</text>
+          <text x="399" y="530" font-size="7" font-weight="600" fill="rgba(255,255,255,.55)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">~90 días · Venezuela</text>
         </g>
 
         <!-- CHINA / VENEZUELA labels -->
-        <text x="30" y="155" font-size="9" font-weight="800" fill="rgba(255,255,255,.18)" font-family="Montserrat,sans-serif" letter-spacing="3">CHINA</text>
-        <text x="540" y="610" font-size="9" font-weight="800" fill="rgba(201,168,76,.55)" font-family="Montserrat,sans-serif" letter-spacing="3">VENEZUELA</text>
+        <text x="26" y="158" font-size="9" font-weight="800" fill="rgba(255,255,255,.18)" font-family="Montserrat,sans-serif" letter-spacing="3">CHINA</text>
+        <text x="540" y="612" font-size="9" font-weight="800" fill="rgba(201,168,76,.55)" font-family="Montserrat,sans-serif" letter-spacing="3">VENEZUELA</text>
 
-        <!-- ════ CAR GROUP ════ -->
+        <!-- ════ CAR GROUP (animated) ════ -->
         <g id="carGroup">
           <!-- headlight glow -->
           <ellipse id="hlGlow" cx="0" cy="-24" rx="14" ry="8" fill="rgba(201,168,76,.3)" filter="url(#carGlow)"/>
@@ -412,8 +663,8 @@
           <!-- wheels -->
           <rect x="-16" y="-17" width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
           <rect x="11"  y="-17" width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
-          <rect x="-16" y="9"  width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
-          <rect x="11"  y="9"  width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+          <rect x="-16" y="9"   width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+          <rect x="11"  y="9"   width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
         </g>
 
       </svg>
