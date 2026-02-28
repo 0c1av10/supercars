@@ -7,31 +7,13 @@
   <meta name="description" content="Proceso de importación de China a Venezuela en 90 días.">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    body { background: #080808; }
-
-    /* ── HERO ── */
-    .proc-hero {
-      height: 46vh; min-height: 300px; position: relative;
-      overflow: hidden; display: flex; align-items: flex-end;
-      padding-bottom: 52px; margin-top: 76px;
-    }
-    .proc-hero-bg {
-      position: absolute; inset: 0;
-      background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=85') center 60%/cover;
-      filter: brightness(.2) saturate(.4);
-    }
-    .proc-hero-content { position: relative; z-index: 2; padding: 0 64px; }
-    .proc-hero-ey { font-size: 9px; font-weight: 700; letter-spacing: .44em; text-transform: uppercase; color: #C9A84C; margin-bottom: 14px; }
-    .proc-hero-title { font-size: clamp(52px, 9vw, 100px); font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: -.03em; line-height: .88; }
-    .proc-hero-title em { font-style: normal; font-weight: 200; color: rgba(255,255,255,.3); }
-
-    /* ── STATS ── */
-    .proc-stats { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid rgba(255,255,255,.06); }
-    .ps-item { padding: 32px 36px; border-right: 1px solid rgba(255,255,255,.05); }
+    /* ── STATS — white site style ── */
+    .proc-stats { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--rule); background: var(--paper); }
+    .ps-item { padding: 40px 44px; border-right: 1px solid var(--rule); }
     .ps-item:last-child { border-right: none; }
-    .ps-num { font-size: clamp(38px,5vw,60px); font-weight: 900; color: #C9A84C; letter-spacing: -.04em; line-height: 1; }
+    .ps-num { font-size: clamp(40px,5vw,64px); font-weight: 900; color: var(--gold); letter-spacing: -.04em; line-height: 1; }
     .ps-unit { font-size: .38em; vertical-align: super; font-weight: 700; margin-left: 2px; }
-    .ps-label { font-size: 9px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.28); margin-top: 5px; }
+    .ps-label { font-size: 9px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--silver); margin-top: 6px; }
 
     /* ══════════════════════════════════════════
        ROAD SECTION — STRAIGHT INTERACTIVE
@@ -145,24 +127,9 @@
     .ral-title { font-size: clamp(24px, 4vw, 40px); font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: -.02em; }
     .ral-title span { color: #C9A84C; }
 
-    /* ── FINALE ── */
-    .proc-finale {
-      background: #050505; border-top: 1px solid rgba(255,255,255,.06);
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-      padding: 100px 80px; align-items: center;
-    }
-    .finale-left-num { font-size: clamp(80px,12vw,140px); font-weight: 900; color: #C9A84C; letter-spacing: -.06em; line-height: .85; }
-    .finale-left-sub { font-size: 10px; font-weight: 700; letter-spacing: .36em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-top: 16px; }
-    .finale-right p { font-size: 14px; font-weight: 400; color: rgba(255,255,255,.5); line-height: 1.9; margin-bottom: 28px; }
-    .finale-checks { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
-    .finale-check { display: flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.65); letter-spacing: .04em; }
-    .fcheck-dot { width: 5px; height: 5px; background: #C9A84C; flex-shrink: 0; }
-    .finale-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
     @media(max-width:900px) {
       .proc-stats { grid-template-columns: 1fr 1fr; }
-      .proc-finale { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
-      .proc-hero-content { padding: 0 24px; }
       .road-track-wrap, .prog-bar-wrap, .road-active-label { padding-left: 20px; padding-right: 20px; }
     }
   </style>
@@ -194,13 +161,17 @@
   </div>
 
   <!-- HERO -->
-  <div class="proc-hero">
-    <div class="proc-hero-bg"></div>
-    <div class="proc-hero-content">
-      <div class="proc-hero-ey">— Super Cars International</div>
-      <div class="proc-hero-title">90 Días<br><em>de China</em><br><em>a tu puerta</em></div>
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=85')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="tag-line">Cómo funciona</div>
+      <div class="page-hero-title">90 Días<br>de China<br>a tu puerta</div>
     </div>
   </div>
+
+  <!-- EYEBROW -->
+  <div class="section-eyebrow"><span>Super Cars International</span><div class="sep"></div><span>Proceso de importación</span></div>
 
   <!-- STATS -->
   <div class="proc-stats rev">
@@ -543,23 +514,23 @@
 
   </div><!-- end road-section -->
 
-  <!-- FINALE -->
-  <div class="proc-finale rev">
+  <!-- PROCESS STEPS GRID — site style -->
+  <div class="process-intro rev">
     <div>
-      <div class="finale-left-num">90<br>Días</div>
-      <div class="finale-left-sub">De inicio a entrega garantizados</div>
+      <div class="tag-line">Inicio a fin</div>
+      <h2 class="display-l" style="margin-top:14px">De China<br><span style="font-weight:200;color:var(--mid)">a tus manos<br>en 90 días</span></h2>
     </div>
     <div>
-      <p class="finale-right">Todo el proceso gestionado por nosotros. Comunicación constante, transparencia total. Tu auto desde China, en 90 días.</p>
-      <div class="finale-checks">
-        <div class="finale-check"><div class="fcheck-dot"></div>Contrato con todos los términos</div>
-        <div class="finale-check"><div class="fcheck-dot"></div>Fotos y videos durante el proceso</div>
-        <div class="finale-check"><div class="fcheck-dot"></div>Seguimiento del barco en tiempo real</div>
-        <div class="finale-check"><div class="fcheck-dot"></div>Gestión aduanal completa Venezuela</div>
-        <div class="finale-check"><div class="fcheck-dot"></div>Entrega legalizado y a tu nombre</div>
+      <p class="body-text" style="margin-bottom:28px">Todo el proceso gestionado por nosotros. Comunicación constante, transparencia total. Tu auto desde China, en 90 días.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
+        <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:600;color:var(--mid);letter-spacing:.04em"><div style="width:5px;height:5px;background:var(--gold);flex-shrink:0"></div>Contrato con todos los términos</div>
+        <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:600;color:var(--mid);letter-spacing:.04em"><div style="width:5px;height:5px;background:var(--gold);flex-shrink:0"></div>Fotos y videos durante el proceso</div>
+        <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:600;color:var(--mid);letter-spacing:.04em"><div style="width:5px;height:5px;background:var(--gold);flex-shrink:0"></div>Seguimiento del barco en tiempo real</div>
+        <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:600;color:var(--mid);letter-spacing:.04em"><div style="width:5px;height:5px;background:var(--gold);flex-shrink:0"></div>Gestión aduanal completa Venezuela</div>
+        <div style="display:flex;align-items:center;gap:14px;font-size:12px;font-weight:600;color:var(--mid);letter-spacing:.04em"><div style="width:5px;height:5px;background:var(--gold);flex-shrink:0"></div>Entrega legalizado y a tu nombre</div>
       </div>
-      <div class="finale-btns">
-        <a href="contacto.html" class="btn-dark" style="background:#C9A84C;color:#000;font-weight:800">Empezar ahora →</a>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="contacto.html" class="btn-dark">Empezar ahora →</a>
         <a href="catalogo.html" class="btn-outline">Ver catálogo</a>
       </div>
     </div>
