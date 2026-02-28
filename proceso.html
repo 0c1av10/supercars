@@ -4,145 +4,166 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Proceso — Super Cars International</title>
-  <meta name="description" content="Proceso de importación de China a Venezuela en 90 días. Transparente, documentado, sin sorpresas.">
+  <meta name="description" content="Proceso de importación de China a Venezuela en 90 días.">
   <link rel="stylesheet" href="css/style.css">
   <style>
     body { background: #080808; }
 
     /* ── HERO ── */
     .proc-hero {
-      height: 50vh; min-height: 320px; position: relative;
+      height: 46vh; min-height: 300px; position: relative;
       overflow: hidden; display: flex; align-items: flex-end;
       padding-bottom: 52px; margin-top: 76px;
     }
     .proc-hero-bg {
       position: absolute; inset: 0;
       background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=85') center 60%/cover;
-      filter: brightness(.22) saturate(.5);
+      filter: brightness(.2) saturate(.4);
     }
     .proc-hero-content { position: relative; z-index: 2; padding: 0 64px; }
-    .proc-hero-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: .44em; text-transform: uppercase; color: #C9A84C; margin-bottom: 14px; }
-    .proc-hero-title { font-size: clamp(56px, 9vw, 104px); font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: -.03em; line-height: .88; }
-    .proc-hero-title em { font-style: normal; font-weight: 200; color: rgba(255,255,255,.35); }
+    .proc-hero-ey { font-size: 9px; font-weight: 700; letter-spacing: .44em; text-transform: uppercase; color: #C9A84C; margin-bottom: 14px; }
+    .proc-hero-title { font-size: clamp(52px, 9vw, 100px); font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: -.03em; line-height: .88; }
+    .proc-hero-title em { font-style: normal; font-weight: 200; color: rgba(255,255,255,.3); }
 
-    /* ── COUNTERS ── */
-    .proc-stats {
-      display: grid; grid-template-columns: repeat(4,1fr);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    .ps-item {
-      padding: 36px 40px; border-right: 1px solid rgba(255,255,255,.05);
-      position: relative; overflow: hidden;
-    }
+    /* ── STATS ── */
+    .proc-stats { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ps-item { padding: 32px 36px; border-right: 1px solid rgba(255,255,255,.05); }
     .ps-item:last-child { border-right: none; }
-    .ps-num { font-size: clamp(40px,5vw,64px); font-weight: 900; color: #C9A84C; letter-spacing: -.04em; line-height: 1; }
-    .ps-unit { font-size: .4em; vertical-align: super; font-weight: 700; margin-left: 2px; }
-    .ps-label { font-size: 9px; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-top: 6px; }
+    .ps-num { font-size: clamp(38px,5vw,60px); font-weight: 900; color: #C9A84C; letter-spacing: -.04em; line-height: 1; }
+    .ps-unit { font-size: .38em; vertical-align: super; font-weight: 700; margin-left: 2px; }
+    .ps-label { font-size: 9px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.28); margin-top: 5px; }
 
-    /* ── ROAD SECTION ── */
-    .road-outer {
-      background: #080808;
-      position: relative; padding: 60px 0 0;
-    }
-
-    .road-scene {
+    /* ══════════════════════════════════════════
+       ROAD SECTION — STRAIGHT INTERACTIVE
+    ══════════════════════════════════════════ */
+    .road-section {
+      background: #060606;
+      padding: 72px 0 0;
       position: relative;
-      max-width: 1100px; margin: 0 auto;
-      padding: 0 32px 40px;
+      user-select: none;
     }
 
-    /* The SVG canvas */
+    .road-hint {
+      text-align: center;
+      font-size: 9px; font-weight: 700; letter-spacing: .3em;
+      text-transform: uppercase; color: rgba(255,255,255,.25);
+      margin-bottom: 36px;
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+    }
+    .road-hint::before, .road-hint::after {
+      content: ''; width: 60px; height: 1px; background: rgba(255,255,255,.1);
+    }
+
+    /* The interactive road wrapper */
+    .road-track-wrap {
+      position: relative;
+      width: 100%;
+      padding: 0 60px;
+      box-sizing: border-box;
+      cursor: ew-resize;
+    }
+
+    /* Step info cards — above the road */
+    .steps-above {
+      display: flex;
+      position: relative;
+      height: 180px;
+      margin-bottom: 0;
+    }
+    .step-slot {
+      flex: 1;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 0;
+      position: relative;
+    }
+    .step-card-pop {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      padding: 16px 18px;
+      width: 90%;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .4s ease, transform .4s ease, border-color .3s;
+      pointer-events: none;
+    }
+    .step-card-pop.above { transform: translateY(-10px); }
+    .step-card-pop.active {
+      opacity: 1; transform: translateY(0); border-color: rgba(201,168,76,.3);
+      background: rgba(201,168,76,.04);
+    }
+    .scp-phase { font-size: 7.5px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: #C9A84C; margin-bottom: 5px; }
+    .scp-title { font-size: 13px; font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: .03em; line-height: 1.2; margin-bottom: 7px; }
+    .scp-desc { font-size: 11px; font-weight: 400; color: rgba(255,255,255,.45); line-height: 1.7; }
+    .scp-days { display: inline-block; margin-top: 10px; font-size: 7.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #C9A84C; border: 1px solid rgba(201,168,76,.3); padding: 3px 9px; }
+
+    /* Connector dot/line from card to road */
+    .step-conn {
+      position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px; height: 0;
+      background: rgba(201,168,76,.4);
+      transition: height .4s ease;
+    }
+    .step-conn.active { height: 24px; }
+
+    /* THE ROAD SVG */
     #roadSVG {
-      width: 100%; height: auto;
-      display: block;
-      filter: drop-shadow(0 0 40px rgba(0,0,0,.8));
+      width: 100%; display: block;
+      overflow: visible;
+      cursor: ew-resize;
     }
 
-    /* Road styles */
-    .r-shadow    { fill:none; stroke:rgba(0,0,0,.6);            stroke-width:70; stroke-linecap:round; stroke-linejoin:round; }
-    .r-border    { fill:none; stroke:#1a1500;                   stroke-width:60; stroke-linecap:round; stroke-linejoin:round; }
-    .r-gold-edge { fill:none; stroke:#C9A84C;                   stroke-width:62; stroke-linecap:round; stroke-linejoin:round; }
-    .r-road      { fill:none; stroke:#141414;                   stroke-width:52; stroke-linecap:round; stroke-linejoin:round; }
-    .r-center    { fill:none; stroke:rgba(255,255,255,.05);     stroke-width:1.5; stroke-dasharray:16 12; stroke-linecap:round; stroke-linejoin:round; }
-    .r-progress  { fill:none; stroke:rgba(201,168,76,.18);      stroke-width:52; stroke-linecap:round; stroke-linejoin:round; }
-
-    /* ── NODE STYLES ── */
-    .sn-ring-outer { fill:none; stroke:rgba(201,168,76,.15); stroke-width:2; }
-    .sn-bg         { fill:#111; }
-    .sn-ring       { fill:none; stroke:rgba(255,255,255,.12); stroke-width:1.5; }
-    .sn-label      { fill:rgba(255,255,255,.35); font-family:'Montserrat',sans-serif; font-size:11px; font-weight:800; text-anchor:middle; dominant-baseline:central; }
-
-    .step-node-g.done   .sn-bg    { fill:rgba(201,168,76,.1); }
-    .step-node-g.done   .sn-ring  { stroke:#C9A84C; stroke-width:2; }
-    .step-node-g.done   .sn-label { fill:#C9A84C; }
-    .step-node-g.active .sn-bg    { fill:#C9A84C; }
-    .step-node-g.active .sn-ring  { stroke:#C9A84C; }
-    .step-node-g.active .sn-label { fill:#0a0a0a; }
-    .step-node-g.active .sn-ring-outer { stroke:rgba(201,168,76,.5); }
-
-    /* connector lines */
-    .sn-line { stroke:rgba(201,168,76,.2); stroke-width:1; stroke-dasharray:3 3; }
-    .sn-line.done { stroke:rgba(201,168,76,.45); stroke-dasharray:none; }
-
-    /* ── STEP CARDS GRID ── */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(255,255,255,.05);
-      margin-top: 1px;
+    /* Below-road step cards (alternate rows) */
+    .steps-below {
+      display: flex;
+      position: relative;
+      height: 180px;
     }
-    .sg-card {
-      background: #0a0a0a;
-      padding: 36px 32px;
-      position: relative; overflow: hidden;
-      opacity: 0; transform: translateY(20px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .sg-card.in { opacity: 1; transform: none; }
-    .sg-card::before {
-      content: ''; position: absolute; top:0; left:0; right:0; height:2px;
-      background: rgba(201,168,76,0); transition: background .4s;
-    }
-    .sg-card.in::before { background: rgba(201,168,76,.35); }
-    .sg-card:hover { background: rgba(201,168,76,.03); }
-    .sg-card:hover::before { background: #C9A84C; }
+    .step-slot.below { align-items: flex-start; }
+    .step-card-pop.below { transform: translateY(10px); }
+    .step-card-pop.below.active { transform: translateY(0); }
+    .step-conn.below { top: 0; bottom: auto; }
+    .step-conn.below.active { height: 24px; }
 
-    .sg-num { font-size: 9px; font-weight: 800; letter-spacing: .3em; color: rgba(255,255,255,.18); margin-bottom: 4px; }
-    .sg-phase { font-size: 9px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: #C9A84C; margin-bottom: 10px; }
-    .sg-title { font-size: 15px; font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: .04em; line-height: 1.2; margin-bottom: 10px; }
-    .sg-desc { font-size: 12px; font-weight: 400; color: rgba(255,255,255,.45); line-height: 1.75; }
-    .sg-badge { display:inline-block; margin-top:14px; font-size: 8px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:#C9A84C; border:1px solid rgba(201,168,76,.3); padding:4px 10px; }
+    /* Progress indicator bar */
+    .prog-bar-wrap {
+      padding: 28px 60px 0;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .prog-bar-track { flex: 1; height: 2px; background: rgba(255,255,255,.08); position: relative; }
+    .prog-bar-fill { height: 100%; background: #C9A84C; width: 0%; transition: width .1s linear; }
+    .prog-label { font-size: 9px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.3); min-width: 60px; }
+    .prog-pct { font-size: 9px; font-weight: 800; letter-spacing: .1em; color: #C9A84C; min-width: 40px; text-align: right; }
 
-    /* Final card full-width */
-    .sg-card.full { grid-column: 1/-1; display:grid; grid-template-columns:1fr 300px; gap:48px; align-items:center; }
-    .sg-finale-num { font-size: 100px; font-weight:900; color:#C9A84C; letter-spacing:-.06em; line-height:1; }
-    .sg-finale-tag { font-size:9px; font-weight:700; letter-spacing:.32em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-top:6px; }
+    /* ── ACTIVE STEP HIGHLIGHT ── */
+    .road-active-label {
+      text-align: center; padding: 32px 60px 60px;
+      opacity: 0; transition: opacity .4s;
+    }
+    .road-active-label.show { opacity: 1; }
+    .ral-step { font-size: 9px; font-weight: 700; letter-spacing: .36em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 8px; }
+    .ral-title { font-size: clamp(24px, 4vw, 40px); font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: -.02em; }
+    .ral-title span { color: #C9A84C; }
 
     /* ── FINALE ── */
     .proc-finale {
-      background: #050505;
-      border-top: 1px solid rgba(255,255,255,.06);
+      background: #050505; border-top: 1px solid rgba(255,255,255,.06);
       display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
       padding: 100px 80px; align-items: center;
     }
-    .finale-left-num { font-size: clamp(80px,12vw,140px); font-weight:900; color:#C9A84C; letter-spacing:-.06em; line-height:.85; }
-    .finale-left-sub { font-size:10px; font-weight:700; letter-spacing:.36em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-top:16px; }
-    .finale-right p { font-size:14px; font-weight:400; color:rgba(255,255,255,.5); line-height:1.9; margin-bottom:28px; }
-    .finale-checks { display:flex; flex-direction:column; gap:12px; margin-bottom:36px; }
-    .finale-check { display:flex; align-items:center; gap:14px; font-size:12px; font-weight:600; color:rgba(255,255,255,.65); letter-spacing:.04em; }
-    .fcheck-dot { width:5px; height:5px; background:#C9A84C; flex-shrink:0; }
-    .finale-btns { display:flex; gap:12px; flex-wrap:wrap; }
+    .finale-left-num { font-size: clamp(80px,12vw,140px); font-weight: 900; color: #C9A84C; letter-spacing: -.06em; line-height: .85; }
+    .finale-left-sub { font-size: 10px; font-weight: 700; letter-spacing: .36em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-top: 16px; }
+    .finale-right p { font-size: 14px; font-weight: 400; color: rgba(255,255,255,.5); line-height: 1.9; margin-bottom: 28px; }
+    .finale-checks { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .finale-check { display: flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.65); letter-spacing: .04em; }
+    .fcheck-dot { width: 5px; height: 5px; background: #C9A84C; flex-shrink: 0; }
+    .finale-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
-    @media(max-width:900px){
+    @media(max-width:900px) {
       .proc-stats { grid-template-columns: 1fr 1fr; }
-      .ps-item:nth-child(2) { border-right:none; }
-      .ps-item:nth-child(3),
-      .ps-item:nth-child(4) { border-top:1px solid rgba(255,255,255,.05); }
-      .steps-grid { grid-template-columns: 1fr; }
-      .sg-card.full { grid-template-columns:1fr; gap:24px; }
-      .proc-finale { grid-template-columns:1fr; padding:60px 24px; gap:40px; }
-      .proc-hero-content { padding:0 24px; }
+      .proc-finale { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      .proc-hero-content { padding: 0 24px; }
+      .road-track-wrap, .prog-bar-wrap, .road-active-label { padding-left: 20px; padding-right: 20px; }
     }
   </style>
 </head>
@@ -176,7 +197,7 @@
   <div class="proc-hero">
     <div class="proc-hero-bg"></div>
     <div class="proc-hero-content">
-      <div class="proc-hero-eyebrow">— Super Cars International</div>
+      <div class="proc-hero-ey">— Super Cars International</div>
       <div class="proc-hero-title">90 Días<br><em>de China</em><br><em>a tu puerta</em></div>
     </div>
   </div>
@@ -201,545 +222,326 @@
     </div>
   </div>
 
-  <!-- ══ ROAD ANIMATION ══ -->
-  <div class="road-outer">
-    <div class="road-scene">
+  <!-- ══════════════ ROAD SECTION ══════════════ -->
+  <div class="road-section" id="roadSection">
 
-      <svg id="roadSVG" viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg">
+    <div class="road-hint">Mueve el cursor sobre la carretera para avanzar</div>
+
+    <div class="road-track-wrap" id="roadWrap">
+
+      <!-- STEP CARDS ABOVE THE ROAD (steps 1, 3, 5, 7) -->
+      <div class="steps-above" id="stepsAbove">
+        <!-- slot 1 -->
+        <div class="step-slot" id="slot1">
+          <div class="step-card-pop above" id="card1">
+            <div class="scp-phase">Etapa 1 · Día 1</div>
+            <div class="scp-title">Selección</div>
+            <div class="scp-desc">Explorás el catálogo o nos indicás el modelo exacto. Asesoramos según tu presupuesto.</div>
+            <span class="scp-days">Inicio</span>
+          </div>
+          <div class="step-conn" id="conn1"></div>
+        </div>
+        <!-- slot 2 — empty placeholder (card goes below) -->
+        <div class="step-slot" id="slot2"></div>
+        <!-- slot 3 -->
+        <div class="step-slot" id="slot3">
+          <div class="step-card-pop above" id="card3">
+            <div class="scp-phase">Etapa 2 · Día 5–10</div>
+            <div class="scp-title">Compra en China</div>
+            <div class="scp-desc">Nuestro equipo adquiere el vehículo. Recibís fotos y videos de todo el proceso.</div>
+            <span class="scp-days">Días 5–10</span>
+          </div>
+          <div class="step-conn" id="conn3"></div>
+        </div>
+        <!-- slot 4 — empty -->
+        <div class="step-slot" id="slot4"></div>
+        <!-- slot 5 -->
+        <div class="step-slot" id="slot5">
+          <div class="step-card-pop above" id="card5">
+            <div class="scp-phase">Etapa 3 · ~60 días</div>
+            <div class="scp-title">Tránsito marítimo</div>
+            <div class="scp-desc">Tu vehículo navega desde China. Te informamos del estado del envío en todo momento.</div>
+            <span class="scp-days">~60 días</span>
+          </div>
+          <div class="step-conn" id="conn5"></div>
+        </div>
+        <!-- slot 6 — empty -->
+        <div class="step-slot" id="slot6"></div>
+        <!-- slot 7 -->
+        <div class="step-slot" id="slot7">
+          <div class="step-card-pop above" id="card7">
+            <div class="scp-phase">Etapa Final · ~90 días</div>
+            <div class="scp-title">Detailing y Entrega</div>
+            <div class="scp-desc">Detailing profesional. Te lo entregamos listo, legalizado y a tu nombre con toda la documentación.</div>
+            <span class="scp-days">~90 días</span>
+          </div>
+          <div class="step-conn" id="conn7"></div>
+        </div>
+      </div>
+
+      <!-- ══════ SVG ROAD ══════ -->
+      <svg id="roadSVG" viewBox="0 0 1400 200" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="5" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
           <filter id="carGlow">
-            <feGaussianBlur stdDeviation="8" result="b"/>
+            <feGaussianBlur stdDeviation="7" result="b"/>
             <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
-          <filter id="shadow">
-            <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,0,0,.7)"/>
+          <filter id="nodeGlow">
+            <feGaussianBlur stdDeviation="4" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
+          <linearGradient id="roadGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#0e0e0e"/>
+            <stop offset="50%"  stop-color="#161616"/>
+            <stop offset="100%" stop-color="#0e0e0e"/>
+          </linearGradient>
+          <!-- Progress gradient left fill -->
+          <linearGradient id="progGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(201,168,76,.35)"/>
+            <stop offset="100%" stop-color="rgba(201,168,76,.12)"/>
+          </linearGradient>
         </defs>
 
-        <!-- ════ ROAD PATH (S-curve winding across canvas) ════ -->
-        <!--
-          Waypoints:
-          Start:  80, 120  (China label)
-          Curve1: top left to center
-          Curve2: down
-          Curve3: sweep right
-          Curve4: down-right
-          Curve5: sweep back left
-          End:    920, 480 (Venezuela label)
-        -->
-        <!-- Shadow layer -->
-        <path id="P" d="
-          M 80,130
-          C 80,130 180,80  320,100
-          C 430,116 480,180 440,240
-          C 400,300 260,320 230,380
-          C 200,445 260,510 370,520
-          C 480,530 560,490 620,445
-          C 700,390 750,320 830,300
-          C 890,286 940,320 940,380
-          C 940,445 890,510 800,530
-          C 720,548 640,530 590,520
-        " class="r-shadow"/>
-        <!-- Gold border (gives 3D road edge look) -->
-        <path d="
-          M 80,130
-          C 80,130 180,80  320,100
-          C 430,116 480,180 440,240
-          C 400,300 260,320 230,380
-          C 200,445 260,510 370,520
-          C 480,530 560,490 620,445
-          C 700,390 750,320 830,300
-          C 890,286 940,320 940,380
-          C 940,445 890,510 800,530
-          C 720,548 640,530 590,520
-        " class="r-gold-edge"/>
+        <!-- ── ROAD LAYERS ── -->
+        <!-- Shadow -->
+        <rect x="0" y="68" width="1400" height="72" rx="0" fill="rgba(0,0,0,.5)"/>
+        <!-- Gold border top -->
+        <rect x="0" y="70" width="1400" height="4" fill="#C9A84C" opacity=".9"/>
+        <!-- Gold border bottom -->
+        <rect x="0" y="134" width="1400" height="4" fill="#C9A84C" opacity=".9"/>
         <!-- Road surface -->
-        <path d="
-          M 80,130
-          C 80,130 180,80  320,100
-          C 430,116 480,180 440,240
-          C 400,300 260,320 230,380
-          C 200,445 260,510 370,520
-          C 480,530 560,490 620,445
-          C 700,390 750,320 830,300
-          C 890,286 940,320 940,380
-          C 940,445 890,510 800,530
-          C 720,548 640,530 590,520
-        " class="r-road" id="roadSurface"/>
+        <rect x="0" y="74" width="1400" height="60" fill="url(#roadGrad)"/>
         <!-- Center dashes -->
-        <path d="
-          M 80,130
-          C 80,130 180,80  320,100
-          C 430,116 480,180 440,240
-          C 400,300 260,320 230,380
-          C 200,445 260,510 370,520
-          C 480,530 560,490 620,445
-          C 700,390 750,320 830,300
-          C 890,286 940,320 940,380
-          C 940,445 890,510 800,530
-          C 720,548 640,530 590,520
-        " class="r-center"/>
-        <!-- Gold progress overlay -->
-        <path d="
-          M 80,130
-          C 80,130 180,80  320,100
-          C 430,116 480,180 440,240
-          C 400,300 260,320 230,380
-          C 200,445 260,510 370,520
-          C 480,530 560,490 620,445
-          C 700,390 750,320 830,300
-          C 890,286 940,320 940,380
-          C 940,445 890,510 800,530
-          C 720,548 640,530 590,520
-        " class="r-progress" id="progressOverlay"/>
+        <line x1="0" y1="104" x2="1400" y2="104" stroke="rgba(255,255,255,.06)" stroke-width="2" stroke-dasharray="28 18"/>
+        <!-- Progress fill (width updated by JS) -->
+        <rect id="roadProgress" x="0" y="74" width="0" height="60" fill="url(#progGrad)"/>
 
-        <!-- ════ STEP NODES — ILLUSTRATED ICONS ════ -->
+        <!-- ── CHECKPOINT MARKERS (x positions for 7 steps) ── -->
+        <!-- X positions: 120, 320, 520, 700, 880, 1080, 1280 -->
 
-        <!-- ─── ICON MACROS (reusable sub-paths) ─── -->
-        <defs>
-          <!-- Car top-down silhouette (centered 0,0 fits in ~20×28 box) -->
-          <g id="ico-car">
-            <ellipse cx="0" cy="5" rx="12" ry="5" fill="rgba(0,0,0,.4)"/>
-            <rect x="-9" y="-15" width="18" height="28" rx="5" fill="#ddd"/>
-            <rect x="-6.5" y="-11" width="13" height="17" rx="3" fill="#bbb"/>
-            <rect x="-6" y="-10" width="12" height="6" rx="2" fill="rgba(140,210,255,.55)"/>
-            <rect x="-5" y="5" width="10" height="5" rx="1.5" fill="rgba(140,210,255,.35)"/>
-            <ellipse cx="-7" cy="-14" rx="2.8" ry="1.6" fill="#ffd700"/>
-            <ellipse cx="7"  cy="-14" rx="2.8" ry="1.6" fill="#ffd700"/>
-            <ellipse cx="-7" cy="13" rx="2.2" ry="1.4" fill="#c0392b"/>
-            <ellipse cx="7"  cy="13" rx="2.2" ry="1.4" fill="#c0392b"/>
-            <rect x="-11" y="-11" width="3.5" height="7" rx="1.8" fill="#333"/>
-            <rect x="7.5"  y="-11" width="3.5" height="7" rx="1.8" fill="#333"/>
-            <rect x="-11" y="6"   width="3.5" height="7" rx="1.8" fill="#333"/>
-            <rect x="7.5"  y="6"   width="3.5" height="7" rx="1.8" fill="#333"/>
+        <!-- Step 1: x=120 — Car/Selection -->
+        <g id="cp1">
+          <line x1="120" y1="74" x2="120" y2="138" stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="4 3"/>
+          <circle cx="120" cy="104" r="18" fill="#0a0a0a" stroke="rgba(255,255,255,.12)" stroke-width="1.5" id="cpCircle1"/>
+          <!-- Car top-down icon -->
+          <g transform="translate(120,104)">
+            <rect x="-6" y="-9" width="12" height="18" rx="3.5" fill="#ccc"/>
+            <rect x="-4.5" y="-7" width="9" height="11" rx="2" fill="#bbb"/>
+            <rect x="-4" y="-6.5" width="8" height="4.5" rx="1.5" fill="rgba(140,210,255,.6)"/>
+            <ellipse cx="-4" cy="-8.5" rx="1.5" ry="1" fill="#ffd700"/>
+            <ellipse cx="4"  cy="-8.5" rx="1.5" ry="1" fill="#ffd700"/>
+            <ellipse cx="-4" cy="9.5"  rx="1.2" ry=".8" fill="#c0392b"/>
+            <ellipse cx="4"  cy="9.5"  rx="1.2" ry=".8" fill="#c0392b"/>
+            <rect x="-7.5" y="-6" width="2" height="5" rx="1" fill="#333"/>
+            <rect x="5.5"  y="-6" width="2" height="5" rx="1" fill="#333"/>
+            <rect x="-7.5" y="3"  width="2" height="5" rx="1" fill="#333"/>
+            <rect x="5.5"  y="3"  width="2" height="5" rx="1" fill="#333"/>
           </g>
-          <!-- Document / Contract icon -->
-          <g id="ico-contract">
-            <rect x="-10" y="-13" width="20" height="26" rx="2" fill="#f0f0e8" stroke="#ccc" stroke-width=".5"/>
-            <rect x="-10" y="-13" width="20" height="8" rx="2" fill="#C9A84C"/>
-            <rect x="-10" y="-5" width="20" height="0" rx="0" fill="#C9A84C"/>
-            <line x1="-7" y1="-2" x2="7" y2="-2" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="-7" y1="2" x2="7" y2="2" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="-7" y1="6" x2="3" y2="6" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Dot at top (connects to card above) -->
+          <circle cx="120" cy="70" r="3" fill="#C9A84C" opacity=".6"/>
+        </g>
+
+        <!-- Step 2: x=320 — Contract -->
+        <g id="cp2">
+          <line x1="320" y1="74" x2="320" y2="138" stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="4 3"/>
+          <circle cx="320" cy="104" r="18" fill="#0a0a0a" stroke="rgba(255,255,255,.12)" stroke-width="1.5" id="cpCircle2"/>
+          <!-- Contract icon -->
+          <g transform="translate(320,104)">
+            <rect x="-7" y="-9" width="14" height="18" rx="1.5" fill="#f0f0e8"/>
+            <rect x="-7" y="-9" width="14" height="5" rx="1" fill="#C9A84C"/>
+            <line x1="-5" y1="-1" x2="5" y2="-1" stroke="#aaa" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="-5" y1="2.5" x2="5" y2="2.5" stroke="#aaa" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="-5" y1="6"   x2="1" y2="6"   stroke="#aaa" stroke-width="1.2" stroke-linecap="round"/>
             <!-- pen -->
-            <rect x="3" y="4" width="2" height="8" rx="1" transform="rotate(-30 7 10)" fill="#2c3e50"/>
-            <polygon points="6,11 8,11 7,14" fill="#e67e22" transform="rotate(-30 7 12)"/>
-            <!-- stamp mark -->
-            <circle cx="5" cy="-7" r="4" fill="none" stroke="#C9A84C" stroke-width="1.2" stroke-dasharray="2 1.5"/>
-            <text x="5" y="-5" font-size="5" font-weight="900" fill="#C9A84C" text-anchor="middle">OK</text>
+            <line x1="2" y1="4" x2="7" y2="9" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="7.5" cy="9.5" r="1" fill="#C9A84C"/>
           </g>
-          <!-- Container + mini car loading icon -->
-          <g id="ico-container">
-            <!-- Container body -->
-            <rect x="-14" y="-10" width="28" height="18" rx="2" fill="#c0392b"/>
-            <line x1="-7" y1="-10" x2="-7" y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
-            <line x1="0"  y1="-10" x2="0"  y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
-            <line x1="7"  y1="-10" x2="7"  y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
-            <!-- door open right -->
-            <rect x="9" y="-10" width="5" height="18" rx="1" fill="#a93226" transform="rotate(15 14 -1)"/>
-            <line x1="11" y1="-10" x2="11" y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1"/>
-            <!-- mini car entering -->
-            <rect x="-18" y="-5" width="10" height="7" rx="2" fill="#222"/>
-            <rect x="-16" y="-4" width="6" height="4" rx="1.5" fill="#333"/>
-            <rect x="-17" y="-4" width="4" height="3" rx="1" fill="rgba(140,210,255,.5)"/>
-            <circle cx="-15" cy="3" r="2" fill="#111" stroke="#555" stroke-width=".5"/>
-            <circle cx="-10" cy="3" r="2" fill="#111" stroke="#555" stroke-width=".5"/>
-            <!-- wheels of container -->
-            <circle cx="-10" cy="9" r="2.5" fill="#222" stroke="#555" stroke-width=".5"/>
-            <circle cx="10"  cy="9" r="2.5" fill="#222" stroke="#555" stroke-width=".5"/>
+          <circle cx="320" cy="138" r="3" fill="#C9A84C" opacity=".6"/>
+        </g>
+
+        <!-- Step 3: x=520 — China Purchase / Money -->
+        <g id="cp3">
+          <line x1="520" y1="74" x2="520" y2="138" stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="4 3"/>
+          <circle cx="520" cy="104" r="18" fill="#0a0a0a" stroke="rgba(255,255,255,.12)" stroke-width="1.5" id="cpCircle3"/>
+          <!-- Money icon -->
+          <g transform="translate(520,104)">
+            <rect x="-10" y="-7" width="20" height="13" rx="2" fill="#219a52"/>
+            <rect x="-9" y="-9" width="20" height="13" rx="2" fill="#27ae60"/>
+            <circle cx="1" cy="-2.5" r="4" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.2"/>
+            <text x="1" y="0" font-size="5.5" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">$</text>
           </g>
+          <circle cx="520" cy="70" r="3" fill="#C9A84C" opacity=".6"/>
+        </g>
+
+        <!-- Step 4: x=700 — Container / Shipping -->
+        <g id="cp4">
+          <line x1="700" y1="74" x2="700" y2="138" stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="4 3"/>
+          <circle cx="700" cy="104" r="18" fill="#0a0a0a" stroke="rgba(255,255,255,.12)" stroke-width="1.5" id="cpCircle4"/>
+          <!-- Container icon -->
+          <g transform="translate(700,104)">
+            <rect x="-11" y="-7" width="22" height="13" rx="2" fill="#c0392b"/>
+            <line x1="-4.5" y1="-7" x2="-4.5" y2="6" stroke="rgba(0,0,0,.35)" stroke-width="1.2"/>
+            <line x1="2"    y1="-7" x2="2"    y2="6" stroke="rgba(0,0,0,.35)" stroke-width="1.2"/>
+            <line x1="8.5"  y1="-7" x2="8.5"  y2="6" stroke="rgba(0,0,0,.35)" stroke-width="1.2"/>
+            <!-- mini car going in -->
+            <rect x="-16" y="-3" width="8" height="5" rx="1.5" fill="#1a1a2e"/>
+            <rect x="-15" y="-2.5" width="4.5" height="2.5" rx="1" fill="rgba(140,210,255,.5)"/>
+            <circle cx="-14" cy="3" r="1.8" fill="#333"/>
+            <circle cx="-10" cy="3" r="1.8" fill="#333"/>
+          </g>
+          <circle cx="700" cy="138" r="3" fill="#C9A84C" opacity=".6"/>
+        </g>
+
+        <!-- Step 5: x=880 — Ship / Transit -->
+        <!-- Water suggestion -->
+        <rect x="840" y="74" width="80" height="60" fill="rgba(41,128,185,.08)"/>
+        <path d="M840,90 Q860,86 880,90 Q900,94 920,90" stroke="rgba(120,200,255,.12)" stroke-width="1" fill="none"/>
+        <path d="M840,100 Q860,96 880,100 Q900,104 920,100" stroke="rgba(120,200,255,.12)" stroke-width="1" fill="none"/>
+        <g id="cp5">
+          <line x1="880" y1="74" x2="880" y2="138" stroke="rgba(41,128,185,.4)" stroke-width="1" stroke-dasharray="4 3"/>
+          <circle cx="880" cy="104" r="18" fill="#0a0a0a" stroke="rgba(41,128,185,.35)" stroke-width="1.5" id="cpCircle5"/>
           <!-- Ship icon -->
-          <g id="ico-ship">
-            <!-- hull -->
-            <path d="M -13,2 L -16,10 Q 0,14 16,10 L 13,2 Z" fill="#2980b9"/>
-            <path d="M -13,2 L 13,2 L 11,-8 L -11,-8 Z" fill="#ecf0f1" stroke="#bdc3c7" stroke-width=".5"/>
-            <!-- bridge -->
-            <rect x="-4" y="-15" width="8" height="8" rx="1" fill="#bdc3c7"/>
-            <rect x="-6" y="-8" width="12" height="3" rx="1" fill="#95a5a6"/>
-            <!-- chimney -->
-            <rect x="1" y="-18" width="4" height="6" rx="1" fill="#e74c3c"/>
-            <!-- windows -->
-            <rect x="-9" y="-5" width="3" height="3" rx=".5" fill="rgba(140,210,255,.7)"/>
-            <rect x="-4" y="-5" width="3" height="3" rx=".5" fill="rgba(140,210,255,.7)"/>
-            <rect x="1"  y="-5" width="3" height="3" rx=".5" fill="rgba(140,210,255,.7)"/>
-            <!-- wake waves -->
-            <path d="M -18,11 Q -14,9 -10,11 Q -6,13 -2,11" stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none"/>
-            <path d="M 2,11 Q 6,9 10,11 Q 14,13 18,11"  stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none"/>
+          <g transform="translate(880,104)">
+            <path d="M-10,2 L-13,8 Q0,12 13,8 L10,2 Z" fill="#2980b9"/>
+            <path d="M-10,2 L10,2 L8,-6 L-8,-6 Z" fill="#ecf0f1"/>
+            <rect x="-3" y="-12" width="5" height="7" rx="1" fill="#bdc3c7"/>
+            <rect x="-4.5" y="-6" width="9" height="3" rx="1" fill="#95a5a6"/>
+            <rect x="1" y="-14" width="2.5" height="5" rx="1" fill="#e74c3c"/>
+            <rect x="-6"  y="-3.5" width="2" height="2" rx=".4" fill="rgba(140,210,255,.8)"/>
+            <rect x="-2.5" y="-3.5" width="2" height="2" rx=".4" fill="rgba(140,210,255,.8)"/>
+            <rect x="1"   y="-3.5" width="2" height="2" rx=".4" fill="rgba(140,210,255,.8)"/>
           </g>
-          <!-- Money / Payment icon -->
-          <g id="ico-money">
-            <rect x="-11" y="-8" width="22" height="16" rx="2" fill="#27ae60"/>
-            <circle cx="0" cy="0" r="5.5" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
-            <text x="0" y="3" font-size="7" font-weight="900" fill="#fff" text-anchor="middle">$</text>
-            <!-- corner circles -->
-            <circle cx="-8" cy="-5" r="2" fill="rgba(255,255,255,.12)"/>
-            <circle cx="8"  cy="5"  r="2" fill="rgba(255,255,255,.12)"/>
-            <!-- shadow stacks -->
-            <rect x="-9" y="-10" width="22" height="16" rx="2" fill="#219a52" z="-1" transform="translate(-1,-2)"/>
-            <rect x="-10" y="-11" width="22" height="16" rx="2" fill="#1e8449" transform="translate(-2,-3)"/>
+          <circle cx="880" cy="70" r="3" fill="rgba(41,128,185,.8)"/>
+        </g>
+
+        <!-- Step 6: x=1080 — Customs -->
+        <g id="cp6">
+          <line x1="1080" y1="74" x2="1080" y2="138" stroke="rgba(201,168,76,.25)" stroke-width="1" stroke-dasharray="4 3"/>
+          <circle cx="1080" cy="104" r="18" fill="#0a0a0a" stroke="rgba(255,255,255,.12)" stroke-width="1.5" id="cpCircle6"/>
+          <!-- Customs officer icon -->
+          <g transform="translate(1080,104)">
+            <circle cx="0" cy="-8" r="4" fill="#ecf0f1"/>
+            <rect x="-5" y="-3" width="10" height="11" rx="2.5" fill="#2c3e50"/>
+            <rect x="-5.5" y="-11" width="11" height="2.5" rx="1.5" fill="#1a252f"/>
+            <rect x="-3.5" y="-13.5" width="7" height="3" rx="1" fill="#2c3e50"/>
+            <polygon points="0,-9 .8,-7.2 2.6,-7.2 1.2,-6.2 1.6,-4.4 0,-5.4 -1.6,-4.4 -1.2,-6.2 -2.6,-7.2 -.8,-7.2" fill="#C9A84C" transform="scale(.7)"/>
+            <!-- document -->
+            <rect x="4" y="-1" width="7" height="9" rx="1" fill="#f5f5f0" transform="rotate(12 7.5 4)"/>
+            <line x1="5.5" y1="2" x2="10" y2="0.5" stroke="#aaa" stroke-width=".8" stroke-linecap="round"/>
+            <line x1="5.5" y1="4.5" x2="10" y2="3"  stroke="#aaa" stroke-width=".8" stroke-linecap="round"/>
           </g>
-          <!-- Customs stamp icon -->
-          <g id="ico-customs">
-            <!-- officer silhouette -->
-            <circle cx="0" cy="-10" r="5" fill="#ecf0f1"/>
-            <rect x="-6" y="-4" width="12" height="14" rx="3" fill="#2c3e50"/>
-            <!-- badge -->
-            <polygon points="0,-7 1,-5 3,-5 1.5,-4 2,-2 0,-3.5 -2,-2 -1.5,-4 -3,-5 -1,-5" fill="#C9A84C" transform="scale(0.7) translate(0,-2)"/>
-            <!-- hat -->
-            <rect x="-7" y="-16" width="14" height="3" rx="1.5" fill="#1a252f"/>
-            <rect x="-5" y="-19" width="10" height="4" rx="1" fill="#2c3e50"/>
-            <!-- clipboard -->
-            <rect x="4" y="-2" width="10" height="13" rx="1" fill="#f5f5f0" transform="rotate(15 9 5)"/>
-            <line x1="6" y1="1" x2="13" y2="-1" stroke="#aaa" stroke-width="1" stroke-linecap="round"/>
-            <line x1="6" y1="4" x2="13" y2="2"  stroke="#aaa" stroke-width="1" stroke-linecap="round"/>
-            <line x1="6" y1="7" x2="11" y2="5"  stroke="#aaa" stroke-width="1" stroke-linecap="round"/>
+          <circle cx="1080" cy="138" r="3" fill="#C9A84C" opacity=".6"/>
+        </g>
+
+        <!-- Step 7: x=1280 — Keys / Delivery -->
+        <g id="cp7">
+          <!-- Finish glow -->
+          <circle cx="1280" cy="104" r="28" fill="rgba(201,168,76,.04)"/>
+          <line x1="1280" y1="74" x2="1280" y2="138" stroke="rgba(201,168,76,.5)" stroke-width="1.5"/>
+          <circle cx="1280" cy="104" r="22" fill="rgba(201,168,76,.08)" stroke="#C9A84C" stroke-width="2" id="cpCircle7" filter="url(#nodeGlow)"/>
+          <!-- Keys icon -->
+          <g transform="translate(1280,104)">
+            <circle cx="-4" cy="-5" r="5.5" fill="none" stroke="#C9A84C" stroke-width="2"/>
+            <circle cx="-4" cy="-5" r="2" fill="#C9A84C"/>
+            <rect x="0.5" y="-6.5" width="12" height="3" rx="1.5" fill="#C9A84C"/>
+            <rect x="10.5" y="-5"  width="2.5" height="2.5" rx=".5" fill="#C9A84C"/>
+            <rect x="7"    y="-4"  width="2.5" height="2.5" rx=".5" fill="#C9A84C"/>
+            <!-- person -->
+            <circle cx="-14" cy="-12" r="3.5" fill="#C9A84C"/>
+            <rect x="-17" y="-8" width="7" height="10" rx="2" fill="#1a1a2e"/>
+            <rect x="-17" y="2" width="2.5" height="7" rx="1.2" fill="#1a1a2e"/>
+            <rect x="-12" y="2" width="2.5" height="7" rx="1.2" fill="#1a1a2e"/>
           </g>
-          <!-- Keys icon for delivery -->
-          <g id="ico-keys">
-            <!-- key 1 -->
-            <circle cx="-5" cy="-8" r="6" fill="none" stroke="#C9A84C" stroke-width="2.5"/>
-            <circle cx="-5" cy="-8" r="2.5" fill="#C9A84C"/>
-            <rect x="-2" y="-9" width="14" height="3" rx="1.5" fill="#C9A84C"/>
-            <rect x="9"  y="-7" width="3" height="2.5" rx=".5" fill="#C9A84C"/>
-            <rect x="6"  y="-6" width="3" height="2.5" rx=".5" fill="#C9A84C"/>
-            <!-- key ring -->
-            <ellipse cx="0" cy="5" rx="6" ry="4" fill="none" stroke="#888" stroke-width="1.5"/>
-            <!-- key 2 smaller -->
-            <circle cx="7" cy="8" r="4" fill="none" stroke="#aaa" stroke-width="1.8"/>
-            <circle cx="7" cy="8" r="1.8" fill="#aaa"/>
-            <rect x="10" y="7" width="9" height="2.2" rx="1" fill="#aaa"/>
-            <rect x="17" y="8" width="2.2" height="1.8" rx=".4" fill="#aaa"/>
-            <rect x="14" y="8" width="2.2" height="1.8" rx=".4" fill="#aaa"/>
-          </g>
-        </defs>
-
-        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             NODE 1 — SELECCIÓN · Auto en carretera
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Mini car scene ON road near start -->
-        <g transform="translate(100,128) scale(0.85)">
-          <use href="#ico-car"/>
+          <text x="1280" y="148" font-size="6.5" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">ENTREGA</text>
+          <circle cx="1280" cy="70" r="4" fill="#C9A84C"/>
         </g>
 
-        <g class="step-node-g" id="sn1">
-          <circle cx="80" cy="130" r="30" fill="rgba(201,168,76,.06)"/>
-          <circle cx="80" cy="130" r="23" class="sn-bg"/>
-          <circle cx="80" cy="130" r="23" class="sn-ring"/>
-          <!-- Car icon inside badge -->
-          <g transform="translate(80,130) scale(0.75)">
-            <rect x="-8" y="-10" width="16" height="22" rx="4" fill="#ccc"/>
-            <rect x="-6" y="-8" width="12" height="14" rx="2.5" fill="#bbb"/>
-            <rect x="-5.5" y="-7" width="11" height="5.5" rx="2" fill="rgba(140,210,255,.55)"/>
-            <ellipse cx="-5.5" cy="-9.5" rx="2" ry="1.2" fill="#ffd700"/>
-            <ellipse cx="5.5"  cy="-9.5" rx="2" ry="1.2" fill="#ffd700"/>
-            <ellipse cx="-5.5" cy="12" rx="1.8" ry="1" fill="#c0392b"/>
-            <ellipse cx="5.5"  cy="12" rx="1.8" ry="1" fill="#c0392b"/>
-            <rect x="-9.5" y="-7" width="2.5" height="5.5" rx="1.3" fill="#333"/>
-            <rect x="7"    y="-7" width="2.5" height="5.5" rx="1.3" fill="#333"/>
-            <rect x="-9.5" y="5"  width="2.5" height="5.5" rx="1.3" fill="#333"/>
-            <rect x="7"    y="5"  width="2.5" height="5.5" rx="1.3" fill="#333"/>
-          </g>
-          <line x1="80" y1="107" x2="80" y2="64" class="sn-line" id="snl1"/>
-          <rect x="5" y="40" width="150" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="80" y="52" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">SELECCIÓN</text>
-          <text x="80" y="62" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">Día 1</text>
-        </g>
+        <!-- CHINA label -->
+        <text x="14" y="58" font-size="8" font-weight="800" fill="rgba(255,255,255,.2)" font-family="Montserrat,sans-serif" letter-spacing="2">CHINA</text>
+        <!-- VENEZUELA label -->
+        <text x="1310" y="58" font-size="8" font-weight="800" fill="rgba(201,168,76,.6)" font-family="Montserrat,sans-serif" letter-spacing="2">VEN.</text>
 
-        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             NODE 2 — CONTRATO · Documento firmado
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Scene: document on road -->
-        <g transform="translate(300,95) scale(0.68)">
-          <use href="#ico-contract"/>
-        </g>
-
-        <g class="step-node-g" id="sn2">
-          <circle cx="318" cy="90" r="30" fill="rgba(201,168,76,.06)"/>
-          <circle cx="318" cy="90" r="23" class="sn-bg"/>
-          <circle cx="318" cy="90" r="23" class="sn-ring"/>
-          <!-- Contract mini icon -->
-          <g transform="translate(318,90) scale(0.72)">
-            <rect x="-9" y="-11" width="18" height="22" rx="2" fill="#f0f0e8"/>
-            <rect x="-9" y="-11" width="18" height="6" rx="1" fill="#C9A84C"/>
-            <line x1="-6" y1="-1" x2="6" y2="-1" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="-6" y1="3"  x2="6" y2="3"  stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="-6" y1="7"  x2="2" y2="7"  stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="4" cy="-6" r="3.5" fill="none" stroke="#C9A84C" stroke-width="1" stroke-dasharray="2 1.5"/>
-            <text x="4" y="-4" font-size="4" font-weight="900" fill="#C9A84C" text-anchor="middle">OK</text>
-          </g>
-          <line x1="318" y1="67" x2="318" y2="30" class="sn-line" id="snl2"/>
-          <rect x="236" y="8" width="164" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="318" y="20" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">CONTRATO</text>
-          <text x="318" y="30" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">Día 2–5</text>
-        </g>
-
-        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             NODE 3 — COMPRA · Dinero / pago
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Scene: money stack on road -->
-        <g transform="translate(435,214) scale(0.72)">
-          <use href="#ico-money"/>
-        </g>
-
-        <g class="step-node-g" id="sn3">
-          <circle cx="455" cy="208" r="30" fill="rgba(201,168,76,.06)"/>
-          <circle cx="455" cy="208" r="23" class="sn-bg"/>
-          <circle cx="455" cy="208" r="23" class="sn-ring"/>
-          <!-- Money mini icon -->
-          <g transform="translate(455,208) scale(0.75)">
-            <rect x="-10" y="-7" width="20" height="14" rx="2" fill="#27ae60"/>
-            <circle cx="0" cy="0" r="4.5" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2"/>
-            <text x="0" y="3" font-size="6" font-weight="900" fill="#fff" text-anchor="middle">$</text>
-          </g>
-          <line x1="478" y1="208" x2="540" y2="208" class="sn-line" id="snl3"/>
-          <rect x="542" y="194" width="178" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="631" y="206" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">COMPRA EN CHINA</text>
-          <text x="631" y="216" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">Día 5–10</text>
-        </g>
-
-        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             NODE 4 — EMBARQUE · Contenedor con auto
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Scene: container loading on road -->
-        <g transform="translate(216,372) scale(0.82)">
-          <use href="#ico-container"/>
-        </g>
-
-        <g class="step-node-g" id="sn4">
-          <circle cx="234" cy="378" r="30" fill="rgba(201,168,76,.06)"/>
-          <circle cx="234" cy="378" r="23" class="sn-bg"/>
-          <circle cx="234" cy="378" r="23" class="sn-ring"/>
-          <!-- Container mini icon -->
-          <g transform="translate(234,378) scale(0.72)">
-            <rect x="-12" y="-8" width="24" height="16" rx="2" fill="#c0392b"/>
-            <line x1="-6" y1="-8" x2="-6" y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
-            <line x1="0"  y1="-8" x2="0"  y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
-            <line x1="6"  y1="-8" x2="6"  y2="8" stroke="rgba(0,0,0,.3)" stroke-width="1.5"/>
-            <!-- mini car silhouette going in -->
-            <rect x="-18" y="-4" width="9" height="6" rx="1.5" fill="#1a1a2e"/>
-            <rect x="-16" y="-3.5" width="5" height="3" rx="1" fill="rgba(140,210,255,.45)"/>
-            <circle cx="-15" cy="3" r="2" fill="#333"/>
-            <circle cx="-11" cy="3" r="2" fill="#333"/>
-          </g>
-          <line x1="211" y1="378" x2="150" y2="378" class="sn-line" id="snl4"/>
-          <rect x="0" y="364" width="152" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="76" y="376" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">EMBARQUE</text>
-          <text x="76" y="386" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">~15 días</text>
-        </g>
-
-        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             NODE 5 — TRÁNSITO · Barco en el mar
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Water strip suggesting ocean under/near node 5 -->
-        <rect x="430" y="490" width="230" height="22" rx="4" fill="rgba(41,128,185,.18)" stroke="rgba(41,128,185,.3)" stroke-width="1"/>
-        <path d="M430,500 Q 460,495 490,500 Q 520,505 550,500 Q 580,495 610,500 Q 640,505 660,500" stroke="rgba(255,255,255,.15)" stroke-width="1.2" fill="none"/>
-
-        <!-- Scene: ship on road / water -->
-        <g transform="translate(527,480) scale(0.85)">
-          <use href="#ico-ship"/>
-        </g>
-
-        <g class="step-node-g" id="sn5">
-          <circle cx="545" cy="482" r="30" fill="rgba(41,128,185,.1)"/>
-          <circle cx="545" cy="482" r="23" class="sn-bg"/>
-          <circle cx="545" cy="482" r="23" class="sn-ring"/>
-          <!-- Ship mini icon -->
-          <g transform="translate(545,482) scale(0.68)">
-            <path d="M-11,2 L-14,9 Q0,13 14,9 L11,2 Z" fill="#2980b9"/>
-            <path d="M-11,2 L11,2 L9,-7 L-9,-7 Z" fill="#ecf0f1"/>
-            <rect x="-3" y="-13" width="6" height="7" rx="1" fill="#bdc3c7"/>
-            <rect x="-5" y="-7" width="10" height="3" rx="1" fill="#95a5a6"/>
-            <rect x="1" y="-15" width="3" height="5" rx="1" fill="#e74c3c"/>
-            <rect x="-7" y="-4" width="2.5" height="2.5" rx=".4" fill="rgba(140,210,255,.8)"/>
-            <rect x="-3" y="-4" width="2.5" height="2.5" rx=".4" fill="rgba(140,210,255,.8)"/>
-            <rect x="1"  y="-4" width="2.5" height="2.5" rx=".4" fill="rgba(140,210,255,.8)"/>
-          </g>
-          <line x1="545" y1="505" x2="545" y2="558" class="sn-line" id="snl5"/>
-          <rect x="460" y="560" width="172" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="546" y="572" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">TRÁNSITO</text>
-          <text x="546" y="582" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">~60 días</text>
-        </g>
-
-        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             NODE 6 — ADUANA · Inspector oficial
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Scene: customs officer on road -->
-        <g transform="translate(824,296) scale(0.78)">
-          <use href="#ico-customs"/>
-        </g>
-
-        <g class="step-node-g" id="sn6">
-          <circle cx="842" cy="292" r="30" fill="rgba(201,168,76,.06)"/>
-          <circle cx="842" cy="292" r="23" class="sn-bg"/>
-          <circle cx="842" cy="292" r="23" class="sn-ring"/>
-          <!-- Customs mini badge -->
-          <g transform="translate(842,292) scale(0.72)">
-            <circle cx="0" cy="-7" r="4.5" fill="#ecf0f1"/>
-            <rect x="-5" y="-2" width="10" height="12" rx="2.5" fill="#2c3e50"/>
-            <rect x="-6" y="-12" width="12" height="3" rx="1.5" fill="#1a252f"/>
-            <rect x="-4" y="-15" width="8" height="4" rx="1" fill="#2c3e50"/>
-            <polygon points="0,-8 1,-6 3,-6 1.5,-5 2,-3 0,-4.2 -2,-3 -1.5,-5 -3,-6 -1,-6" fill="#C9A84C" transform="scale(0.6)"/>
-          </g>
-          <line x1="842" y1="269" x2="842" y2="230" class="sn-line" id="snl6"/>
-          <rect x="755" y="208" width="174" height="28" rx="2" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.2)" stroke-width="1"/>
-          <text x="842" y="220" font-size="7" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">ADUANA</text>
-          <text x="842" y="230" font-size="7" font-weight="600" fill="rgba(255,255,255,.45)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">~10 días</text>
-        </g>
-
-        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             NODE 7 — ENTREGA · Auto + Llaves
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Scene: car + person + keys on road at end -->
-        <!-- person silhouette -->
-        <g transform="translate(620,515)">
-          <circle cx="0" cy="-18" r="5" fill="#C9A84C"/>
-          <rect x="-4" y="-12" width="8" height="14" rx="3" fill="#1a1a2e"/>
-          <line x1="-4" y1="-8" x2="-9" y2="0" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="4"  y1="-8" x2="9"  y2="-3" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
-          <!-- keys in hand -->
-          <g transform="translate(9,-3) scale(0.6)">
-            <circle cx="0" cy="-5" r="4" fill="none" stroke="#C9A84C" stroke-width="2"/>
-            <circle cx="0" cy="-5" r="1.5" fill="#C9A84C"/>
-            <rect x="1.5" y="-6" width="9" height="2.5" rx="1" fill="#C9A84C"/>
-            <rect x="8.5" y="-5" width="2.5" height="2" rx=".4" fill="#C9A84C"/>
-            <rect x="5.5" y="-4.5" width="2.5" height="2" rx=".4" fill="#C9A84C"/>
-          </g>
-          <rect x="-4" y="2" width="3" height="10" rx="1.5" fill="#1a1a2e"/>
-          <rect x="1"  y="2" width="3" height="10" rx="1.5" fill="#1a1a2e"/>
-        </g>
-        <!-- car parked at finish -->
-        <g transform="translate(652,520) scale(0.95)">
-          <use href="#ico-car"/>
-        </g>
-
-        <!-- Big finish glow ring -->
-        <g class="step-node-g" id="sn7">
-          <circle cx="590" cy="520" r="42" fill="rgba(201,168,76,.05)"/>
-          <circle cx="590" cy="520" r="32" fill="rgba(201,168,76,.1)"/>
-          <circle cx="590" cy="520" r="25" class="sn-bg"/>
-          <circle cx="590" cy="520" r="25" class="sn-ring" style="stroke:#C9A84C;stroke-width:2.5"/>
-          <!-- Keys icon inside final node -->
-          <g transform="translate(590,520) scale(0.7)">
-            <circle cx="-3" cy="-6" r="5.5" fill="none" stroke="#C9A84C" stroke-width="2.2"/>
-            <circle cx="-3" cy="-6" r="2" fill="#C9A84C"/>
-            <rect x="1.5" y="-7.5" width="13" height="3" rx="1.5" fill="#C9A84C"/>
-            <rect x="12"  y="-6"   width="3"  height="2.5" rx=".5" fill="#C9A84C"/>
-            <rect x="8.5" y="-5"   width="3"  height="2.5" rx=".5" fill="#C9A84C"/>
-          </g>
-          <line x1="565" y1="520" x2="500" y2="520" class="sn-line" id="snl7"/>
-          <rect x="296" y="508" width="206" height="28" rx="2" fill="rgba(201,168,76,.22)" stroke="rgba(201,168,76,.6)" stroke-width="1"/>
-          <text x="399" y="520" font-size="7.5" font-weight="800" fill="#C9A84C" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1.5">✓ ENTREGA FINAL</text>
-          <text x="399" y="530" font-size="7" font-weight="600" fill="rgba(255,255,255,.55)" font-family="Montserrat,sans-serif" text-anchor="middle" letter-spacing="1">~90 días · Venezuela</text>
-        </g>
-
-        <!-- CHINA / VENEZUELA labels -->
-        <text x="26" y="158" font-size="9" font-weight="800" fill="rgba(255,255,255,.18)" font-family="Montserrat,sans-serif" letter-spacing="3">CHINA</text>
-        <text x="540" y="612" font-size="9" font-weight="800" fill="rgba(201,168,76,.55)" font-family="Montserrat,sans-serif" letter-spacing="3">VENEZUELA</text>
-
-        <!-- ════ CAR GROUP (animated) ════ -->
-        <g id="carGroup">
+        <!-- ══ ANIMATED CAR GROUP ══ -->
+        <g id="carGroup" transform="translate(120,104) rotate(90)">
           <!-- headlight glow -->
-          <ellipse id="hlGlow" cx="0" cy="-24" rx="14" ry="8" fill="rgba(201,168,76,.3)" filter="url(#carGlow)"/>
-          <!-- car shadow -->
-          <ellipse cx="0" cy="8" rx="18" ry="7" fill="rgba(0,0,0,.5)"/>
+          <ellipse id="hlGlow" cx="0" cy="-20" rx="12" ry="6" fill="rgba(201,168,76,.4)" filter="url(#carGlow)"/>
+          <!-- shadow -->
+          <ellipse cx="0" cy="5" rx="15" ry="6" fill="rgba(0,0,0,.45)"/>
           <!-- body -->
-          <rect x="-13" y="-22" width="26" height="40" rx="7" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1.5"/>
+          <rect x="-11" y="-18" width="22" height="34" rx="6" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="1.5"/>
           <!-- roof -->
-          <rect x="-9" y="-17" width="18" height="26" rx="4" fill="#222"/>
+          <rect x="-7.5" y="-13" width="15" height="22" rx="4" fill="#212121"/>
           <!-- windshield -->
-          <rect x="-7.5" y="-16" width="15" height="9" rx="2.5" fill="rgba(140,200,255,.12)" stroke="rgba(255,255,255,.06)" stroke-width=".5"/>
+          <rect x="-6.5" y="-12" width="13" height="7.5" rx="2" fill="rgba(140,200,255,.15)" stroke="rgba(255,255,255,.07)" stroke-width=".5"/>
           <!-- rear window -->
-          <rect x="-6" y="8" width="12" height="6" rx="2" fill="rgba(140,200,255,.08)"/>
+          <rect x="-5" y="7" width="10" height="5" rx="1.5" fill="rgba(140,200,255,.1)"/>
           <!-- headlights -->
-          <ellipse cx="-8" cy="-21" rx="4" ry="2.5" fill="#C9A84C"/>
-          <ellipse cx="8"  cy="-21" rx="4" ry="2.5" fill="#C9A84C"/>
+          <ellipse cx="-7" cy="-17" rx="3.5" ry="2" fill="#C9A84C"/>
+          <ellipse cx="7"  cy="-17" rx="3.5" ry="2" fill="#C9A84C"/>
           <!-- brake lights -->
-          <ellipse cx="-8" cy="18" rx="3.5" ry="2" fill="#c0392b" opacity=".8"/>
-          <ellipse cx="8"  cy="18" rx="3.5" ry="2" fill="#c0392b" opacity=".8"/>
+          <ellipse cx="-7" cy="15"  rx="3"   ry="1.8" fill="#c0392b" opacity=".85"/>
+          <ellipse cx="7"  cy="15"  rx="3"   ry="1.8" fill="#c0392b" opacity=".85"/>
           <!-- wheels -->
-          <rect x="-16" y="-17" width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
-          <rect x="11"  y="-17" width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
-          <rect x="-16" y="9"   width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
-          <rect x="11"  y="9"   width="5" height="9" rx="2.5" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+          <rect x="-14" y="-13" width="4" height="8" rx="2" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+          <rect x="10"  y="-13" width="4" height="8" rx="2" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+          <rect x="-14" y="7"   width="4" height="8" rx="2" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
+          <rect x="10"  y="7"   width="4" height="8" rx="2" fill="#0a0a0a" stroke="#3a3a3a" stroke-width=".8"/>
         </g>
-
       </svg>
-    </div>
 
-    <!-- ════ STEP CARDS ════ -->
-    <div class="steps-grid">
-
-      <div class="sg-card" data-delay="0">
-        <div class="sg-num">01</div>
-        <div class="sg-phase">Etapa 1 · Día 1</div>
-        <div class="sg-title">Selección del vehículo</div>
-        <div class="sg-desc">Explorás nuestro catálogo o nos indicás exactamente qué modelo querés. Nuestros asesores te ayudan a encontrar el auto perfecto según tu presupuesto.</div>
-        <span class="sg-badge">Inicio</span>
-      </div>
-
-      <div class="sg-card" data-delay="80">
-        <div class="sg-num">02</div>
-        <div class="sg-phase">Etapa 1 · Día 2–5</div>
-        <div class="sg-title">Pago para embarcar</div>
-        <div class="sg-desc">Firmamos el contrato con todos los términos claros. Realizás el primer pago para iniciar el proceso de embarque desde China.</div>
-        <span class="sg-badge">Días 2–5</span>
-      </div>
-
-      <div class="sg-card" data-delay="160">
-        <div class="sg-num">03</div>
-        <div class="sg-phase">Etapa 2 · Día 5–10</div>
-        <div class="sg-title">Compra en origen (China)</div>
-        <div class="sg-desc">Nuestro equipo en China adquiere el vehículo. Recibís fotos y videos durante todo el proceso de preparación y salida desde fábrica.</div>
-        <span class="sg-badge">Días 5–10</span>
-      </div>
-
-      <div class="sg-card" data-delay="240">
-        <div class="sg-num">04</div>
-        <div class="sg-phase">Etapa 2 · ~15 días</div>
-        <div class="sg-title">Preparación y embarque</div>
-        <div class="sg-desc">El vehículo es inspeccionado, preparado y enviado a la naviera desde puerto en China. Aproximadamente 15 días desde la confirmación.</div>
-        <span class="sg-badge">~15 días</span>
-      </div>
-
-      <div class="sg-card" data-delay="320">
-        <div class="sg-num">05</div>
-        <div class="sg-phase">Etapa 3 · ~60 días</div>
-        <div class="sg-title">Tránsito marítimo</div>
-        <div class="sg-desc">Tu vehículo navega desde China hacia Venezuela. Te mantenemos informado del estado del envío en todo momento. ~60 días de travesía.</div>
-        <span class="sg-badge">~60 días</span>
-      </div>
-
-      <div class="sg-card" data-delay="400">
-        <div class="sg-num">06</div>
-        <div class="sg-phase">Etapa 3 · ~10 días</div>
-        <div class="sg-title">Aduanas y nacionalización</div>
-        <div class="sg-desc">Gestionamos todos los trámites aduanales e impuestos en Venezuela. Asesoramiento completo en cada pago y requisito legal requerido.</div>
-        <span class="sg-badge">~10 días</span>
-      </div>
-
-      <div class="sg-card full" data-delay="480" style="border-top:1px solid rgba(201,168,76,.3)">
-        <div>
-          <div class="sg-num">07 — ETAPA FINAL</div>
-          <div class="sg-phase">~90 días totales</div>
-          <div class="sg-title" style="font-size:20px">Detailing y entrega</div>
-          <div class="sg-desc">Tu vehículo recibe detailing profesional y te lo entregamos listo para circular, con toda la documentación en regla, legalizado y a tu nombre.</div>
-          <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
-            <span class="sg-badge">~90 días total</span>
-            <a href="contacto.html" class="btn-dark" style="background:#C9A84C;color:#000;font-size:8.5px;font-weight:800;padding:8px 20px;text-decoration:none;display:inline-flex;align-items:center">Empezar ahora →</a>
+      <!-- STEP CARDS BELOW THE ROAD (steps 2, 4, 6) -->
+      <div class="steps-below" id="stepsBelow">
+        <div class="step-slot below" id="slot1b"></div>
+        <div class="step-slot below" id="slot2b">
+          <div class="step-conn below" id="conn2"></div>
+          <div class="step-card-pop below" id="card2">
+            <div class="scp-phase">Etapa 1 · Día 2–5</div>
+            <div class="scp-title">Contrato y pago</div>
+            <div class="scp-desc">Firmamos con términos claros. Primer pago para iniciar el embarque desde China.</div>
+            <span class="scp-days">Días 2–5</span>
           </div>
         </div>
-        <div style="text-align:center">
-          <div class="sg-finale-num">90</div>
-          <div class="sg-finale-tag">Días · China → Venezuela</div>
+        <div class="step-slot below" id="slot3b"></div>
+        <div class="step-slot below" id="slot4b">
+          <div class="step-conn below" id="conn4"></div>
+          <div class="step-card-pop below" id="card4">
+            <div class="scp-phase">Etapa 2 · ~15 días</div>
+            <div class="scp-title">Preparación y embarque</div>
+            <div class="scp-desc">El vehículo es inspeccionado y enviado al puerto. Aproximadamente 15 días desde la confirmación.</div>
+            <span class="scp-days">~15 días</span>
+          </div>
         </div>
+        <div class="step-slot below" id="slot5b"></div>
+        <div class="step-slot below" id="slot6b">
+          <div class="step-conn below" id="conn6"></div>
+          <div class="step-card-pop below" id="card6">
+            <div class="scp-phase">Etapa 3 · ~10 días</div>
+            <div class="scp-title">Aduanas Venezuela</div>
+            <div class="scp-desc">Gestionamos todos los trámites aduanales. Asesoramiento completo en cada pago legal requerido.</div>
+            <span class="scp-days">~10 días</span>
+          </div>
+        </div>
+        <div class="step-slot below" id="slot7b"></div>
       </div>
+    </div><!-- end road-track-wrap -->
 
+    <!-- Progress bar -->
+    <div class="prog-bar-wrap">
+      <span class="prog-label">China</span>
+      <div class="prog-bar-track">
+        <div class="prog-bar-fill" id="progFill"></div>
+      </div>
+      <span class="prog-label" style="text-align:right">Venezuela</span>
+      <span class="prog-pct" id="progPct">0%</span>
     </div>
-  </div>
+
+    <!-- Active step label -->
+    <div class="road-active-label" id="activeLabel">
+      <div class="ral-step" id="alStep">Paso 1 de 7</div>
+      <div class="ral-title" id="alTitle"><span>Selección</span> del vehículo</div>
+    </div>
+
+  </div><!-- end road-section -->
 
   <!-- FINALE -->
   <div class="proc-finale rev">
@@ -798,123 +600,229 @@
 
     /* ── COUNTERS ── */
     function animCount(el, target, dur) {
-      var start = performance.now();
-      (function frame(now) {
-        var t = Math.min((now - start) / dur, 1);
-        var eased = 1 - Math.pow(1 - t, 3);
-        el.textContent = Math.round(eased * target).toLocaleString();
-        if (t < 1) requestAnimationFrame(frame);
-      })(start);
+      var s = performance.now();
+      (function f(now) {
+        var t = Math.min((now - s) / dur, 1);
+        var e = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(e * target).toLocaleString();
+        if (t < 1) requestAnimationFrame(f);
+      })(s);
     }
     var statsObs = new IntersectionObserver(function(entries) {
       if (!entries[0].isIntersecting) return;
       statsObs.disconnect();
-      animCount(document.getElementById('cntDays'),  90,   1400);
-      animCount(document.getElementById('cntSteps'), 7,    900);
-      animCount(document.getElementById('cntKm'),    18400, 2200);
+      animCount(document.getElementById('cntDays'), 90, 1400);
+      animCount(document.getElementById('cntSteps'), 7, 900);
+      animCount(document.getElementById('cntKm'), 18400, 2200);
     }, { threshold: 0.4 });
-    statsObs.observe(document.querySelector('.proc-stats'));
+    var statsEl = document.querySelector('.proc-stats');
+    if (statsEl) statsObs.observe(statsEl);
 
-    /* ── ROAD ANIMATION ── */
-    var svg        = document.getElementById('roadSVG');
-    var surface    = document.getElementById('roadSurface');
-    var progress   = document.getElementById('progressOverlay');
-    var car        = document.getElementById('carGroup');
+    /* ══════════════════════════════════════════
+       INTERACTIVE ROAD
+    ══════════════════════════════════════════ */
+    var svg     = document.getElementById('roadSVG');
+    var car     = document.getElementById('carGroup');
+    var progSVG = document.getElementById('roadProgress');
+    var progFill = document.getElementById('progFill');
+    var progPct  = document.getElementById('progPct');
+    var activeLabel = document.getElementById('activeLabel');
+    var alStep = document.getElementById('alStep');
+    var alTitle = document.getElementById('alTitle');
+    var hlGlow = document.getElementById('hlGlow');
+    var roadWrap = document.getElementById('roadWrap');
 
-    var totalLen   = surface.getTotalLength();
-    progress.style.strokeDasharray = '0 ' + totalLen;
+    // Step data
+    var steps = [
+      { x: 120,  id: 1, label: 'SELECCIÓN',    sub: 'del vehículo',      cards: ['card1'],         conns: ['conn1']         },
+      { x: 320,  id: 2, label: 'CONTRATO',      sub: 'y pago inicial',    cards: ['card2'],         conns: ['conn2']         },
+      { x: 520,  id: 3, label: 'COMPRA',        sub: 'en China',          cards: ['card3'],         conns: ['conn3']         },
+      { x: 700,  id: 4, label: 'EMBARQUE',      sub: 'preparación',       cards: ['card4'],         conns: ['conn4']         },
+      { x: 880,  id: 5, label: 'TRÁNSITO',      sub: 'marítimo',          cards: ['card5'],         conns: ['conn5']         },
+      { x: 1080, id: 6, label: 'ADUANA',        sub: 'Venezuela',         cards: ['card6'],         conns: ['conn6']         },
+      { x: 1280, id: 7, label: 'ENTREGA',       sub: 'final',             cards: ['card7'],         conns: ['conn7']         },
+    ];
 
-    // Node step positions (0–1 along path)
-    var stops = [0.03, 0.17, 0.31, 0.44, 0.58, 0.74, 0.96];
-    var nodeIds = ['sn1','sn2','sn3','sn4','sn5','sn6','sn7'];
+    var SVG_W = 1400;
+    var CAR_START_X = 120;
+    var CAR_END_X   = 1280;
+    var CAR_Y       = 104;
 
-    var currentT = 0, targetT = 0, rafId;
+    // Current car X in SVG units
+    var carX = CAR_START_X;
+    var targetX = CAR_START_X;
+    var rafId;
+    var lastActiveStep = -1;
+    var interacted = false;
 
-    function getAngle(len) {
-      var eps = 3;
-      var a = surface.getPointAtLength(Math.max(len - eps, 0));
-      var b = surface.getPointAtLength(Math.min(len + eps, totalLen));
-      return Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+    // Map SVG x to progress 0–1
+    function xToProgress(x) {
+      return (x - CAR_START_X) / (CAR_END_X - CAR_START_X);
     }
 
-    function drawAt(t) {
-      var len = totalLen * Math.max(0, Math.min(1, t));
-      var pt  = surface.getPointAtLength(len);
-      var ang = getAngle(len) - 90;
-      car.setAttribute('transform', 'translate(' + pt.x + ',' + pt.y + ') rotate(' + ang + ')');
-      progress.style.strokeDasharray = len + ' ' + totalLen;
+    function setCar(x) {
+      carX = Math.max(CAR_START_X, Math.min(CAR_END_X, x));
+      car.setAttribute('transform', 'translate(' + carX + ',' + CAR_Y + ') rotate(90)');
 
-      // Update node states
-      for (var i = 0; i < stops.length; i++) {
-        var n = document.getElementById(nodeIds[i]);
-        var l = document.getElementById('snl' + (i+1));
-        n.classList.remove('active','done');
-        if (l) l.classList.remove('done');
-        if (t > stops[i] + 0.03) {
-          n.classList.add('done');
-          if (l) l.classList.add('done');
-        } else if (Math.abs(t - stops[i]) <= 0.03) {
-          n.classList.add('active');
+      // Road progress fill (SVG)
+      progSVG.setAttribute('width', Math.max(0, carX - CAR_START_X + 20));
+
+      // Progress bar fill
+      var pct = Math.round(xToProgress(carX) * 100);
+      progFill.style.width = pct + '%';
+      progPct.textContent = pct + '%';
+
+      // Activate step nodes and cards
+      var activeIdx = -1;
+      for (var i = 0; i < steps.length; i++) {
+        var s = steps[i];
+        var circle = document.getElementById('cpCircle' + s.id);
+        var reached = carX >= s.x - 12;
+        var isActive = Math.abs(carX - s.x) < 80;
+
+        // Node styling
+        if (circle) {
+          if (isActive) {
+            circle.setAttribute('fill', '#C9A84C');
+            circle.setAttribute('stroke', '#C9A84C');
+            activeIdx = i;
+          } else if (reached) {
+            circle.setAttribute('fill', 'rgba(201,168,76,.18)');
+            circle.setAttribute('stroke', '#C9A84C');
+          } else {
+            circle.setAttribute('fill', '#0a0a0a');
+            circle.setAttribute('stroke', 'rgba(255,255,255,.12)');
+          }
         }
+
+        // Cards and connectors
+        s.cards.forEach(function(cid) {
+          var c = document.getElementById(cid);
+          if (c) {
+            if (reached) c.classList.add('active');
+            else c.classList.remove('active');
+          }
+        });
+        s.conns.forEach(function(cid) {
+          var c = document.getElementById(cid);
+          if (c) {
+            if (reached) c.classList.add('active');
+            else c.classList.remove('active');
+          }
+        });
+      }
+
+      // Active step label
+      if (activeIdx >= 0 && activeIdx !== lastActiveStep) {
+        lastActiveStep = activeIdx;
+        var st = steps[activeIdx];
+        alStep.textContent = 'Paso ' + st.id + ' de 7';
+        alTitle.innerHTML = '<span>' + st.label + '</span> ' + st.sub;
+        activeLabel.classList.add('show');
       }
     }
 
-    function animate() {
-      var diff = targetT - currentT;
-      if (Math.abs(diff) > 0.0002) {
-        currentT += diff * 0.055;
-        drawAt(currentT);
-        rafId = requestAnimationFrame(animate);
+    // Smooth animation
+    function animateCar() {
+      var diff = targetX - carX;
+      if (Math.abs(diff) > 0.5) {
+        carX += diff * 0.08;
+        setCar(carX);
+        rafId = requestAnimationFrame(animateCar);
       } else {
-        currentT = targetT;
-        drawAt(currentT);
+        setCar(targetX);
       }
     }
 
-    var roadOuter = document.querySelector('.road-outer');
-    function onScroll() {
-      var rect = roadOuter.getBoundingClientRect();
-      var wh   = window.innerHeight;
-      var rh   = roadOuter.offsetHeight;
-      var prog = Math.max(0, Math.min(1, -rect.top / (rh - wh * 0.5)));
-      targetT  = prog;
-      cancelAnimationFrame(rafId);
-      animate();
+    // Convert mouse/touch event to SVG X coordinate
+    function eventToSvgX(evt) {
+      var rect = svg.getBoundingClientRect();
+      var clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+      var ratio = (clientX - rect.left) / rect.width;
+      return ratio * SVG_W;
     }
 
-    // Init car at start
-    drawAt(0);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    // Mouse/touch on the road section
+    function handleMove(evt) {
+      if (!interacted) {
+        interacted = true;
+        activeLabel.classList.add('show');
+      }
+      targetX = eventToSvgX(evt);
+      cancelAnimationFrame(rafId);
+      animateCar();
+    }
 
-    // SVG entrance
-    svg.style.cssText += 'opacity:0;transform:translateY(24px);transition:opacity 1.2s ease,transform 1.2s ease;';
-    new IntersectionObserver(function(e) {
-      if (e[0].isIntersecting) { svg.style.opacity='1'; svg.style.transform='none'; }
-    }, { threshold: 0.1 }).observe(svg);
+    // Handle touch drag and mouse move
+    svg.addEventListener('mousemove', handleMove, { passive: true });
+    svg.addEventListener('touchmove', function(e) { e.preventDefault(); handleMove(e); }, { passive: false });
+    roadWrap.addEventListener('mousemove', handleMove, { passive: true });
 
-    /* ── STEP CARDS ENTRANCE ── */
-    var cards = document.querySelectorAll('.sg-card');
-    var cardObs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          var delay = parseInt(e.target.getAttribute('data-delay')) || 0;
-          setTimeout(function() { e.target.classList.add('in'); }, delay);
-          cardObs.unobserve(e.target);
-        }
+    // Click snaps to nearest step
+    svg.addEventListener('click', function(evt) {
+      var svgX = eventToSvgX(evt);
+      // Find nearest step
+      var nearest = steps[0];
+      var minDist = Math.abs(svgX - steps[0].x);
+      steps.forEach(function(s) {
+        var d = Math.abs(svgX - s.x);
+        if (d < minDist) { minDist = d; nearest = s; }
       });
-    }, { threshold: 0.15 });
-    cards.forEach(function(c) { cardObs.observe(c); });
+      targetX = nearest.x;
+      cancelAnimationFrame(rafId);
+      animateCar();
+    });
 
-    /* ── HEADLIGHT PULSE ── */
-    var glow = document.getElementById('hlGlow');
-    var pulse = true;
+    // Auto-demo animation on load (drives slowly across)
+    function autoDemoForward() {
+      var start = performance.now();
+      var dur = 3500;
+      var from = CAR_START_X;
+      var to = CAR_START_X + (CAR_END_X - CAR_START_X) * 0.25; // goes to 25% then stops
+      (function frame(now) {
+        if (interacted) return;
+        var t = Math.min((now - start) / dur, 1);
+        var eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        var x = from + (to - from) * eased;
+        setCar(x);
+        carX = x;
+        if (t < 1 && !interacted) requestAnimationFrame(frame);
+        else if (!interacted) {
+          // pause then go back
+          setTimeout(function() {
+            if (!interacted) {
+              var back = performance.now();
+              var durB = 2000;
+              (function frameB(nowB) {
+                if (interacted) return;
+                var tB = Math.min((nowB - back) / durB, 1);
+                var eB = 1 - Math.pow(1 - tB, 3);
+                var xB = to + (from - to) * eB;
+                setCar(xB);
+                carX = xB;
+                if (tB < 1 && !interacted) requestAnimationFrame(frameB);
+              })(back);
+            }
+          }, 1500);
+        }
+      })(start);
+    }
+
+    // Init
+    setCar(CAR_START_X);
+    setTimeout(autoDemoForward, 1200);
+
+    // Headlight pulse
     setInterval(function() {
-      if (!glow) return;
-      pulse = !pulse;
-      glow.style.opacity = pulse ? '1' : '0.4';
-      glow.style.transition = 'opacity 0.4s';
-    }, 800);
+      if (!hlGlow) return;
+      hlGlow.style.opacity = hlGlow.style.opacity === '0.3' ? '0.8' : '0.3';
+      hlGlow.style.transition = 'opacity 0.5s';
+    }, 700);
+
+    // Touch hint on mobile
+    if ('ontouchstart' in window) {
+      document.querySelector('.road-hint').textContent = '← Arrastrá sobre la carretera para avanzar →';
+    }
 
   })();
   </script>
